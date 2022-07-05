@@ -1,0 +1,127 @@
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
+}
+
+android {
+    namespace 'com.example.madplayground'
+    compileSdk 32
+
+    defaultConfig {
+        applicationId "com.example.madplayground"
+        minSdk 26
+        targetSdk 32
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        vectorDrawables {
+            useSupportLibrary true
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+    buildFeatures {
+        compose true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion '1.2.0'
+    }
+    packagingOptions {
+        resources {
+            excludes += '/META-INF/{AL2.0,LGPL2.1}'
+        }
+    }
+}
+
+dependencies {
+
+    kapt 'org.jetbrains.kotlinx:kotlinx-metadata-jvm:0.5.0'
+
+    // Core Extensions
+    implementation 'androidx.core:core-ktx:1.8.0'
+
+    // region Compose
+
+    def compose_ui_version = '1.3.0-alpha01'
+
+    // Compose Activity
+    implementation 'androidx.activity:activity-compose:1.5.0'
+
+    // Compose UI
+    implementation "androidx.compose.ui:ui:$compose_ui_version"
+
+    // Compose Preview Tooling
+    implementation "androidx.compose.ui:ui-tooling-preview:$compose_ui_version"
+
+    // Material for Compose
+    implementation "androidx.compose.material:material:$compose_ui_version"
+
+    // endregion Compose
+
+    // region Lifecycle
+
+    // Lifecycle Runtime
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.5.0'
+
+    // ViewModel
+
+    def lifecycle_version = "2.6.0-alpha01"
+
+    // ViewModel Kotlin Extensions
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
+
+    // ViewModel Utilities for Compose
+    implementation "androidx.lifecycle:lifecycle-viewmodel-compose:$lifecycle_version"
+
+    // Java8 Lifecycle Compiler - faster incremental builds
+    implementation "androidx.lifecycle:lifecycle-common-java8:$lifecycle_version"
+
+    // endregion Lifecycle
+
+    // Navigation
+    implementation "androidx.navigation:navigation-compose:2.5.0"
+
+    // region Hilt
+
+    def hilt_version = '2.42'
+
+    // Hilt for Android
+    implementation "com.google.dagger:hilt-android:$hilt_version"
+
+    // Hilt Compiler
+    kapt "com.google.dagger:hilt-compiler:$hilt_version"
+
+    // Hilt Compose Navigation Integration
+    implementation 'androidx.hilt:hilt-navigation-compose:1.0.0'
+
+    // endregion Hilt
+
+    // region Testing
+
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+
+    // Compose Testing
+
+    androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_ui_version"
+    debugImplementation "androidx.compose.ui:ui-tooling:$compose_ui_version"
+    debugImplementation "androidx.compose.ui:ui-test-manifest:$compose_ui_version"
+
+    // endregion Testing
+}
