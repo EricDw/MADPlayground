@@ -1,4 +1,4 @@
-package com.example.madplayground.app
+package com.example.madplayground.logs.modules
 
 import com.example.madplayground.logs.AndroidLogger
 import com.example.madplayground.logs.api.Logger

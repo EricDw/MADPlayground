@@ -1,4 +1,4 @@
-package com.example.madplayground.ui.theme
+package com.example.madplayground.ui.theme.m2
 
 import androidx.compose.ui.graphics.Color
 

@@ -1,8 +1,8 @@
 package com.example.madplayground.ui.screens.home.viewmodel
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import com.example.madplayground.logs.api.Logger
+import com.example.madplayground.ui.screens.home.HomeScreenState
 import com.example.madplayground.ui.screens.home.api.HomeScreen
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -15,6 +15,8 @@ class HomeScreenViewModel @Inject constructor(
     private val logger: Logger,
 ) : ViewModel(), HomeScreen.ViewModel {
 
+    private val tag = this::class.simpleName
+
     private val _state = MutableStateFlow(HomeScreenState())
 
     override val state: StateFlow<HomeScreen.State> =
@@ -24,8 +26,11 @@ class HomeScreenViewModel @Inject constructor(
 
         when (event) {
 
-            else -> {
-                logger.logError("Event Handling Not Implemented")
+            HomeScreen.Event.HomeScreenStarted -> {
+                logger.logError(
+                    tag = tag,
+                    message = "Event Handling Not Implemented"
+                )
             }
 
         }

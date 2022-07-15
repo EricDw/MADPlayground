@@ -1,3 +1,19 @@
 <resources>
     <string name="app_name">MAD Playground</string>
+    <string name="title_home">Home</string>
+    <string name="title_settings">Settings</string>
+    <string name="title_display">Display</string>
+    <string name="label_theme_type">Theme Type</string>
+    <string name="label_icon_type">Icon Type</string>
+    <string name="label_shape_type">Shape Type</string>
+    <string name="label_design_language">Design Language</string>
+    <string name="label_light">Light</string>
+    <string name="label_dark">Dark</string>
+    <string name="label_system">System</string>
+    <string name="label_default">Default</string>
+    <string name="label_sharp">Sharp</string>
+    <string name="label_outlined">Outlined</string>
+    <string name="label_rounded">Rounded</string>
+    <string name="label_cut">Cut</string>
+    <string name="label_two_tone">Two Tone</string>
 </resources>
