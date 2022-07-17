@@ -2,10 +2,8 @@ package com.example.madplayground.ui.container.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.madplayground.logs.api.Logger
-import com.example.madplayground.messages.api.Message
-import com.example.madplayground.models.apis.App
-import com.example.madplayground.ui.config.CombinedWindowType
+import com.example.madplayground.features.app.apis.App
+import com.example.madplayground.features.messages.apis.Message
 import com.example.madplayground.ui.container.ContentContainerState
 import com.example.madplayground.ui.container.api.ContentContainer
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -15,11 +13,13 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ContentContainerViewModel @Inject constructor(
-    private val logger: Logger,
     private val app: App,
 ) : ViewModel(), ContentContainer.ViewModel {
 
     private val tag = this::class.simpleName
+
+    private val logs
+        get() = app.logs
 
     private var state = ContentContainerState()
 
@@ -55,12 +55,19 @@ class ContentContainerViewModel @Inject constructor(
 
         }.launchIn(viewModelScope)
 
+    private var labelSynchronizer: Job? = app.settings.alwaysShowNavigationLabels
+        .onEach { alwaysShowLabels ->
+
+            state.alwaysShowNavigationLabels = alwaysShowLabels
+
+        }.launchIn(viewModelScope)
+
     override val eventHandler: Message.Handler<ContentContainer.Event> =
         Message.Handler { event ->
             when (event) {
 
-                ContentContainer.Event.HomeTabClicked                -> {
-                    logger.logDebug(
+                ContentContainer.Event.HomeTabClicked          -> {
+                    logs.logDebug(
                         tag = tag,
                         message = "Handling event: ${event::class.simpleName}"
                     )
@@ -71,9 +78,9 @@ class ContentContainerViewModel @Inject constructor(
 
                 }
 
-                ContentContainer.Event.SettingsTabClicked            -> {
+                ContentContainer.Event.SettingsTabClicked      -> {
 
-                    logger.logDebug(
+                    logs.logDebug(
                         tag = tag,
                         message = "Handling event: ${event::class.simpleName}"
                     )
@@ -84,24 +91,22 @@ class ContentContainerViewModel @Inject constructor(
 
                 }
 
-                ContentContainer.Event.NavigationButtonClicked       -> {
+                ContentContainer.Event.NavigationButtonClicked -> {
 
-                    logger.logDebug(
+                    logs.logDebug(
                         tag = tag,
                         message = "Handling event: ${event::class.simpleName}"
                     )
 
-                    // TODO: Use strategy pattern here
-
-                    when (stateFlow.value.screenContext) {
+                    when (state.screenContext) {
 
                         ContentContainer.ScreenContext.HOME     -> {
-                            state.triggerDrawerToOpen = true
+                            /* no-op */
                         }
 
                         ContentContainer.ScreenContext.SETTINGS -> {
 
-                            logger.logDebug(
+                            logs.logDebug(
                                 tag = tag,
                                 message = "Navigating Back"
                             )
@@ -116,142 +121,20 @@ class ContentContainerViewModel @Inject constructor(
 
                 }
 
-                ContentContainer.Event.HomeScreenStarted             -> {
+                ContentContainer.Event.HomeScreenStarted       -> {
                     state.screenContext = ContentContainer.ScreenContext.HOME
                 }
 
-                ContentContainer.Event.SettingsScreenStarted         -> {
+                ContentContainer.Event.SettingsScreenStarted   -> {
                     state.screenContext = ContentContainer.ScreenContext.SETTINGS
                 }
 
-                ContentContainer.Event.DrawerClosed                  -> {
-                    state.triggerDrawerToOpen = false
+                ContentContainer.Event.DrawerClosed            -> {
 
-                    logger.logDebug(
+                    logs.logDebug(
                         tag = tag,
                         message = "Drawer closed"
                     )
-                }
-
-                is ContentContainer.Event.WindowConfigurationChanged -> {
-
-                    val windowConfiguration = event.newWindowConfiguration
-
-                    when (
-                        windowConfiguration.combinedWindowType
-                    ) {
-
-                        CombinedWindowType.COMPACT_WIDTH_COMPACT_HEIGHT   -> {
-                            // TODO: Configure State
-
-                            logger.logDebug(
-                                tag = tag,
-                                message = "$windowConfiguration not handled!"
-                            )
-
-                        }
-
-                        CombinedWindowType.COMPACT_WIDTH_MEDIUM_HEIGHT    -> {
-
-                            with(state) {
-
-                                showTopAppBar = true
-
-                                showBottomNavBar = true
-
-                                showNavigationRail = false
-
-                            }
-
-                            logger.logDebug(
-                                tag = tag,
-                                message = "$windowConfiguration not handled!"
-                            )
-
-                        }
-
-                        CombinedWindowType.COMPACT_WIDTH_EXPANDED_HEIGHT  -> {
-                            // TODO: Configure State
-
-                            logger.logDebug(
-                                tag = tag,
-                                message = "$windowConfiguration not handled!"
-                            )
-
-                        }
-
-                        CombinedWindowType.MEDIUM_WIDTH_COMPACT_HEIGHT    -> {
-                            // TODO: Configure State
-
-                            with(state) {
-
-                                showTopAppBar = false
-
-                                showBottomNavBar = false
-
-                                showNavigationRail = true
-
-                            }
-
-                            logger.logDebug(
-                                tag = tag,
-                                message = "$windowConfiguration not handled!"
-                            )
-
-                        }
-
-                        CombinedWindowType.MEDIUM_WIDTH_MEDIUM_HEIGHT     -> {
-                            // TODO: Configure State
-
-                            logger.logDebug(
-                                tag = tag,
-                                message = "$windowConfiguration not handled!"
-                            )
-
-                        }
-
-                        CombinedWindowType.MEDIUM_WIDTH_EXPANDED_HEIGHT   -> {
-                            // TODO: Configure State
-
-                            logger.logDebug(
-                                tag = tag,
-                                message = "$windowConfiguration not handled!"
-                            )
-
-                        }
-
-                        CombinedWindowType.EXPANDED_WIDTH_COMPACT_HEIGHT  -> {
-                            // TODO: Configure State
-
-                            logger.logDebug(
-                                tag = tag,
-                                message = "$windowConfiguration not handled!"
-                            )
-
-                        }
-
-                        CombinedWindowType.EXPANDED_WIDTH_MEDIUM_HEIGHT   -> {
-                            // TODO: Configure State
-
-                            logger.logDebug(
-                                tag = tag,
-                                message = "$windowConfiguration not handled!"
-                            )
-
-                        }
-
-                        CombinedWindowType.EXPANDED_WIDTH_EXPANDED_HEIGHT -> {
-                            // TODO: Configure State
-
-                            logger.logDebug(
-                                tag = tag,
-                                message = "$windowConfiguration not handled!"
-                            )
-
-                        }
-
-                    }
-
                 }
 
             }
@@ -267,6 +150,9 @@ class ContentContainerViewModel @Inject constructor(
 
         shapeSynchronizer?.cancel()
         shapeSynchronizer = null
+
+        labelSynchronizer?.cancel()
+        labelSynchronizer = null
 
     }
 

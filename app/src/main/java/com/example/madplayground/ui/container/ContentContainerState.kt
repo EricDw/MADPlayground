@@ -1,7 +1,7 @@
 package com.example.madplayground.ui.container
 
 import androidx.compose.runtime.*
-import com.example.madplayground.models.apis.Settings
+import com.example.madplayground.features.settings.apis.Settings
 import com.example.madplayground.ui.container.api.ContentContainer
 
 class ContentContainerState : ContentContainer.State {
@@ -22,15 +22,7 @@ class ContentContainerState : ContentContainer.State {
         Settings.ShapeType.ROUNDED
     )
 
-    override var triggerDrawerToOpen: Boolean by mutableStateOf(false)
-
-    override var showTopAppBar: Boolean by mutableStateOf(true)
-
-    override var showNavigationIcon: Boolean by mutableStateOf(true)
-
-    override var showBottomNavBar: Boolean by mutableStateOf(false)
-
-    override var showNavigationRail: Boolean by mutableStateOf(true)
+    override var alwaysShowNavigationLabels: Boolean by mutableStateOf(false)
 
 }
 

@@ -5,7 +5,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.madplayground.messages.api.Message
+import com.example.madplayground.features.messages.apis.Message
 import com.example.madplayground.ui.container.api.ContentContainer
 import com.example.madplayground.ui.screens.settings.SettingsScreen
 import com.example.madplayground.ui.screens.settings.api.SettingsScreen
@@ -43,6 +43,10 @@ fun SettingsScreenController(
             }
 
             SettingsScreen.Event.ShapeTypeClicked -> {
+                settingsScreenViewModel.eventHandler(theEvent)
+            }
+
+            SettingsScreen.Event.LabelVisibilityClicked -> {
                 settingsScreenViewModel.eventHandler(theEvent)
             }
 

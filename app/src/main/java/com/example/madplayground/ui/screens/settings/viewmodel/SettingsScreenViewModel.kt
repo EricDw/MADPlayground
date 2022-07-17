@@ -2,10 +2,9 @@ package com.example.madplayground.ui.screens.settings.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.madplayground.logs.api.Logger
-import com.example.madplayground.messages.api.Message
-import com.example.madplayground.models.apis.App
-import com.example.madplayground.models.apis.Settings
+import com.example.madplayground.features.app.apis.App
+import com.example.madplayground.features.messages.apis.Message
+import com.example.madplayground.features.settings.apis.Settings
 import com.example.madplayground.ui.screens.settings.SettingsScreenState
 import com.example.madplayground.ui.screens.settings.api.SettingsScreen
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -16,11 +15,13 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SettingsScreenViewModel @Inject constructor(
-    private val logger: Logger,
     private val app: App,
 ) : ViewModel(), SettingsScreen.ViewModel {
 
     private val tag = this::class.simpleName
+
+    private val logs
+        get() = app.logs
 
     private val settingsScreenState = SettingsScreenState()
 
@@ -36,7 +37,6 @@ class SettingsScreenViewModel @Inject constructor(
 
         }.launchIn(viewModelScope)
 
-
     private var iconSynchronizer: Job? = app.settings.iconographyType
         .onEach { iconographyType ->
 
@@ -51,11 +51,18 @@ class SettingsScreenViewModel @Inject constructor(
 
         }.launchIn(viewModelScope)
 
+    private var labelSynchronizer: Job? = app.settings.alwaysShowNavigationLabels
+        .onEach { showLabels ->
+
+            settingsScreenState.alwaysShowNavigationLabels = showLabels
+
+        }.launchIn(viewModelScope)
+
     override val eventHandler: Message.Handler<SettingsScreen.Event> = Message.Handler { theEvent ->
 
         when (theEvent) {
 
-            SettingsScreen.Event.ThemeTypeClicked -> {
+            SettingsScreen.Event.ThemeTypeClicked       -> {
 
                 val newThemeType = when (settingsScreenState.themeType) {
 
@@ -79,13 +86,13 @@ class SettingsScreenViewModel @Inject constructor(
                         newThemeType
                     )
 
-                    logger.logDebug(tag = tag, message = "Updating ThemeType to: $newThemeType")
+                    logs.logDebug(tag = tag, message = "Updating ThemeType to: $newThemeType")
 
                 }
 
             }
 
-            SettingsScreen.Event.IconTypeClicked  -> {
+            SettingsScreen.Event.IconTypeClicked        -> {
 
                 val newIconType = when (settingsScreenState.iconType) {
 
@@ -117,7 +124,7 @@ class SettingsScreenViewModel @Inject constructor(
                 }
             }
 
-            SettingsScreen.Event.ShapeTypeClicked  -> {
+            SettingsScreen.Event.ShapeTypeClicked       -> {
 
                 val newShapeType = when (settingsScreenState.shapeType) {
 
@@ -138,7 +145,15 @@ class SettingsScreenViewModel @Inject constructor(
                 }
             }
 
-            SettingsScreen.Event.Started          -> {
+            SettingsScreen.Event.LabelVisibilityClicked -> {
+                viewModelScope.launch {
+                    app.settings.setAlwaysShowNavigationLabels(
+                        !settingsScreenState.alwaysShowNavigationLabels
+                    )
+                }
+            }
+
+            SettingsScreen.Event.Started                -> {
                 /* no-op */
             }
 
@@ -156,6 +171,9 @@ class SettingsScreenViewModel @Inject constructor(
 
         shapeSynchronizer?.cancel()
         shapeSynchronizer = null
+
+        labelSynchronizer?.cancel()
+        labelSynchronizer = null
 
     }
 }

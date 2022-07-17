@@ -14,7 +14,9 @@
         <entry key="app/src/main/java/com/example/madplayground/ui/components/MorphText.kt" value="0.15043877977434184" />
         <entry key="app/src/main/java/com/example/madplayground/ui/container/ContentContainerUI.kt" value="0.1881856540084388" />
         <entry key="app/src/main/java/com/example/madplayground/ui/container/M3ContentContainerUI.kt" value="0.20925925925925926" />
-        <entry key="app/src/main/java/com/example/madplayground/ui/screens/settings/SettingsScreenUI.kt" value="0.29907407407407405" />
+        <entry key="app/src/main/java/com/example/madplayground/ui/screens/home/HomeScreenUI.kt" value="0.22037037037037038" />
+        <entry key="app/src/main/java/com/example/madplayground/ui/screens/posts/PostCardUI.kt" value="0.1" />
+        <entry key="app/src/main/java/com/example/madplayground/ui/screens/settings/SettingsScreenUI.kt" value="0.30925925925925923" />
       </map>
     </option>
   </component>

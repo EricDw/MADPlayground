@@ -1,9 +1,8 @@
 package com.example.madplayground.ui.logs
 
-import androidx.compose.runtime.Composable
 import androidx.compose.runtime.staticCompositionLocalOf
-import com.example.madplayground.logs.api.Logger
+import com.example.madplayground.features.logs.api.Logs
 
-val LocalLogger = staticCompositionLocalOf<Logger> {
-    Logger.EMPTY
+val LocalLogs = staticCompositionLocalOf<Logs> {
+    Logs.EMPTY
 }

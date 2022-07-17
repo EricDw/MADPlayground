@@ -1,34 +1,58 @@
 package com.example.madplayground.ui.screens.posts
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.Card
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.madplayground.ui.screens.posts.api.Post
+import com.example.madplayground.features.quotes.apis.Quote
 
 @Composable
-fun PostCard(
+fun QuoteCard(
     modifier: Modifier = Modifier,
-    state: Post.State = rememberPostState(),
+    state: Quote.State = rememberQuoteState(),
 ) {
     Card(
         modifier = modifier,
         elevation = 1.dp
     ) {
 
-        Box(
-            modifier = Modifier.padding(8.dp),
-            contentAlignment = Alignment.Center
+        Column(
+            modifier = Modifier.padding(16.dp).wrapContentHeight(),
+            verticalArrangement = Arrangement.Center
         ) {
 
-            Text(
-                text = state.title
-            )
+            Row(
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text(
+                    text = "\"",
+                    style = MaterialTheme.typography.h3
+                )
+            }
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.Center
+            ) {
+
+                Text(
+                    text = state.title
+                )
+
+            }
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.End
+            ) {
+                Text(
+                    text = "\"",
+                    style = MaterialTheme.typography.h3
+                )
+            }
 
         }
 
@@ -42,11 +66,11 @@ fun PostCard(
 @Composable
 fun PostCardPreview() {
 
-    val state = rememberPostState {
+    val state = rememberQuoteState {
         title = "Hello World"
     }
 
-    PostCard(
+    QuoteCard(
         state = state
     )
 }

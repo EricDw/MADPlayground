@@ -4,11 +4,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
 import com.example.madplayground.ui.screens.home.api.HomeScreen
-import com.example.madplayground.ui.screens.posts.api.Post
+import com.example.madplayground.features.quotes.apis.Quote
 
 class HomeScreenState : HomeScreen.State {
 
-    override val posts: MutableList<Post.State> = mutableStateListOf()
+    override val quotes: MutableList<Quote.State> = mutableStateListOf()
 
 }
 

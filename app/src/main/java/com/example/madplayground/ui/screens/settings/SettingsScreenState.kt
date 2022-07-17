@@ -1,7 +1,7 @@
 package com.example.madplayground.ui.screens.settings
 
 import androidx.compose.runtime.*
-import com.example.madplayground.models.apis.Settings
+import com.example.madplayground.features.settings.apis.Settings
 import com.example.madplayground.ui.screens.settings.api.SettingsScreen
 
 class SettingsScreenState : SettingsScreen.State {
@@ -17,6 +17,8 @@ class SettingsScreenState : SettingsScreen.State {
     override var shapeType: Settings.ShapeType by mutableStateOf(
         Settings.ShapeType.ROUNDED
     )
+
+    override var alwaysShowNavigationLabels: Boolean by mutableStateOf(false)
 
 }
 

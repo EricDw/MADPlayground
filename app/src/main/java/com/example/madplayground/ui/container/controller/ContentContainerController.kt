@@ -2,10 +2,7 @@ package com.example.madplayground.ui.container.controller
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraph.Companion.findStartDestination
@@ -14,11 +11,12 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navigation
+import com.example.madplayground.ui.config.CombinedWindowType
 import com.example.madplayground.ui.config.LocalWindowConfiguration
 import com.example.madplayground.ui.container.ContentContainer
 import com.example.madplayground.ui.container.api.ContentContainer
 import com.example.madplayground.ui.container.viewmodel.ContentContainerViewModel
-import com.example.madplayground.ui.logs.LocalLogger
+import com.example.madplayground.ui.logs.LocalLogs
 import com.example.madplayground.ui.screens.home.api.HomeScreen
 import com.example.madplayground.ui.screens.home.controller.HomeScreenController
 import com.example.madplayground.ui.screens.settings.api.SettingsScreen
@@ -31,19 +29,89 @@ fun ContentContainerController(
 
     val tag = "ContentContainerController"
 
-    val logger = LocalLogger.current
+    val logs = LocalLogs.current
 
     val windowConfiguration = LocalWindowConfiguration.current
 
     val contentContainerState by contentContainerViewModel.stateFlow.collectAsState()
 
+    var showTopAppBar: Boolean by remember {
+        mutableStateOf(true)
+    }
+
+    var showBottomNavBar: Boolean by remember {
+        mutableStateOf(true)
+    }
+
+    var showNavigationRail: Boolean by remember {
+        mutableStateOf(false)
+    }
+
     val sideEffect by contentContainerViewModel.sideEffect.collectAsState()
 
     val navHostController: NavHostController = rememberNavController()
 
+    ContentContainer(
+        modifier = Modifier.fillMaxSize(),
+        state = contentContainerState,
+        showTopAppBar = showTopAppBar,
+        showBottomNavBar = showBottomNavBar,
+        showNavigationRail = showNavigationRail,
+        eventHandler = contentContainerViewModel.eventHandler
+    ) { rootPadding ->
+
+        val screenModifier = Modifier
+            .fillMaxSize()
+            .padding(rootPadding)
+
+        NavHost(
+            navController = navHostController,
+            startDestination = ContentContainer.HOME_GRAPH_ROUTE,
+        ) {
+
+            navigation(
+                startDestination = HomeScreen.ROUTE,
+                route = ContentContainer.HOME_GRAPH_ROUTE
+            ) {
+
+                composable(
+                    route = HomeScreen.ROUTE
+                ) {
+
+                    HomeScreenController(
+                        modifier = screenModifier,
+                        contentContainerEventHandler = contentContainerViewModel.eventHandler
+                    )
+
+                }
+
+            }
+
+            navigation(
+                startDestination = SettingsScreen.ROUTE,
+                route = ContentContainer.SETTINGS_GRAPH_ROUTE
+            ) {
+
+                composable(
+                    route = SettingsScreen.ROUTE
+                ) {
+
+                    SettingsScreenController(
+                        modifier = screenModifier,
+                        contentContainerEventHandler = contentContainerViewModel.eventHandler,
+                    )
+
+                }
+
+            }
+
+        }
+
+    }
+
     LaunchedEffect(key1 = sideEffect) {
 
-        logger.logDebug(
+        logs.logDebug(
             tag = tag,
             message = "Handling: $sideEffect"
         )
@@ -102,59 +170,104 @@ fun ContentContainerController(
     }
 
     LaunchedEffect(key1 = windowConfiguration) {
-        contentContainerViewModel.eventHandler(
-            ContentContainer.Event.WindowConfigurationChanged(windowConfiguration)
-        )
-    }
-
-    ContentContainer(
-        state = contentContainerState,
-        eventHandler = contentContainerViewModel.eventHandler,
-        modifier = Modifier.fillMaxSize(),
-    ) { rootPadding ->
-
-        val screenModifier = Modifier
-            .fillMaxSize()
-            .padding(rootPadding)
-
-        NavHost(
-            navController = navHostController,
-            startDestination = ContentContainer.HOME_GRAPH_ROUTE,
+        when (
+            windowConfiguration.combinedWindowType
         ) {
 
-            navigation(
-                startDestination = HomeScreen.ROUTE,
-                route = ContentContainer.HOME_GRAPH_ROUTE
-            ) {
+            CombinedWindowType.COMPACT_WIDTH_COMPACT_HEIGHT   -> {
 
-                composable(
-                    route = HomeScreen.ROUTE
-                ) {
+                showTopAppBar = false
+                showBottomNavBar = false
+                showNavigationRail = false
 
-                    HomeScreenController(
-                        modifier = screenModifier,
-                        contentContainerEventHandler = contentContainerViewModel.eventHandler
-                    )
-
-                }
+                logs.logDebug(
+                    tag = tag,
+                    message = "$windowConfiguration not handled!"
+                )
 
             }
 
-            navigation(
-                startDestination = SettingsScreen.ROUTE,
-                route = ContentContainer.SETTINGS_GRAPH_ROUTE
-            ) {
+            CombinedWindowType.COMPACT_WIDTH_MEDIUM_HEIGHT    -> {
 
-                composable(
-                    route = SettingsScreen.ROUTE
-                ) {
+                showBottomNavBar = true
+                showNavigationRail = false
 
-                    SettingsScreenController(
-                        modifier = screenModifier,
-                        contentContainerEventHandler = contentContainerViewModel.eventHandler,
-                    )
+                logs.logDebug(
+                    tag = tag,
+                    message = "$windowConfiguration not handled!"
+                )
 
-                }
+            }
+
+            CombinedWindowType.COMPACT_WIDTH_EXPANDED_HEIGHT  -> {
+                // TODO: Configure State
+
+                logs.logDebug(
+                    tag = tag,
+                    message = "$windowConfiguration not handled!"
+                )
+
+            }
+
+            CombinedWindowType.MEDIUM_WIDTH_COMPACT_HEIGHT    -> {
+
+                showBottomNavBar = false
+                showNavigationRail = true
+
+                logs.logDebug(
+                    tag = tag,
+                    message = "$windowConfiguration not handled!"
+                )
+
+            }
+
+            CombinedWindowType.MEDIUM_WIDTH_MEDIUM_HEIGHT     -> {
+                // TODO: Configure State
+
+                logs.logDebug(
+                    tag = tag,
+                    message = "$windowConfiguration not handled!"
+                )
+
+            }
+
+            CombinedWindowType.MEDIUM_WIDTH_EXPANDED_HEIGHT   -> {
+                // TODO: Configure State
+
+                logs.logDebug(
+                    tag = tag,
+                    message = "$windowConfiguration not handled!"
+                )
+
+            }
+
+            CombinedWindowType.EXPANDED_WIDTH_COMPACT_HEIGHT  -> {
+                // TODO: Configure State
+
+                logs.logDebug(
+                    tag = tag,
+                    message = "$windowConfiguration not handled!"
+                )
+
+            }
+
+            CombinedWindowType.EXPANDED_WIDTH_MEDIUM_HEIGHT   -> {
+                // TODO: Configure State
+
+                logs.logDebug(
+                    tag = tag,
+                    message = "$windowConfiguration not handled!"
+                )
+
+            }
+
+            CombinedWindowType.EXPANDED_WIDTH_EXPANDED_HEIGHT -> {
+                // TODO: Configure State
+
+                logs.logDebug(
+                    tag = tag,
+                    message = "$windowConfiguration not handled!"
+                )
 
             }
 

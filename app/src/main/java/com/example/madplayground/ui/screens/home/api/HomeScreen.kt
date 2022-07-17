@@ -1,6 +1,6 @@
 package com.example.madplayground.ui.screens.home.api
 
-import com.example.madplayground.ui.screens.posts.api.Post
+import com.example.madplayground.features.quotes.apis.Quote
 import kotlinx.coroutines.flow.StateFlow
 
 interface HomeScreen {
@@ -34,7 +34,7 @@ interface HomeScreen {
 
     interface State {
 
-        val posts: List<Post.State>
+        val quotes: List<Quote.State>
 
     }
 

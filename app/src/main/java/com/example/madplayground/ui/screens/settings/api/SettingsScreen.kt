@@ -1,7 +1,7 @@
 package com.example.madplayground.ui.screens.settings.api
 
-import com.example.madplayground.messages.api.Message
-import com.example.madplayground.models.apis.Settings
+import com.example.madplayground.features.messages.apis.Message
+import com.example.madplayground.features.settings.apis.Settings
 import kotlinx.coroutines.flow.StateFlow
 
 interface SettingsScreen {
@@ -20,6 +20,8 @@ interface SettingsScreen {
 
         object ShapeTypeClicked : Event
 
+        object LabelVisibilityClicked : Event
+
     }
 
     interface State {
@@ -29,6 +31,8 @@ interface SettingsScreen {
         val iconType: Settings.IconographyType
 
         val shapeType: Settings.ShapeType
+
+        val alwaysShowNavigationLabels: Boolean
 
     }
 

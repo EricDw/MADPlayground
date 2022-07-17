@@ -1,8 +1,7 @@
 package com.example.madplayground.ui.container.api
 
-import com.example.madplayground.messages.api.Message
-import com.example.madplayground.models.apis.Settings
-import com.example.madplayground.ui.config.WindowConfiguration
+import com.example.madplayground.features.messages.apis.Message
+import com.example.madplayground.features.settings.apis.Settings
 import kotlinx.coroutines.flow.StateFlow
 
 interface ContentContainer {
@@ -29,10 +28,6 @@ interface ContentContainer {
         object HomeTabClicked : Event
 
         object DrawerClosed : Event
-
-        class WindowConfigurationChanged(
-            val newWindowConfiguration: WindowConfiguration,
-        ) : Event
 
     }
 
@@ -64,15 +59,7 @@ interface ContentContainer {
 
         val shapeType: Settings.ShapeType
 
-        val triggerDrawerToOpen: Boolean
-
-        val showNavigationIcon: Boolean
-
-        val showTopAppBar: Boolean
-
-        val showBottomNavBar: Boolean
-
-        val showNavigationRail: Boolean
+        val alwaysShowNavigationLabels: Boolean
 
     }
 

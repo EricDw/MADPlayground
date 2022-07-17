@@ -2,7 +2,7 @@ package com.example.madplayground.ui.screens.home
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -12,8 +12,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.madplayground.ui.screens.home.api.HomeScreen
-import com.example.madplayground.ui.screens.posts.PostCard
-import com.example.madplayground.ui.screens.posts.PostState
+import com.example.madplayground.ui.screens.posts.QuoteCard
+import com.example.madplayground.ui.screens.posts.QuoteState
+import com.example.madplayground.features.quotes.apis.Quote
 
 @Composable
 fun HomeScreen(
@@ -22,6 +23,25 @@ fun HomeScreen(
     eventHandler: HomeScreen.Event.Handler = HomeScreen.Event.Handler.EMPTY,
 ) {
 
+    QuoteCardList(
+        modifier, state.quotes
+    )
+
+    LaunchedEffect(key1 = eventHandler) {
+
+        eventHandler.handle(
+            HomeScreen.Event.HomeScreenStarted
+        )
+
+    }
+
+}
+
+@Composable
+private fun QuoteCardList(
+    modifier: Modifier,
+    quotes: List<Quote.State>,
+) {
     LazyColumn(
         modifier = modifier.fillMaxSize(),
         contentPadding = PaddingValues(
@@ -31,7 +51,7 @@ fun HomeScreen(
         )
     ) {
 
-        if (state.posts.isEmpty()) {
+        if (quotes.isEmpty()) {
             item {
                 Box(
                     modifier = Modifier.fillMaxSize(),
@@ -45,30 +65,27 @@ fun HomeScreen(
             }
         }
 
-        items(
-            items = state.posts,
-            key = { it.id }
-        ) { thePost ->
+        itemsIndexed(
+            items = quotes,
+            key = { _, quote -> quote.id },
+        ) { index, thePost ->
 
-            PostCard(
+            QuoteCard(
                 state = thePost,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(bottom = 8.dp)
+                    .padding(
+                        bottom = if (index == quotes.lastIndex) {
+                            0.dp
+                        } else {
+                            8.dp
+                        }
+                    )
             )
 
         }
 
     }
-
-    LaunchedEffect(key1 = eventHandler) {
-
-        eventHandler.handle(
-            HomeScreen.Event.HomeScreenStarted
-        )
-
-    }
-
 }
 
 @Preview(
@@ -81,9 +98,9 @@ fun HomeScreenPreview() {
     val state = rememberHomeScreenState {
 
         (0..5).map {
-            PostState(id = "$it", title = "Post $it")
+            QuoteState(id = "$it", title = "Post $it")
         }.also { thePosts ->
-            posts.addAll(thePosts)
+            quotes.addAll(thePosts)
         }
 
     }

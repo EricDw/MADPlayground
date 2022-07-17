@@ -1,0 +1,18 @@
+package com.example.madplayground.ui.screens.posts
+
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
+import com.example.madplayground.features.quotes.apis.Quote
+import java.util.*
+
+data class QuoteState(
+    override var id: String = UUID.randomUUID().toString(),
+    override var title: String = "",
+) : Quote.State
+
+@Composable
+fun rememberQuoteState(
+    initializer: QuoteState.() -> Unit = {},
+): QuoteState = remember {
+    QuoteState().apply(initializer)
+}
