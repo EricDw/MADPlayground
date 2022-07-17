@@ -32,7 +32,7 @@ interface SettingsScreen {
 
         val shapeType: Settings.ShapeType
 
-        val alwaysShowNavigationLabels: Boolean
+        val navigationLabelVisibility: Settings.NavigationLabelVisibility
 
     }
 

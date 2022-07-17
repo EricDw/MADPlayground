@@ -51,10 +51,10 @@ class SettingsScreenViewModel @Inject constructor(
 
         }.launchIn(viewModelScope)
 
-    private var labelSynchronizer: Job? = app.settings.alwaysShowNavigationLabels
-        .onEach { showLabels ->
+    private var labelSynchronizer: Job? = app.settings.navigationLabelVisibility
+        .onEach { visibility ->
 
-            settingsScreenState.alwaysShowNavigationLabels = showLabels
+            settingsScreenState.navigationLabelVisibility = visibility
 
         }.launchIn(viewModelScope)
 
@@ -146,9 +146,28 @@ class SettingsScreenViewModel @Inject constructor(
             }
 
             SettingsScreen.Event.LabelVisibilityClicked -> {
+
+                val newVisibility = when (
+                    settingsScreenState.navigationLabelVisibility
+                ) {
+
+                    Settings.NavigationLabelVisibility.NEVER         -> {
+                        Settings.NavigationLabelVisibility.ALWAYS
+                    }
+
+                    Settings.NavigationLabelVisibility.ALWAYS        -> {
+                        Settings.NavigationLabelVisibility.WHEN_SELECTED
+                    }
+
+                    Settings.NavigationLabelVisibility.WHEN_SELECTED -> {
+                        Settings.NavigationLabelVisibility.NEVER
+                    }
+
+                }
+
                 viewModelScope.launch {
-                    app.settings.setAlwaysShowNavigationLabels(
-                        !settingsScreenState.alwaysShowNavigationLabels
+                    app.settings.setNavigationLabelVisibility(
+                        newVisibility = newVisibility
                     )
                 }
             }

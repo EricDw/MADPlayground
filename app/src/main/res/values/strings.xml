@@ -26,7 +26,8 @@
     <string name="label_cut">Cut</string>
     <string name="label_two_tone">Two Tone</string>
     <string name="label_always_visible">Always Visible</string>
-    <string name="label_only_selected">Only When Selected</string>
+    <string name="label_when_selected">When Selected</string>
+    <string name="label_never">Never</string>
 
     <!-- endregion Labels -->
 

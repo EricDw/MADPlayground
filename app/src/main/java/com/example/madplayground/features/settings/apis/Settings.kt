@@ -10,7 +10,7 @@ interface Settings {
 
     val shapeType: StateFlow<ShapeType>
 
-    val alwaysShowNavigationLabels: StateFlow<Boolean>
+    val navigationLabelVisibility: StateFlow<NavigationLabelVisibility>
 
     suspend fun setThemeType(
         newThemeType: ThemeType,
@@ -24,8 +24,8 @@ interface Settings {
         newShapeType: ShapeType,
     )
 
-    suspend fun setAlwaysShowNavigationLabels(
-        showLabels: Boolean,
+    suspend fun setNavigationLabelVisibility(
+        newVisibility: NavigationLabelVisibility,
     )
 
     enum class ThemeType {
@@ -38,6 +38,10 @@ interface Settings {
 
     enum class IconographyType {
         DEFAULT, SHARP, OUTLINED, ROUNDED, TWO_TONE;
+    }
+
+    enum class NavigationLabelVisibility {
+        NEVER, ALWAYS, WHEN_SELECTED;
     }
 
 }

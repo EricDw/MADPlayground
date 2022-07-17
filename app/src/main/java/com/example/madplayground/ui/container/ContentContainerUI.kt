@@ -16,6 +16,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.madplayground.R
 import com.example.madplayground.features.messages.apis.Message
+import com.example.madplayground.features.settings.apis.Settings
 import com.example.madplayground.ui.container.api.ContentContainer
 import com.example.madplayground.ui.theme.AppTheme
 import com.example.madplayground.ui.theme.LocalIconography
@@ -140,12 +141,16 @@ fun ContentContainer(
                                     contentDescription = "Home Tab"
                                 )
                             },
-                            label = {
-                                Text(
-                                    text = stringResource(id = R.string.title_home)
-                                )
+                            label = if (state.navigationLabelVisibility == Settings.NavigationLabelVisibility.NEVER) {
+                                null
+                            } else {
+                                {
+                                    Text(
+                                        text = stringResource(id = R.string.title_home)
+                                    )
+                                }
                             },
-                            alwaysShowLabel = state.alwaysShowNavigationLabels
+                            alwaysShowLabel = state.navigationLabelVisibility == Settings.NavigationLabelVisibility.ALWAYS
                         )
 
                         BottomNavigationItem(
@@ -161,12 +166,16 @@ fun ContentContainer(
                                     contentDescription = "Settings Tab"
                                 )
                             },
-                            label = {
-                                Text(
-                                    text = stringResource(id = R.string.title_settings)
-                                )
+                            label = if (state.navigationLabelVisibility == Settings.NavigationLabelVisibility.NEVER) {
+                                null
+                            } else {
+                                {
+                                    Text(
+                                        text = stringResource(id = R.string.title_settings)
+                                    )
+                                }
                             },
-                            alwaysShowLabel = state.alwaysShowNavigationLabels
+                            alwaysShowLabel = state.navigationLabelVisibility == Settings.NavigationLabelVisibility.ALWAYS
                         )
                     }
 
@@ -250,12 +259,16 @@ fun ContentContainer(
                                         contentDescription = "Home Tab"
                                     )
                                 },
-                                label = {
-                                    Text(
-                                        text = stringResource(id = R.string.title_home)
-                                    )
+                                label = if (state.navigationLabelVisibility == Settings.NavigationLabelVisibility.NEVER) {
+                                    null
+                                } else {
+                                    {
+                                        Text(
+                                            text = stringResource(id = R.string.title_home)
+                                        )
+                                    }
                                 },
-                                alwaysShowLabel = state.alwaysShowNavigationLabels
+                                alwaysShowLabel = state.navigationLabelVisibility == Settings.NavigationLabelVisibility.ALWAYS
                             )
 
                             NavigationRailItem(
@@ -271,12 +284,16 @@ fun ContentContainer(
                                         contentDescription = "Settings Tab"
                                     )
                                 },
-                                label = {
-                                    Text(
-                                        text = stringResource(id = R.string.title_settings)
-                                    )
+                                label = if (state.navigationLabelVisibility == Settings.NavigationLabelVisibility.NEVER) {
+                                    null
+                                } else {
+                                    {
+                                        Text(
+                                            text = stringResource(id = R.string.title_settings)
+                                        )
+                                    }
                                 },
-                                alwaysShowLabel = state.alwaysShowNavigationLabels
+                                alwaysShowLabel = state.navigationLabelVisibility == Settings.NavigationLabelVisibility.ALWAYS
                             )
 
                         }

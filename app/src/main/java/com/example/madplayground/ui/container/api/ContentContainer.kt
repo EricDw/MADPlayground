@@ -59,7 +59,7 @@ interface ContentContainer {
 
         val shapeType: Settings.ShapeType
 
-        val alwaysShowNavigationLabels: Boolean
+        val navigationLabelVisibility: Settings.NavigationLabelVisibility
 
     }
 

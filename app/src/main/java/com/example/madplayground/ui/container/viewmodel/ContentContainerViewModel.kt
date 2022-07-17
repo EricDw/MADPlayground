@@ -55,10 +55,10 @@ class ContentContainerViewModel @Inject constructor(
 
         }.launchIn(viewModelScope)
 
-    private var labelSynchronizer: Job? = app.settings.alwaysShowNavigationLabels
-        .onEach { alwaysShowLabels ->
+    private var labelSynchronizer: Job? = app.settings.navigationLabelVisibility
+        .onEach { visibility ->
 
-            state.alwaysShowNavigationLabels = alwaysShowLabels
+            state.navigationLabelVisibility = visibility
 
         }.launchIn(viewModelScope)
 

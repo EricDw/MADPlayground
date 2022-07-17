@@ -18,7 +18,9 @@ class SettingsScreenState : SettingsScreen.State {
         Settings.ShapeType.ROUNDED
     )
 
-    override var alwaysShowNavigationLabels: Boolean by mutableStateOf(false)
+    override var navigationLabelVisibility: Settings.NavigationLabelVisibility by mutableStateOf(
+        Settings.NavigationLabelVisibility.WHEN_SELECTED
+    )
 
 }
 

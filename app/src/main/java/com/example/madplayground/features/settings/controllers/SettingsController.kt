@@ -2,7 +2,6 @@ package com.example.madplayground.features.settings.controllers
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import com.example.madplayground.features.settings.apis.Settings
@@ -19,7 +18,7 @@ class SettingsController(
     private val themeKey = stringPreferencesKey("theme_type")
     private val iconographyKey = stringPreferencesKey("iconography_type")
     private val shapeKey = stringPreferencesKey("shape_type")
-    private val showNavigationLabelKey = booleanPreferencesKey("show_navigation_labels")
+    private val navigationLabelVisibilityKey = stringPreferencesKey("navigation_visibility")
 
     private val _themeType = MutableStateFlow(
         Settings.ThemeType.SYSTEM
@@ -33,8 +32,8 @@ class SettingsController(
         Settings.ShapeType.ROUNDED
     )
 
-    private val _alwaysShowNavigationLabels = MutableStateFlow(
-        false
+    private val _navigationLabelVisibility = MutableStateFlow(
+        Settings.NavigationLabelVisibility.WHEN_SELECTED
     )
 
     override val themeType: StateFlow<Settings.ThemeType> =
@@ -46,8 +45,8 @@ class SettingsController(
     override val shapeType: StateFlow<Settings.ShapeType> =
         _shapeType.asStateFlow()
 
-    override val alwaysShowNavigationLabels: StateFlow<Boolean> =
-        _alwaysShowNavigationLabels.asStateFlow()
+    override val navigationLabelVisibility: StateFlow<Settings.NavigationLabelVisibility> =
+        _navigationLabelVisibility.asStateFlow()
 
 
     init {
@@ -71,8 +70,10 @@ class SettingsController(
                 } ?: Settings.ShapeType.ROUNDED
             }
 
-            data.mapTo(_alwaysShowNavigationLabels, scope) {
-                it[showNavigationLabelKey] ?: false
+            data.mapTo(_navigationLabelVisibility, scope) {
+                it[navigationLabelVisibilityKey]?.let { name ->
+                    Settings.NavigationLabelVisibility.valueOf(name)
+                } ?: Settings.NavigationLabelVisibility.WHEN_SELECTED
             }
         }
 
@@ -103,11 +104,11 @@ class SettingsController(
         }
     }
 
-    override suspend fun setAlwaysShowNavigationLabels(
-        showLabels: Boolean
+    override suspend fun setNavigationLabelVisibility(
+        newVisibility: Settings.NavigationLabelVisibility,
     ) {
         dataStore.edit { preferences ->
-            preferences[showNavigationLabelKey] = showLabels
+            preferences[navigationLabelVisibilityKey] = newVisibility.name
         }
     }
 }

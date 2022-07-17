@@ -236,14 +236,18 @@ fun SettingsScreen(
                         )
                 ) {
 
-                    val typeId = when (state.alwaysShowNavigationLabels) {
+                    val typeId = when (state.navigationLabelVisibility) {
 
-                        true  -> {
+                        Settings.NavigationLabelVisibility.ALWAYS  -> {
                             R.string.label_always_visible
                         }
 
-                        false -> {
-                            R.string.label_only_selected
+                        Settings.NavigationLabelVisibility.WHEN_SELECTED -> {
+                            R.string.label_when_selected
+                        }
+
+                        Settings.NavigationLabelVisibility.NEVER -> {
+                            R.string.label_never
                         }
 
                     }
