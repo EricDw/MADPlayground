@@ -11,10 +11,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.madplayground.ui.screens.home.api.HomeScreen
-import com.example.madplayground.ui.screens.posts.QuoteCard
-import com.example.madplayground.ui.screens.posts.QuoteState
 import com.example.madplayground.features.quotes.apis.Quote
+import com.example.madplayground.ui.components.QuoteCard
+import com.example.madplayground.ui.components.QuoteState
+import com.example.madplayground.ui.screens.home.api.HomeScreen
 
 @Composable
 fun HomeScreen(
@@ -23,9 +23,29 @@ fun HomeScreen(
     eventHandler: HomeScreen.Event.Handler = HomeScreen.Event.Handler.EMPTY,
 ) {
 
-    QuoteCardList(
-        modifier, state.quotes
-    )
+    val quoteOfTheDay = state.quoteOfTheDay
+
+    Box(
+        modifier = modifier,
+        contentAlignment = Alignment.Center
+    ) {
+
+        if (quoteOfTheDay == null) {
+
+            Text(
+                text = "Time to add a quote!"
+            )
+
+        } else {
+
+            QuoteCard(
+                modifier = Modifier.wrapContentSize(),
+                state = quoteOfTheDay
+            )
+
+        }
+
+    }
 
     LaunchedEffect(key1 = eventHandler) {
 
@@ -35,57 +55,6 @@ fun HomeScreen(
 
     }
 
-}
-
-@Composable
-private fun QuoteCardList(
-    modifier: Modifier,
-    quotes: List<Quote.State>,
-) {
-    LazyColumn(
-        modifier = modifier.fillMaxSize(),
-        contentPadding = PaddingValues(
-            start = 8.dp,
-            top = 8.dp,
-            end = 8.dp
-        )
-    ) {
-
-        if (quotes.isEmpty()) {
-            item {
-                Box(
-                    modifier = Modifier.fillMaxSize(),
-                    contentAlignment = Alignment.Center
-                ) {
-
-                    Text(
-                        text = "Home Screen",
-                    )
-                }
-            }
-        }
-
-        itemsIndexed(
-            items = quotes,
-            key = { _, quote -> quote.id },
-        ) { index, thePost ->
-
-            QuoteCard(
-                state = thePost,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(
-                        bottom = if (index == quotes.lastIndex) {
-                            0.dp
-                        } else {
-                            8.dp
-                        }
-                    )
-            )
-
-        }
-
-    }
 }
 
 @Preview(
@@ -98,9 +67,9 @@ fun HomeScreenPreview() {
     val state = rememberHomeScreenState {
 
         (0..5).map {
-            QuoteState(id = "$it", title = "Post $it")
-        }.also { thePosts ->
-            quotes.addAll(thePosts)
+            QuoteState(id = "$it", content = "Post $it")
+        }.also { theQuotes ->
+            quotes.addAll(theQuotes)
         }
 
     }

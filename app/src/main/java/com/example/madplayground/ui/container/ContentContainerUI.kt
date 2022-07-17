@@ -44,7 +44,8 @@ fun ContentContainer(
         }
     }
 
-    val isTopNavigationIconVisible = false
+    val isTopNavigationIconVisible =
+        !showNavigationRail && state.screenContext != ContentContainer.ScreenContext.HOME
 
     val drawerState = rememberDrawerState(
         initialValue = DrawerValue.Closed
@@ -53,9 +54,6 @@ fun ContentContainer(
         when (drawerValue) {
 
             DrawerValue.Closed -> {
-                eventHandler(
-                    ContentContainer.Event.DrawerClosed
-                )
                 true
             }
 
@@ -181,7 +179,13 @@ fun ContentContainer(
                     visible = visible,
                 ) {
 
-                    FloatingActionButton(onClick = { /*TODO*/ }) {
+                    FloatingActionButton(
+                        onClick = {
+                            eventHandler(
+                                ContentContainer.Event.FABClicked
+                            )
+                        }
+                    ) {
                         Icon(
                             imageVector = LocalIconography.current.editIcon,
                             contentDescription = null
@@ -202,7 +206,13 @@ fun ContentContainer(
                         header = when (state.screenContext) {
                             ContentContainer.ScreenContext.HOME     -> {
                                 {
-                                    FloatingActionButton(onClick = { /*TODO*/ }) {
+                                    FloatingActionButton(
+                                        onClick = {
+                                            eventHandler(
+                                                ContentContainer.Event.FABClicked
+                                            )
+                                        }
+                                    ) {
                                         Icon(
                                             imageVector = LocalIconography.current.editIcon,
                                             contentDescription = null

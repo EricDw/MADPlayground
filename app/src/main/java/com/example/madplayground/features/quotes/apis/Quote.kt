@@ -4,13 +4,13 @@ interface Quote {
 
     val id: String
 
-    val title: String
+    val content: String
 
     interface State {
 
         val id: String
 
-        val title: String
+        val content: String
 
     }
 

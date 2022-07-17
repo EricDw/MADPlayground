@@ -1,4 +1,4 @@
-package com.example.madplayground.ui.screens.posts
+package com.example.madplayground.ui.components
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -7,7 +7,7 @@ import java.util.*
 
 data class QuoteState(
     override var id: String = UUID.randomUUID().toString(),
-    override var title: String = "",
+    override var content: String = "",
 ) : Quote.State
 
 @Composable

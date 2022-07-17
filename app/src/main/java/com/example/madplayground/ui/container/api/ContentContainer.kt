@@ -27,7 +27,7 @@ interface ContentContainer {
 
         object HomeTabClicked : Event
 
-        object DrawerClosed : Event
+        object FABClicked : Event
 
     }
 

@@ -4,22 +4,22 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.madplayground.features.app.apis.App
 import com.example.madplayground.features.messages.apis.Message
+import com.example.madplayground.features.quotes.controllers.QuoteController
 import com.example.madplayground.ui.container.ContentContainerState
 import com.example.madplayground.ui.container.api.ContentContainer
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlin.random.Random
 
 @HiltViewModel
 class ContentContainerViewModel @Inject constructor(
     private val app: App,
-) : ViewModel(), ContentContainer.ViewModel {
+) : ViewModel(), ContentContainer.ViewModel, App by app {
 
     private val tag = this::class.simpleName
-
-    private val logs
-        get() = app.logs
 
     private var state = ContentContainerState()
 
@@ -129,15 +129,27 @@ class ContentContainerViewModel @Inject constructor(
                     state.screenContext = ContentContainer.ScreenContext.SETTINGS
                 }
 
-                ContentContainer.Event.DrawerClosed            -> {
+                ContentContainer.Event.FABClicked              -> {
 
-                    logs.logDebug(
-                        tag = tag,
-                        message = "Drawer closed"
-                    )
+                    viewModelScope.launch {
+
+                        quotes.addNewQuote(
+                            QuoteController(
+                                content = "Quote: ${Random.nextInt()}"
+                            )
+                        )
+
+                        logs.logDebug(
+                            tag = tag,
+                            message = "Event: $event Handled"
+                        )
+
+                    }
+
                 }
 
             }
+
         }
 
     override fun onCleared() {

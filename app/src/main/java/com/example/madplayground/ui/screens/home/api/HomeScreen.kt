@@ -1,6 +1,7 @@
 package com.example.madplayground.ui.screens.home.api
 
 import com.example.madplayground.features.quotes.apis.Quote
+import com.example.madplayground.ui.components.QuoteState
 import kotlinx.coroutines.flow.StateFlow
 
 interface HomeScreen {
@@ -35,6 +36,8 @@ interface HomeScreen {
     interface State {
 
         val quotes: List<Quote.State>
+
+        val quoteOfTheDay: Quote.State?
 
     }
 
