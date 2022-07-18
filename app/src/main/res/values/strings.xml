@@ -29,4 +29,10 @@
 
     <!-- endregion Labels -->
 
+    <!-- region Messages -->
+
+    <string name="message_add_quote">"Time to add a quote!"</string>
+
+    <!-- endregion Messages -->
+
 </resources>

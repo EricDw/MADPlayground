@@ -4,7 +4,6 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -25,6 +24,7 @@ fun ContentContainer(
     showTopAppBar: Boolean = true,
     showBottomNavBar: Boolean = true,
     showNavigationRail: Boolean = false,
+    showScaffoldFAB: Boolean = false,
     eventHandler: Message.Handler<ContentContainer.Event> = Message.Handler { /* no-op */ },
     content: @Composable (scaffoldPadding: PaddingValues) -> Unit,
 ) {
@@ -96,10 +96,10 @@ fun ContentContainer(
             topBar = {
                 if (showTopAppBar)
                     TopBar(
-                        isNavigationButtonEnabled,
-                        isTopNavigationIconVisible,
-                        eventHandler,
-                        state
+                        isNavigationButtonEnabled = isNavigationButtonEnabled,
+                        showNavigationIcon = isTopNavigationIconVisible,
+                        eventHandler = eventHandler,
+                        state = state
                     )
             },
             bottomBar = {
@@ -163,9 +163,8 @@ fun ContentContainer(
 
             },
             floatingActionButton = {
-                AnimatedVisibility(
-                    visible = !showNavigationRail && isFABVisible,
-                ) {
+
+                if (showScaffoldFAB && state.screenContext != ContentContainer.ScreenContext.SETTINGS) {
 
                     FloatingActionButton(
                         onClick = {

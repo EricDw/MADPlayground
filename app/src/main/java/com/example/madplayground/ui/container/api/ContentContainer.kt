@@ -50,11 +50,11 @@ interface ContentContainer {
 
         sealed interface Action : Message {
 
-            class SwitchContexts(
+            data class SwitchContexts(
                 val newContext: ScreenContext
             ): Action
 
-            class AddNewQuote(
+            data class AddNewQuote(
                 val content: String = "Quote: ${Random.nextInt()}"
             ): Action
 

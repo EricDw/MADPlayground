@@ -31,15 +31,6 @@ class HomeScreenViewModel @Inject constructor(
         }.launchIn(viewModelScope)
     }
 
-    override fun handle(event: HomeScreen.Event) {
-
-        when (event) {
-
-            else -> {}
-        }
-
-    }
-
     private fun Quote.toState(): Quote.State {
         return QuoteState(
             id = id,

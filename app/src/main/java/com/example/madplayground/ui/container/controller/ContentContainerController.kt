@@ -48,6 +48,10 @@ fun ContentContainerController(
         mutableStateOf(false)
     }
 
+    var showScaffoldFAB: Boolean by remember {
+        mutableStateOf(false)
+    }
+
     val navHostController: NavHostController = rememberNavController()
 
     val eventHandler = Message.Handler<ContentContainer.Event> { event ->
@@ -104,6 +108,7 @@ fun ContentContainerController(
         showTopAppBar = showTopAppBar,
         showBottomNavBar = showBottomNavBar,
         showNavigationRail = showNavigationRail,
+        showScaffoldFAB = showScaffoldFAB,
         eventHandler = eventHandler
     ) { rootPadding ->
 
@@ -179,6 +184,7 @@ fun ContentContainerController(
                 showTopAppBar = false
                 showBottomNavBar = false
                 showNavigationRail = false
+                showScaffoldFAB = true
 
                 logs.logDebug(
                     tag = tag,
@@ -191,6 +197,7 @@ fun ContentContainerController(
 
                 showBottomNavBar = true
                 showNavigationRail = false
+                showScaffoldFAB = true
 
                 logs.logDebug(
                     tag = tag,
@@ -213,6 +220,7 @@ fun ContentContainerController(
 
                 showBottomNavBar = false
                 showNavigationRail = true
+                showScaffoldFAB = false
 
                 logs.logDebug(
                     tag = tag,

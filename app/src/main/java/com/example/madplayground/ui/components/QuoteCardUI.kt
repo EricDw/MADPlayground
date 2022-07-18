@@ -50,6 +50,8 @@ fun PostCardPreview() {
     }
 
     QuoteCard(
-        state = state
+        state = state,
+        elevation = 4.dp,
+        modifier = Modifier.wrapContentSize()
     )
 }

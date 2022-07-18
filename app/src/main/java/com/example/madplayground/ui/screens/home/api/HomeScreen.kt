@@ -1,7 +1,7 @@
 package com.example.madplayground.ui.screens.home.api
 
+import com.example.madplayground.features.messages.apis.Message
 import com.example.madplayground.features.quotes.apis.Quote
-import com.example.madplayground.ui.components.QuoteState
 import kotlinx.coroutines.flow.StateFlow
 
 interface HomeScreen {
@@ -14,21 +14,6 @@ interface HomeScreen {
 
     sealed interface Event {
 
-        fun interface Handler {
-
-            /**
-             * Event handler that does nothing.
-             */
-            object EMPTY : Handler {
-                override fun handle(event: Event) {
-                    /* no-op */
-                }
-            }
-
-            fun handle(event: Event)
-
-        }
-
     }
 
     interface State {
@@ -39,9 +24,13 @@ interface HomeScreen {
 
     }
 
-    interface ViewModel : Event.Handler {
+    interface ViewModel {
 
         val state: StateFlow<State>
+
+        sealed interface Action : Message {
+
+        }
 
     }
 

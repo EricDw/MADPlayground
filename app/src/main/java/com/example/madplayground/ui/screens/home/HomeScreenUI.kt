@@ -1,12 +1,17 @@
 package com.example.madplayground.ui.screens.home
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.madplayground.R
 import com.example.madplayground.ui.components.QuoteCard
 import com.example.madplayground.ui.components.QuoteState
 import com.example.madplayground.ui.screens.home.api.HomeScreen
@@ -27,7 +32,7 @@ fun HomeScreen(
         if (quoteOfTheDay == null) {
 
             Text(
-                text = "Time to add a quote!"
+                text = stringResource(id = R.string.message_add_quote)
             )
 
         } else {

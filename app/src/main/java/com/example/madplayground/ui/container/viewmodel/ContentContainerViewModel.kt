@@ -10,7 +10,6 @@ import com.example.madplayground.ui.container.api.ContentContainer
 import com.example.madplayground.ui.container.api.ContentContainer.State
 import com.example.madplayground.ui.container.api.ContentContainer.ViewModel.Action
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -30,35 +29,45 @@ class ContentContainerViewModel @Inject constructor(
     override val stateFlow: StateFlow<State> =
         _stateFlow.asStateFlow()
 
-    private var themeSynchronizer: Job? = app.settings.themeType
-        .onEach { themeType ->
+    init {
 
-            state.themeType = themeType
+        app.settings.themeType
+            .onEach { themeType ->
 
-        }.launchIn(viewModelScope)
+                state.themeType = themeType
 
-    private var iconSynchronizer: Job? = app.settings.iconographyType
-        .onEach { iconographyType ->
+            }.launchIn(viewModelScope)
 
-            state.iconographyType = iconographyType
+        app.settings.iconographyType
+            .onEach { iconographyType ->
 
-        }.launchIn(viewModelScope)
+                state.iconographyType = iconographyType
 
-    private var shapeSynchronizer: Job? = app.settings.shapeType
-        .onEach { shapeType ->
+            }.launchIn(viewModelScope)
 
-            state.shapeType = shapeType
+        app.settings.shapeType
+            .onEach { shapeType ->
 
-        }.launchIn(viewModelScope)
+                state.shapeType = shapeType
 
-    private var labelSynchronizer: Job? = app.settings.navigationLabelVisibility
-        .onEach { visibility ->
+            }.launchIn(viewModelScope)
 
-            state.navigationLabelVisibility = visibility
+        app.settings.navigationLabelVisibility
+            .onEach { visibility ->
 
-        }.launchIn(viewModelScope)
+                state.navigationLabelVisibility = visibility
+
+            }.launchIn(viewModelScope)
+
+    }
 
     override val actionHandler = Message.Handler<Action> { action ->
+
+        logs.logDebug(
+            tag = tag,
+            message = "Handling: $action"
+        )
+
         when (action) {
 
             is Action.SwitchContexts -> {
@@ -74,22 +83,6 @@ class ContentContainerViewModel @Inject constructor(
             }
 
         }
-
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        themeSynchronizer?.cancel()
-        themeSynchronizer = null
-
-        iconSynchronizer?.cancel()
-        iconSynchronizer = null
-
-        shapeSynchronizer?.cancel()
-        shapeSynchronizer = null
-
-        labelSynchronizer?.cancel()
-        labelSynchronizer = null
 
     }
 
