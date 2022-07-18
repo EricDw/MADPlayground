@@ -24,13 +24,13 @@ interface SettingsScreen {
 
     interface State {
 
-        val themeType: Settings.ThemeType
+        val themeType: StateFlow<Settings.ThemeType>
 
-        val iconType: Settings.IconographyType
+        val iconType: StateFlow<Settings.IconographyType>
 
-        val shapeType: Settings.ShapeType
+        val shapeType: StateFlow<Settings.ShapeType>
 
-        val navigationLabelVisibility: Settings.NavigationLabelVisibility
+        val navigationLabelVisibility: StateFlow<Settings.NavigationLabelVisibility>
 
     }
 

@@ -8,12 +8,12 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.madplayground.features.messages.apis.Message
 import com.example.madplayground.ui.screens.settings.SettingsScreen
 import com.example.madplayground.ui.screens.settings.api.SettingsScreen
-import com.example.madplayground.ui.screens.settings.viewmodel.SettingsScreenViewModel
+import com.example.madplayground.ui.screens.settings.viewmodel.AndroidSettingsScreenViewModel
 
 @Composable
 fun SettingsScreenController(
     modifier: Modifier = Modifier,
-    settingsScreenViewModel: SettingsScreen.ViewModel = hiltViewModel<SettingsScreenViewModel>(),
+    settingsScreenViewModel: SettingsScreen.ViewModel = hiltViewModel<AndroidSettingsScreenViewModel>(),
 ) {
 
     val state by settingsScreenViewModel.stateFlow.collectAsState()

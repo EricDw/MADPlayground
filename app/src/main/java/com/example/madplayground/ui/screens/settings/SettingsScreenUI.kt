@@ -7,6 +7,8 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -22,6 +24,11 @@ fun SettingsScreen(
     state: SettingsScreen.State = rememberSettingsScreenState(),
     eventHandler: Message.Handler<SettingsScreen.Event>? = null,
 ) {
+
+    val themeType by state.themeType.collectAsState()
+    val iconType by state.iconType.collectAsState()
+    val shapeType by state.shapeType.collectAsState()
+    val navigationLabelVisibility by state.navigationLabelVisibility.collectAsState()
 
     LazyColumn(
         modifier = modifier,
@@ -53,7 +60,7 @@ fun SettingsScreen(
         // Theme
         item {
 
-            val labelId = when (state.themeType) {
+            val labelId = when (themeType) {
 
                 Settings.ThemeType.LIGHT  -> {
                     R.string.label_light
@@ -86,7 +93,7 @@ fun SettingsScreen(
         // Icons
         item {
 
-            val labelId = when (state.iconType) {
+            val labelId = when (iconType) {
 
                 Settings.IconographyType.DEFAULT  -> {
                     R.string.label_default
@@ -127,7 +134,7 @@ fun SettingsScreen(
         // Shapes
         item {
 
-            val labelId = when (state.shapeType) {
+            val labelId = when (shapeType) {
 
                 Settings.ShapeType.ROUNDED -> {
                     R.string.label_rounded
@@ -155,7 +162,7 @@ fun SettingsScreen(
         // Navigation Labels
         item {
 
-            val labelId = when (state.navigationLabelVisibility) {
+            val labelId = when (navigationLabelVisibility) {
 
                 Settings.NavigationLabelVisibility.ALWAYS  -> {
                     R.string.label_always_visible

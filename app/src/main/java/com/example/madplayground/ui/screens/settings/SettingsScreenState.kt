@@ -3,22 +3,23 @@ package com.example.madplayground.ui.screens.settings
 import androidx.compose.runtime.*
 import com.example.madplayground.features.settings.apis.Settings
 import com.example.madplayground.ui.screens.settings.api.SettingsScreen
+import kotlinx.coroutines.flow.MutableStateFlow
 
 class SettingsScreenState : SettingsScreen.State {
 
-    override var themeType: Settings.ThemeType by mutableStateOf(
+    override val themeType = MutableStateFlow(
         Settings.ThemeType.SYSTEM
     )
 
-    override var iconType: Settings.IconographyType by mutableStateOf(
+    override val iconType = MutableStateFlow(
         Settings.IconographyType.DEFAULT
     )
 
-    override var shapeType: Settings.ShapeType by mutableStateOf(
+    override val shapeType = MutableStateFlow(
         Settings.ShapeType.ROUNDED
     )
 
-    override var navigationLabelVisibility: Settings.NavigationLabelVisibility by mutableStateOf(
+    override val navigationLabelVisibility = MutableStateFlow(
         Settings.NavigationLabelVisibility.WHEN_SELECTED
     )
 

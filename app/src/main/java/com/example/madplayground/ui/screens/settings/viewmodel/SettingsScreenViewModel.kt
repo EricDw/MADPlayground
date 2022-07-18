@@ -1,7 +1,5 @@
 package com.example.madplayground.ui.screens.settings.viewmodel
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.example.madplayground.features.app.apis.App
 import com.example.madplayground.features.messages.apis.Message
 import com.example.madplayground.features.settings.apis.Settings
@@ -9,16 +7,17 @@ import com.example.madplayground.ui.screens.settings.SettingsScreenState
 import com.example.madplayground.ui.screens.settings.api.SettingsScreen
 import com.example.madplayground.ui.screens.settings.api.SettingsScreen.*
 import com.example.madplayground.ui.screens.settings.api.SettingsScreen.ViewModel.*
-import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-@HiltViewModel
 class SettingsScreenViewModel @Inject constructor(
     private val app: App,
-) : ViewModel(), SettingsScreen.ViewModel {
+    private val scope: CoroutineScope = CoroutineScope(Dispatchers.Main.immediate)
+) : SettingsScreen.ViewModel {
 
     private val tag = this::class.simpleName
 
@@ -32,47 +31,52 @@ class SettingsScreenViewModel @Inject constructor(
     override val stateFlow: StateFlow<State> =
         _stateFlow.asStateFlow()
 
-    private var themeSynchronizer: Job? = app.settings.themeType
-        .onEach { themeType ->
+    init {
 
-            settingsScreenState.themeType = themeType
+        app.settings.themeType
+            .onEach { themeType ->
 
-        }.launchIn(viewModelScope)
+                settingsScreenState.themeType.update { themeType }
 
-    private var iconSynchronizer: Job? = app.settings.iconographyType
-        .onEach { iconographyType ->
+            }.launchIn(scope)
 
-            settingsScreenState.iconType = iconographyType
+        app.settings.iconographyType
+            .onEach { iconographyType ->
 
-        }.launchIn(viewModelScope)
+                settingsScreenState.iconType.update { iconographyType }
 
-    private var shapeSynchronizer: Job? = app.settings.shapeType
-        .onEach { shapeType ->
+            }.launchIn(scope)
 
-            settingsScreenState.shapeType = shapeType
+        app.settings.shapeType
+            .onEach { shapeType ->
 
-        }.launchIn(viewModelScope)
+                settingsScreenState.shapeType.update { shapeType }
 
-    private var labelSynchronizer: Job? = app.settings.navigationLabelVisibility
-        .onEach { visibility ->
+            }.launchIn(scope)
 
-            settingsScreenState.navigationLabelVisibility = visibility
+        app.settings.navigationLabelVisibility
+            .onEach { visibility ->
 
-        }.launchIn(viewModelScope)
+                settingsScreenState.navigationLabelVisibility.update { visibility }
+
+            }.launchIn(scope)
+    }
 
     override val actionHandler: Message.Handler<Action> = Message.Handler { theAction ->
 
         when (theAction) {
 
-            Action.CycleThemeType       -> {
+            Action.CycleThemeType -> {
 
-                val newThemeType = when (settingsScreenState.themeType) {
+                val newThemeType = when (
+                    settingsScreenState.themeType.value
+                ) {
 
-                    Settings.ThemeType.LIGHT  -> {
+                    Settings.ThemeType.LIGHT -> {
                         Settings.ThemeType.DARK
                     }
 
-                    Settings.ThemeType.DARK   -> {
+                    Settings.ThemeType.DARK -> {
                         Settings.ThemeType.SYSTEM
                     }
 
@@ -82,7 +86,7 @@ class SettingsScreenViewModel @Inject constructor(
 
                 }
 
-                viewModelScope.launch {
+                scope.launch {
 
                     app.settings.setThemeType(
                         newThemeType
@@ -94,15 +98,17 @@ class SettingsScreenViewModel @Inject constructor(
 
             }
 
-            Action.CycleIconType        -> {
+            Action.CycleIconType -> {
 
-                val newIconType = when (settingsScreenState.iconType) {
+                val newIconType = when (
+                    settingsScreenState.iconType.value
+                ) {
 
-                    Settings.IconographyType.DEFAULT  -> {
+                    Settings.IconographyType.DEFAULT -> {
                         Settings.IconographyType.SHARP
                     }
 
-                    Settings.IconographyType.SHARP    -> {
+                    Settings.IconographyType.SHARP -> {
                         Settings.IconographyType.OUTLINED
                     }
 
@@ -110,7 +116,7 @@ class SettingsScreenViewModel @Inject constructor(
                         Settings.IconographyType.ROUNDED
                     }
 
-                    Settings.IconographyType.ROUNDED  -> {
+                    Settings.IconographyType.ROUNDED -> {
                         Settings.IconographyType.TWO_TONE
                     }
 
@@ -119,28 +125,30 @@ class SettingsScreenViewModel @Inject constructor(
                     }
                 }
 
-                viewModelScope.launch {
+                scope.launch {
                     app.settings.setIconographyType(
                         newIconType
                     )
                 }
             }
 
-            Action.CycleShapeType       -> {
+            Action.CycleShapeType -> {
 
-                val newShapeType = when (settingsScreenState.shapeType) {
+                val newShapeType = when (
+                    settingsScreenState.shapeType.value
+                ) {
 
                     Settings.ShapeType.ROUNDED -> {
                         Settings.ShapeType.CUT
                     }
 
-                    Settings.ShapeType.CUT     -> {
+                    Settings.ShapeType.CUT -> {
                         Settings.ShapeType.ROUNDED
                     }
 
                 }
 
-                viewModelScope.launch {
+                scope.launch {
                     app.settings.setShapeType(
                         newShapeType = newShapeType
                     )
@@ -150,14 +158,14 @@ class SettingsScreenViewModel @Inject constructor(
             Action.CycleLabelVisibility -> {
 
                 val newVisibility = when (
-                    settingsScreenState.navigationLabelVisibility
+                    settingsScreenState.navigationLabelVisibility.value
                 ) {
 
-                    Settings.NavigationLabelVisibility.NEVER         -> {
+                    Settings.NavigationLabelVisibility.NEVER -> {
                         Settings.NavigationLabelVisibility.ALWAYS
                     }
 
-                    Settings.NavigationLabelVisibility.ALWAYS        -> {
+                    Settings.NavigationLabelVisibility.ALWAYS -> {
                         Settings.NavigationLabelVisibility.WHEN_SELECTED
                     }
 
@@ -167,7 +175,7 @@ class SettingsScreenViewModel @Inject constructor(
 
                 }
 
-                viewModelScope.launch {
+                scope.launch {
                     app.settings.setNavigationLabelVisibility(
                         newVisibility = newVisibility
                     )
@@ -178,19 +186,4 @@ class SettingsScreenViewModel @Inject constructor(
 
     }
 
-    override fun onCleared() {
-        super.onCleared()
-        themeSynchronizer?.cancel()
-        themeSynchronizer = null
-
-        iconSynchronizer?.cancel()
-        iconSynchronizer = null
-
-        shapeSynchronizer?.cancel()
-        shapeSynchronizer = null
-
-        labelSynchronizer?.cancel()
-        labelSynchronizer = null
-
-    }
 }
