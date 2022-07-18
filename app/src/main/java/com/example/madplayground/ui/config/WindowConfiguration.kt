@@ -8,12 +8,8 @@ data class WindowConfiguration(
 ) {
 
     @Suppress("MemberVisibilityCanBePrivate")
-    val combinedWindowType: CombinedWindowType
-
-    init {
-        val widthAndHeight = windowWidthType to windowHeightType
-
-        combinedWindowType = when (widthAndHeight) {
+    val combinedWindowType: CombinedWindowType =
+        when (windowWidthType to windowHeightType) {
 
             WindowWidthType.COMPACT to WindowHeightType.COMPACT  ->
                 CombinedWindowType.COMPACT_WIDTH_COMPACT_HEIGHT
@@ -44,7 +40,7 @@ data class WindowConfiguration(
 
 
         }
-    }
+
 }
 
 enum class WindowWidthType {

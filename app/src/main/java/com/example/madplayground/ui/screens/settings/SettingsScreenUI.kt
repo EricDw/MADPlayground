@@ -1,12 +1,12 @@
 package com.example.madplayground.ui.screens.settings
 
+import androidx.annotation.StringRes
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -47,56 +47,35 @@ fun SettingsScreen(
             }
 
             Spacer(modifier = Modifier.height(16.dp))
+
         }
 
         // Theme
         item {
 
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clickable {
-                        eventHandler?.invoke(
-                            SettingsScreen.Event.ThemeTypeClicked
-                        )
-                    }
-            ) {
+            val labelId = when (state.themeType) {
 
-                Column(
-                    modifier = Modifier
-                        .padding(
-                            start = 16.dp,
-                            end = 16.dp
-                        )
-                ) {
-
-                    val typeId = when (state.themeType) {
-
-                        Settings.ThemeType.LIGHT  -> {
-                            R.string.label_light
-                        }
-
-                        Settings.ThemeType.DARK   -> {
-                            R.string.label_dark
-                        }
-
-                        Settings.ThemeType.SYSTEM -> {
-                            R.string.label_system
-                        }
-
-                    }
-
-                    Text(
-                        text = stringResource(id = R.string.label_theme_type),
-                        style = MaterialTheme.typography.h5
-                    )
-
-                    Text(
-                        text = stringResource(id = typeId),
-                        style = MaterialTheme.typography.body2
-                    )
-
+                Settings.ThemeType.LIGHT  -> {
+                    R.string.label_light
                 }
+
+                Settings.ThemeType.DARK   -> {
+                    R.string.label_dark
+                }
+
+                Settings.ThemeType.SYSTEM -> {
+                    R.string.label_system
+                }
+
+            }
+
+            SettingItem(
+                titleId = R.string.title_theme_type,
+                labelId = labelId
+            ) {
+                eventHandler?.invoke(
+                    SettingsScreen.Event.ThemeTypeClicked
+                )
 
             }
 
@@ -106,59 +85,38 @@ fun SettingsScreen(
 
         // Icons
         item {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clickable {
-                        eventHandler?.invoke(
-                            SettingsScreen.Event.IconTypeClicked
-                        )
-                    }
-            ) {
 
-                Column(
-                    modifier = Modifier
-                        .padding(
-                            start = 16.dp,
-                            end = 16.dp
-                        )
-                ) {
+            val labelId = when (state.iconType) {
 
-                    val typeId = when (state.iconType) {
-
-                        Settings.IconographyType.DEFAULT  -> {
-                            R.string.label_default
-                        }
-
-                        Settings.IconographyType.SHARP    -> {
-                            R.string.label_sharp
-                        }
-
-                        Settings.IconographyType.OUTLINED -> {
-                            R.string.label_outlined
-                        }
-
-                        Settings.IconographyType.ROUNDED  -> {
-                            R.string.label_rounded
-                        }
-
-                        Settings.IconographyType.TWO_TONE -> {
-                            R.string.label_two_tone
-                        }
-
-                    }
-
-                    Text(
-                        text = stringResource(id = R.string.label_icon_type),
-                        style = MaterialTheme.typography.h5
-                    )
-
-                    Text(
-                        text = stringResource(id = typeId),
-                        style = MaterialTheme.typography.body2
-                    )
-
+                Settings.IconographyType.DEFAULT  -> {
+                    R.string.label_default
                 }
+
+                Settings.IconographyType.SHARP    -> {
+                    R.string.label_sharp
+                }
+
+                Settings.IconographyType.OUTLINED -> {
+                    R.string.label_outlined
+                }
+
+                Settings.IconographyType.ROUNDED  -> {
+                    R.string.label_rounded
+                }
+
+                Settings.IconographyType.TWO_TONE -> {
+                    R.string.label_two_tone
+                }
+
+            }
+
+            SettingItem(
+                titleId = R.string.title_icon_type,
+                labelId = labelId
+            ) {
+                eventHandler?.invoke(
+                    SettingsScreen.Event.IconTypeClicked
+                )
 
             }
 
@@ -168,48 +126,26 @@ fun SettingsScreen(
 
         // Shapes
         item {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clickable {
-                        eventHandler?.invoke(
-                            SettingsScreen.Event.ShapeTypeClicked
-                        )
-                    }
-            ) {
 
-                Column(
-                    modifier = Modifier
-                        .padding(
-                            start = 16.dp,
-                            end = 16.dp
-                        )
-                ) {
+            val labelId = when (state.shapeType) {
 
-                    val typeId = when (state.shapeType) {
-
-                        Settings.ShapeType.ROUNDED -> {
-                            R.string.label_rounded
-                        }
-
-                        Settings.ShapeType.CUT     -> {
-                            R.string.label_cut
-                        }
-
-                    }
-
-                    Text(
-                        text = stringResource(id = R.string.label_shape_type),
-                        style = MaterialTheme.typography.h5
-                    )
-
-                    Text(
-                        text = stringResource(id = typeId),
-                        style = MaterialTheme.typography.body2
-                    )
-
+                Settings.ShapeType.ROUNDED -> {
+                    R.string.label_rounded
                 }
 
+                Settings.ShapeType.CUT     -> {
+                    R.string.label_cut
+                }
+
+            }
+
+            SettingItem(
+                titleId = R.string.title_shape_type,
+                labelId = labelId
+            ) {
+                eventHandler?.invoke(
+                    SettingsScreen.Event.ShapeTypeClicked
+                )
             }
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -218,64 +154,73 @@ fun SettingsScreen(
 
         // Navigation Labels
         item {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clickable {
-                        eventHandler?.invoke(
-                            SettingsScreen.Event.LabelVisibilityClicked
-                        )
-                    }
-            ) {
 
-                Column(
-                    modifier = Modifier
-                        .padding(
-                            start = 16.dp,
-                            end = 16.dp
-                        )
-                ) {
+            val labelId = when (state.navigationLabelVisibility) {
 
-                    val typeId = when (state.navigationLabelVisibility) {
-
-                        Settings.NavigationLabelVisibility.ALWAYS  -> {
-                            R.string.label_always_visible
-                        }
-
-                        Settings.NavigationLabelVisibility.WHEN_SELECTED -> {
-                            R.string.label_when_selected
-                        }
-
-                        Settings.NavigationLabelVisibility.NEVER -> {
-                            R.string.label_never
-                        }
-
-                    }
-
-                    Text(
-                        text = stringResource(id = R.string.title_label_visibility),
-                        style = MaterialTheme.typography.h5
-                    )
-
-                    Text(
-                        text = stringResource(id = typeId),
-                        style = MaterialTheme.typography.body2
-                    )
-
+                Settings.NavigationLabelVisibility.ALWAYS  -> {
+                    R.string.label_always_visible
                 }
 
+                Settings.NavigationLabelVisibility.WHEN_SELECTED -> {
+                    R.string.label_when_selected
+                }
+
+                Settings.NavigationLabelVisibility.NEVER -> {
+                    R.string.label_never
+                }
+
+            }
+
+            SettingItem(
+                titleId = R.string.title_label_visibility,
+                labelId = labelId
+            ) {
+                eventHandler?.invoke(
+                    SettingsScreen.Event.LabelVisibilityClicked
+                )
             }
 
         }
 
     }
 
-    LaunchedEffect(key1 = eventHandler) {
-        eventHandler?.invoke(
-            SettingsScreen.Event.Started
-        )
-    }
+}
 
+@Composable
+private fun SettingItem(
+    @StringRes
+    titleId: Int,
+    @StringRes
+    labelId: Int,
+    onClick: () -> Unit,
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable(onClick = onClick)
+    ) {
+
+        Column(
+            modifier = Modifier
+                .padding(
+                    start = 16.dp,
+                    end = 16.dp
+                )
+        ) {
+
+            Text(
+                text = stringResource(id = titleId),
+                style = MaterialTheme.typography.h5
+            )
+
+            Text(
+                text = stringResource(id = labelId),
+                style = MaterialTheme.typography.body2
+            )
+
+        }
+
+    }
 }
 
 @Preview(

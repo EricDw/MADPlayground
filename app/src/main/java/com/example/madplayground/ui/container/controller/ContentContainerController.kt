@@ -11,6 +11,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navigation
+import com.example.madplayground.features.messages.apis.Message
 import com.example.madplayground.ui.config.CombinedWindowType
 import com.example.madplayground.ui.config.LocalWindowConfiguration
 import com.example.madplayground.ui.container.ContentContainer
@@ -47,9 +48,55 @@ fun ContentContainerController(
         mutableStateOf(false)
     }
 
-    val sideEffect by contentContainerViewModel.sideEffect.collectAsState()
-
     val navHostController: NavHostController = rememberNavController()
+
+    val eventHandler = Message.Handler<ContentContainer.Event> { event ->
+
+        when (event) {
+
+            ContentContainer.Event.FABClicked              -> {
+                contentContainerViewModel.actionHandler(
+                    ContentContainer.ViewModel.Action.AddNewQuote()
+                )
+            }
+
+            ContentContainer.Event.HomeTabClicked          -> {
+
+                if (contentContainerState.screenContext != ContentContainer.ScreenContext.HOME)
+                    navHostController.navigateToGraph(
+                        ContentContainer.HOME_GRAPH_ROUTE
+                    )
+
+            }
+
+            ContentContainer.Event.SettingsTabClicked      -> {
+
+                if (contentContainerState.screenContext != ContentContainer.ScreenContext.SETTINGS)
+                    navHostController.navigateToGraph(
+                        ContentContainer.SETTINGS_GRAPH_ROUTE
+                    )
+
+            }
+
+            ContentContainer.Event.NavigationButtonClicked -> {
+
+                when (contentContainerState.screenContext) {
+
+                    ContentContainer.ScreenContext.HOME     -> {
+                        /* no-op */
+                    }
+
+                    ContentContainer.ScreenContext.SETTINGS -> {
+                        navHostController.popBackStack()
+                    }
+
+                }
+
+            }
+
+        }
+
+    }
 
     ContentContainer(
         modifier = Modifier.fillMaxSize(),
@@ -57,7 +104,7 @@ fun ContentContainerController(
         showTopAppBar = showTopAppBar,
         showBottomNavBar = showBottomNavBar,
         showNavigationRail = showNavigationRail,
-        eventHandler = contentContainerViewModel.eventHandler
+        eventHandler = eventHandler
     ) { rootPadding ->
 
         val screenModifier = Modifier
@@ -79,9 +126,15 @@ fun ContentContainerController(
                 ) {
 
                     HomeScreenController(
-                        modifier = screenModifier,
-                        contentContainerEventHandler = contentContainerViewModel.eventHandler
+                        modifier = screenModifier
                     )
+                    LaunchedEffect(key1 = true) {
+                        contentContainerViewModel.actionHandler(
+                            ContentContainer.ViewModel.Action.SwitchContexts(
+                                ContentContainer.ScreenContext.HOME
+                            )
+                        )
+                    }
 
                 }
 
@@ -98,75 +151,22 @@ fun ContentContainerController(
 
                     SettingsScreenController(
                         modifier = screenModifier,
-                        contentContainerEventHandler = contentContainerViewModel.eventHandler,
                     )
 
+                    LaunchedEffect(key1 = true) {
+                        contentContainerViewModel.actionHandler(
+                            ContentContainer.ViewModel.Action.SwitchContexts(
+                                ContentContainer.ScreenContext.SETTINGS
+                            )
+                        )
+                    }
+
                 }
 
             }
 
         }
 
-    }
-
-    LaunchedEffect(key1 = sideEffect) {
-
-        logs.logDebug(
-            tag = tag,
-            message = "Handling: $sideEffect"
-        )
-
-        when (sideEffect) {
-
-            is ContentContainer.SideEffect.NavigateToHomeTab     -> {
-                navHostController.navigate(
-                    ContentContainer.HOME_GRAPH_ROUTE
-                ) {
-                    // Pop up to the start destination of the graph to
-                    // avoid building up a large stack of destinations
-                    // on the back stack as users select items
-                    popUpTo(
-                        id = navHostController.graph.findStartDestination().id
-                    ) {
-                        saveState = true
-                    }
-                    // Avoid multiple copies of the same destination when
-                    // re-selecting the same item
-                    launchSingleTop = true
-                    // Restore state when re-selecting a previously selected item
-                    restoreState = true
-                }
-            }
-
-            is ContentContainer.SideEffect.NavigateToSettingsTab -> {
-                navHostController.navigate(
-                    ContentContainer.SETTINGS_GRAPH_ROUTE,
-                ) {
-                    // Pop up to the start destination of the graph to
-                    // avoid building up a large stack of destinations
-                    // on the back stack as users select items
-                    popUpTo(
-                        id = navHostController.graph.findStartDestination().id
-                    ) {
-                        saveState = true
-                    }
-                    // Avoid multiple copies of the same destination when
-                    // re-selecting the same item
-                    launchSingleTop = true
-                    // Restore state when re-selecting a previously selected item
-                    restoreState = true
-                }
-            }
-
-            is ContentContainer.SideEffect.NavigateBack          -> {
-                navHostController.popBackStack()
-            }
-
-            null                                                 -> {
-                /* no-op */
-            }
-
-        }
     }
 
     LaunchedEffect(key1 = windowConfiguration) {
@@ -275,4 +275,24 @@ fun ContentContainerController(
 
     }
 
+}
+
+private fun NavHostController.navigateToGraph(route: String) {
+    navigate(
+        route
+    ) {
+        // Pop up to the start destination of the graph to
+        // avoid building up a large stack of destinations
+        // on the back stack as users select items
+        popUpTo(
+            id = graph.findStartDestination().id
+        ) {
+            saveState = true
+        }
+        // Avoid multiple copies of the same destination when
+        // re-selecting the same item
+        launchSingleTop = true
+        // Restore state when re-selecting a previously selected item
+        restoreState = true
+    }
 }

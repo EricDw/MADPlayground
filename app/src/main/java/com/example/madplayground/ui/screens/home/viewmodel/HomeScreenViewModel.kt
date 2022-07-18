@@ -35,13 +35,7 @@ class HomeScreenViewModel @Inject constructor(
 
         when (event) {
 
-            HomeScreen.Event.HomeScreenStarted -> {
-                logs.logError(
-                    tag = tag,
-                    message = "Event Handling Not Implemented"
-                )
-            }
-
+            else -> {}
         }
 
     }

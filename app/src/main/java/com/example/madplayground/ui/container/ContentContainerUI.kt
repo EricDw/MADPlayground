@@ -6,10 +6,7 @@ import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.derivedStateOf
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -43,6 +40,14 @@ fun ContentContainer(
                 }
             }
         }
+    }
+
+    var isFABVisible by remember {
+        mutableStateOf(true)
+    }
+
+    var isNavigationButtonEnabled by remember {
+        mutableStateOf(false)
     }
 
     val isTopNavigationIconVisible =
@@ -79,20 +84,6 @@ fun ContentContainer(
             snackbarHostState = snackbarHostState
         )
 
-    val isNavigationButtonEnabled = when (
-        state.screenContext
-    ) {
-
-        ContentContainer.ScreenContext.HOME     -> {
-            true
-        }
-
-        ContentContainer.ScreenContext.SETTINGS -> {
-            true
-        }
-
-    }
-
     AppTheme(
         themeType = state.themeType,
         iconographyType = state.iconographyType,
@@ -110,17 +101,6 @@ fun ContentContainer(
                         eventHandler,
                         state
                     )
-            },
-            drawerContent = {
-
-                LazyColumn(
-                    modifier = Modifier.fillMaxSize()
-                ) {
-                    item {
-                        Text(text = "TODO: Categories")
-                    }
-                }
-
             },
             bottomBar = {
 
@@ -183,9 +163,8 @@ fun ContentContainer(
 
             },
             floatingActionButton = {
-                val visible = !showNavigationRail
                 AnimatedVisibility(
-                    visible = visible,
+                    visible = !showNavigationRail && isFABVisible,
                 ) {
 
                     FloatingActionButton(
@@ -215,17 +194,19 @@ fun ContentContainer(
                         header = when (state.screenContext) {
                             ContentContainer.ScreenContext.HOME     -> {
                                 {
-                                    FloatingActionButton(
-                                        onClick = {
-                                            eventHandler(
-                                                ContentContainer.Event.FABClicked
+                                    AnimatedVisibility(visible = isFABVisible) {
+                                        FloatingActionButton(
+                                            onClick = {
+                                                eventHandler(
+                                                    ContentContainer.Event.FABClicked
+                                                )
+                                            }
+                                        ) {
+                                            Icon(
+                                                imageVector = LocalIconography.current.editIcon,
+                                                contentDescription = null
                                             )
                                         }
-                                    ) {
-                                        Icon(
-                                            imageVector = LocalIconography.current.editIcon,
-                                            contentDescription = null
-                                        )
                                     }
                                 }
                             }
@@ -308,6 +289,25 @@ fun ContentContainer(
             }
 
         }
+    }
+
+    LaunchedEffect(key1 = state.screenContext) {
+        when (
+            state.screenContext
+        ) {
+
+            ContentContainer.ScreenContext.HOME     -> {
+                isFABVisible = true
+                isNavigationButtonEnabled = false
+            }
+
+            ContentContainer.ScreenContext.SETTINGS -> {
+                isFABVisible = false
+                isNavigationButtonEnabled = true
+            }
+
+        }
+
     }
 
 }

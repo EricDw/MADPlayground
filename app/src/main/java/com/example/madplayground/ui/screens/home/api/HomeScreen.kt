@@ -29,8 +29,6 @@ interface HomeScreen {
 
         }
 
-        object HomeScreenStarted : Event
-
     }
 
     interface State {

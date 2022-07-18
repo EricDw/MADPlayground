@@ -7,6 +7,8 @@ import com.example.madplayground.features.messages.apis.Message
 import com.example.madplayground.features.settings.apis.Settings
 import com.example.madplayground.ui.screens.settings.SettingsScreenState
 import com.example.madplayground.ui.screens.settings.api.SettingsScreen
+import com.example.madplayground.ui.screens.settings.api.SettingsScreen.*
+import com.example.madplayground.ui.screens.settings.api.SettingsScreen.ViewModel.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.*
@@ -27,7 +29,7 @@ class SettingsScreenViewModel @Inject constructor(
 
     private val _stateFlow = MutableStateFlow(settingsScreenState)
 
-    override val stateFlow: StateFlow<SettingsScreen.State> =
+    override val stateFlow: StateFlow<State> =
         _stateFlow.asStateFlow()
 
     private var themeSynchronizer: Job? = app.settings.themeType
@@ -58,11 +60,11 @@ class SettingsScreenViewModel @Inject constructor(
 
         }.launchIn(viewModelScope)
 
-    override val eventHandler: Message.Handler<SettingsScreen.Event> = Message.Handler { theEvent ->
+    override val actionHandler: Message.Handler<Action> = Message.Handler { theAction ->
 
-        when (theEvent) {
+        when (theAction) {
 
-            SettingsScreen.Event.ThemeTypeClicked       -> {
+            Action.CycleThemeType       -> {
 
                 val newThemeType = when (settingsScreenState.themeType) {
 
@@ -92,7 +94,7 @@ class SettingsScreenViewModel @Inject constructor(
 
             }
 
-            SettingsScreen.Event.IconTypeClicked        -> {
+            Action.CycleIconType        -> {
 
                 val newIconType = when (settingsScreenState.iconType) {
 
@@ -124,7 +126,7 @@ class SettingsScreenViewModel @Inject constructor(
                 }
             }
 
-            SettingsScreen.Event.ShapeTypeClicked       -> {
+            Action.CycleShapeType       -> {
 
                 val newShapeType = when (settingsScreenState.shapeType) {
 
@@ -145,7 +147,7 @@ class SettingsScreenViewModel @Inject constructor(
                 }
             }
 
-            SettingsScreen.Event.LabelVisibilityClicked -> {
+            Action.CycleLabelVisibility -> {
 
                 val newVisibility = when (
                     settingsScreenState.navigationLabelVisibility
@@ -170,10 +172,6 @@ class SettingsScreenViewModel @Inject constructor(
                         newVisibility = newVisibility
                     )
                 }
-            }
-
-            SettingsScreen.Event.Started                -> {
-                /* no-op */
             }
 
         }

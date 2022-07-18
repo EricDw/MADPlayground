@@ -6,7 +6,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.madplayground.features.messages.apis.Message
-import com.example.madplayground.ui.container.api.ContentContainer
 import com.example.madplayground.ui.screens.settings.SettingsScreen
 import com.example.madplayground.ui.screens.settings.api.SettingsScreen
 import com.example.madplayground.ui.screens.settings.viewmodel.SettingsScreenViewModel
@@ -14,7 +13,6 @@ import com.example.madplayground.ui.screens.settings.viewmodel.SettingsScreenVie
 @Composable
 fun SettingsScreenController(
     modifier: Modifier = Modifier,
-    contentContainerEventHandler: Message.Handler<ContentContainer.Event> = Message.Handler { /* no-op */ },
     settingsScreenViewModel: SettingsScreen.ViewModel = hiltViewModel<SettingsScreenViewModel>(),
 ) {
 
@@ -24,30 +22,36 @@ fun SettingsScreenController(
 
         when (theEvent) {
 
-            SettingsScreen.Event.Started          -> {
+            SettingsScreen.Event.ThemeTypeClicked       -> {
 
-                contentContainerEventHandler(
-                    ContentContainer.Event.SettingsScreenStarted
+                settingsScreenViewModel.actionHandler(
+                    SettingsScreen.ViewModel.Action.CycleThemeType
                 )
 
             }
 
-            SettingsScreen.Event.ThemeTypeClicked -> {
+            SettingsScreen.Event.IconTypeClicked        -> {
 
-                settingsScreenViewModel.eventHandler(theEvent)
+                settingsScreenViewModel.actionHandler(
+                    SettingsScreen.ViewModel.Action.CycleIconType
+                )
 
             }
 
-            SettingsScreen.Event.IconTypeClicked  -> {
-                settingsScreenViewModel.eventHandler(theEvent)
-            }
+            SettingsScreen.Event.ShapeTypeClicked       -> {
 
-            SettingsScreen.Event.ShapeTypeClicked -> {
-                settingsScreenViewModel.eventHandler(theEvent)
+                settingsScreenViewModel.actionHandler(
+                    SettingsScreen.ViewModel.Action.CycleShapeType
+                )
+
             }
 
             SettingsScreen.Event.LabelVisibilityClicked -> {
-                settingsScreenViewModel.eventHandler(theEvent)
+
+                settingsScreenViewModel.actionHandler(
+                    SettingsScreen.ViewModel.Action.CycleLabelVisibility
+                )
+
             }
 
         }

@@ -3,6 +3,7 @@ package com.example.madplayground.ui.container.api
 import com.example.madplayground.features.messages.apis.Message
 import com.example.madplayground.features.settings.apis.Settings
 import kotlinx.coroutines.flow.StateFlow
+import kotlin.random.Random
 
 interface ContentContainer {
 
@@ -21,31 +22,9 @@ interface ContentContainer {
 
         object NavigationButtonClicked : Event
 
-        object HomeScreenStarted : Event
-
-        object SettingsScreenStarted : Event
-
         object HomeTabClicked : Event
 
         object FABClicked : Event
-
-    }
-
-    sealed interface SideEffect {
-
-        val completionHandler: () -> Unit
-
-        class NavigateToHomeTab(
-            override val completionHandler: () -> Unit = {},
-        ) : SideEffect
-
-        class NavigateToSettingsTab(
-            override val completionHandler: () -> Unit = {},
-        ) : SideEffect
-
-        class NavigateBack(
-            override val completionHandler: () -> Unit = {},
-        ) : SideEffect
 
     }
 
@@ -67,9 +46,19 @@ interface ContentContainer {
 
         val stateFlow: StateFlow<State>
 
-        val sideEffect: StateFlow<SideEffect?>
+        val actionHandler: Message.Handler<Action>
 
-        val eventHandler: Message.Handler<Event>
+        sealed interface Action : Message {
+
+            class SwitchContexts(
+                val newContext: ScreenContext
+            ): Action
+
+            class AddNewQuote(
+                val content: String = "Quote: ${Random.nextInt()}"
+            ): Action
+
+        }
 
     }
 

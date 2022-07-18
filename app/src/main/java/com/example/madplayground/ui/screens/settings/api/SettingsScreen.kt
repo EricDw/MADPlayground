@@ -12,8 +12,6 @@ interface SettingsScreen {
 
     sealed interface Event : Message {
 
-        object Started : Event
-
         object ThemeTypeClicked : Event
 
         object IconTypeClicked : Event
@@ -40,7 +38,19 @@ interface SettingsScreen {
 
         val stateFlow: StateFlow<State>
 
-        val eventHandler: Message.Handler<Event>
+        val actionHandler: Message.Handler<Action>
+
+        sealed interface Action : Message {
+
+            object CycleThemeType : Action
+
+            object CycleIconType : Action
+
+            object CycleShapeType : Action
+
+            object CycleLabelVisibility : Action
+
+        }
 
     }
 
