@@ -42,13 +42,29 @@ interface SettingsScreen {
 
         sealed interface Action : Message {
 
-            object CycleThemeType : Action
+            object CycleThemeType : Action {
+                override fun toString(): String {
+                    return this::class.simpleName ?: super.toString()
+                }
+            }
 
-            object CycleIconType : Action
+            object CycleIconType : Action {
+                override fun toString(): String {
+                    return this::class.simpleName ?: super.toString()
+                }
+            }
 
-            object CycleShapeType : Action
+            object CycleShapeType : Action {
+                override fun toString(): String {
+                    return this::class.simpleName ?: super.toString()
+                }
+            }
 
-            object CycleLabelVisibility : Action
+            object CycleLabelVisibility : Action {
+                override fun toString(): String {
+                    return this::class.simpleName ?: super.toString()
+                }
+            }
 
         }
 

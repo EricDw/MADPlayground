@@ -30,8 +30,18 @@ class SettingsScreenViewModel @Inject constructor(
 
     init {
 
+        logs.logDebug(
+            tag = tag,
+            message = "Initializing"
+        )
+
         app.settings.themeType
             .onEach { themeType ->
+
+                logs.logDebug(
+                    tag = tag,
+                    message = "ThemeType Changed too: $themeType"
+                )
 
                 settingsScreenState.themeType.update { themeType }
 
@@ -40,12 +50,22 @@ class SettingsScreenViewModel @Inject constructor(
         app.settings.iconographyType
             .onEach { iconographyType ->
 
+                logs.logDebug(
+                    tag = tag,
+                    message = "IconographyType Changed too: $iconographyType"
+                )
+
                 settingsScreenState.iconType.update { iconographyType }
 
             }.launchIn(scope)
 
         app.settings.shapeType
             .onEach { shapeType ->
+
+                logs.logDebug(
+                    tag = tag,
+                    message = "ShapeType Changed too: $shapeType"
+                )
 
                 settingsScreenState.shapeType.update { shapeType }
 
@@ -54,12 +74,28 @@ class SettingsScreenViewModel @Inject constructor(
         app.settings.navigationLabelVisibility
             .onEach { visibility ->
 
+                logs.logDebug(
+                    tag = tag,
+                    message = "NavigationLabelVisibility Changed too: $visibility"
+                )
+
                 settingsScreenState.navigationLabelVisibility.update { visibility }
 
             }.launchIn(scope)
+
+        logs.logDebug(
+            tag = tag,
+            message = "Initialized"
+        )
+
     }
 
     override val actionHandler: Message.Handler<Action> = Message.Handler { theAction ->
+
+        logs.logDebug(
+            tag = tag,
+            message = "Received: $theAction"
+        )
 
         when (theAction) {
 
@@ -88,8 +124,6 @@ class SettingsScreenViewModel @Inject constructor(
                     app.settings.setThemeType(
                         newThemeType
                     )
-
-                    logs.logDebug(tag = tag, message = "Updating ThemeType to: $newThemeType")
 
                 }
 

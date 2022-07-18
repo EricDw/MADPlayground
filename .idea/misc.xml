@@ -3,21 +3,13 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="app/src/main/java/com/example/madplayground/ui/app/AppUI.kt" value="0.2574074074074074" />
-        <entry key="app/src/main/java/com/example/madplayground/ui/components/MorphButton.kt" value="0.15468227424749165" />
-        <entry key="app/src/main/java/com/example/madplayground/ui/components/MorphFloatingActionButton.kt" value="0.15468227424749165" />
-        <entry key="app/src/main/java/com/example/madplayground/ui/components/MorphIcon.kt" value="0.15468227424749165" />
-        <entry key="app/src/main/java/com/example/madplayground/ui/components/MorphIconButton.kt" value="0.15468227424749165" />
-        <entry key="app/src/main/java/com/example/madplayground/ui/components/MorphNavigationRail.kt" value="0.15468227424749165" />
-        <entry key="app/src/main/java/com/example/madplayground/ui/components/MorphNavigationRailItem.kt" value="0.15468227424749165" />
-        <entry key="app/src/main/java/com/example/madplayground/ui/components/MorphScaffold.kt" value="0.15468227424749165" />
-        <entry key="app/src/main/java/com/example/madplayground/ui/components/MorphText.kt" value="0.15043877977434184" />
-        <entry key="app/src/main/java/com/example/madplayground/ui/components/QuoteCardUI.kt" value="0.22037037037037038" />
-        <entry key="app/src/main/java/com/example/madplayground/ui/container/ContentContainerUI.kt" value="0.1881856540084388" />
-        <entry key="app/src/main/java/com/example/madplayground/ui/container/M3ContentContainerUI.kt" value="0.20925925925925926" />
-        <entry key="app/src/main/java/com/example/madplayground/ui/screens/home/HomeScreenUI.kt" value="0.17685185185185184" />
-        <entry key="app/src/main/java/com/example/madplayground/ui/screens/posts/PostCardUI.kt" value="0.1" />
-        <entry key="app/src/main/java/com/example/madplayground/ui/screens/settings/SettingsScreenUI.kt" value="0.30925925925925923" />
+        <entry key="app/src/main/java/com/example/madplayground/features/container/ContentContainerUI.kt" value="0.2898148148148148" />
+        <entry key="app/src/main/java/com/example/madplayground/features/home/HomeScreenUI.kt" value="0.3409282700421941" />
+        <entry key="app/src/main/java/com/example/madplayground/ui/app/AppUI.kt" value="0.3344594594594595" />
+        <entry key="app/src/main/java/com/example/madplayground/ui/container/ContentContainerUI.kt" value="0.35648148148148145" />
+        <entry key="app/src/main/java/com/example/madplayground/ui/screens/home/HomeScreenUI.kt" value="0.27685185185185185" />
+        <entry key="app/src/main/java/com/example/madplayground/ui/screens/posts/PostCardUI.kt" value="0.5268518518518519" />
+        <entry key="app/src/main/java/com/example/madplayground/ui/screens/settings/SettingsScreenUI.kt" value="0.2537037037037037" />
       </map>
     </option>
   </component>

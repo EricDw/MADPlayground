@@ -14,7 +14,6 @@ class SettingsController(
     private val scope: CoroutineScope,
 ) : Settings {
 
-
     private val themeKey = stringPreferencesKey("theme_type")
     private val iconographyKey = stringPreferencesKey("iconography_type")
     private val shapeKey = stringPreferencesKey("shape_type")
