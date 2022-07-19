@@ -222,7 +222,7 @@ fun ContentContainerController(
 
                     else -> {
                         showTopAppBar = false
-                        showBottomNavBar = false
+                        showBottomNavBar = true
                         showNavigationRail = false
                         showScaffoldFAB = true
                     }
