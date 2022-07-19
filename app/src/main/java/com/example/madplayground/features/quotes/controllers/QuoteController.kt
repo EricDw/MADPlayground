@@ -7,7 +7,8 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import java.util.UUID
 
-class QuoteController(
+data class QuoteController(
     override val content: String,
     override val id: String = UUID.randomUUID().toString(),
+    override val author: String? = null,
 ) : Quote

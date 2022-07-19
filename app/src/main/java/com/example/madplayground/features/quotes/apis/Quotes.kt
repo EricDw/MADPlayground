@@ -7,7 +7,8 @@ interface Quotes {
     val quoteOfTheDay: StateFlow<Quote?>
 
     suspend fun addNewQuote(
-        quote: Quote
+        content: String,
+        author: String? = null
     )
 
 }

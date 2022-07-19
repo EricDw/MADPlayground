@@ -74,14 +74,6 @@ class ContentContainerViewModel @Inject constructor(
                 state.screenContext = action.newContext
             }
 
-            is Action.AddNewQuote    -> {
-                viewModelScope.launch {
-                    quotes.addNewQuote(
-                        QuoteController(content = action.content)
-                    )
-                }
-            }
-
         }
 
     }

@@ -13,7 +13,7 @@ interface ContentContainer {
     }
 
     enum class ScreenContext {
-        HOME, SETTINGS;
+        HOME, SETTINGS, QUOTE_FORM;
     }
 
     sealed interface Event : Message {
@@ -52,10 +52,6 @@ interface ContentContainer {
 
             data class SwitchContexts(
                 val newContext: ScreenContext
-            ): Action
-
-            data class AddNewQuote(
-                val content: String = "Quote: ${Random.nextInt()}"
             ): Action
 
         }

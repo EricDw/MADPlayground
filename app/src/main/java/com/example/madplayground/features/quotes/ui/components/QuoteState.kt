@@ -8,6 +8,7 @@ import java.util.*
 data class QuoteState(
     override var id: String = UUID.randomUUID().toString(),
     override var content: String = "",
+    override val author: String? = null
 ) : Quote.State
 
 @Composable

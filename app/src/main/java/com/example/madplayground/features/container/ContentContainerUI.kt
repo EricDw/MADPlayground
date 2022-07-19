@@ -8,8 +8,10 @@ import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.example.madplayground.R
 import com.example.madplayground.features.messages.apis.Message
 import com.example.madplayground.features.settings.apis.Settings
@@ -30,16 +32,26 @@ fun ContentContainer(
 ) {
 
     val isDrawerUnlocked by remember {
+
         derivedStateOf {
             when (state.screenContext) {
+
                 ContentContainer.ScreenContext.HOME     -> {
                     false
                 }
+
                 ContentContainer.ScreenContext.SETTINGS -> {
                     false
                 }
+
+                ContentContainer.ScreenContext.QUOTE_FORM -> {
+                    false
+                }
+
             }
+
         }
+
     }
 
     var isFABVisible by remember {
@@ -219,6 +231,9 @@ fun ContentContainer(
                                     )
                                 }
                             }
+                            else -> {
+                                {/* no-op */}
+                            }
                         },
                     ) {
                         Column(
@@ -305,6 +320,11 @@ fun ContentContainer(
                 isNavigationButtonEnabled = true
             }
 
+            ContentContainer.ScreenContext.QUOTE_FORM -> {
+                isFABVisible = false
+                isNavigationButtonEnabled = true
+            }
+
         }
 
     }
@@ -318,6 +338,17 @@ private fun TopBar(
     eventHandler: Message.Handler<ContentContainer.Event>,
     state: ContentContainer.State,
 ) {
+
+    val elevation = when (state.screenContext) {
+        ContentContainer.ScreenContext.QUOTE_FORM -> {
+            0.dp
+        }
+
+        else -> {
+            1.dp
+        }
+    }
+
     TopAppBar(
         navigationIcon = if (!showNavigationIcon) {
             null
@@ -337,7 +368,9 @@ private fun TopBar(
                 ContentContainer.ScreenContext.SETTINGS -> {
                     R.string.title_settings
                 }
-
+                ContentContainer.ScreenContext.QUOTE_FORM -> {
+                    R.string.title_compose_quote
+                }
             }
 
             Text(
@@ -345,7 +378,8 @@ private fun TopBar(
             )
         },
         actions = {
-        }
+        },
+        elevation = elevation,
     )
 }
 
@@ -380,6 +414,9 @@ private fun NavigationIcon(
                     LocalIconography.current.backIcon
                 }
 
+                ContentContainer.ScreenContext.QUOTE_FORM -> {
+                    LocalIconography.current.backIcon
+                }
             }
 
             Icon(

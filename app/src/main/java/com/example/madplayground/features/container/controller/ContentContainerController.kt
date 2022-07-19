@@ -20,6 +20,8 @@ import com.example.madplayground.features.container.viewmodel.ContentContainerVi
 import com.example.madplayground.ui.logs.LocalLogs
 import com.example.madplayground.features.home.api.HomeScreen
 import com.example.madplayground.features.home.controller.HomeScreenController
+import com.example.madplayground.features.quotes.ui.screens.form.api.QuoteFormScreen
+import com.example.madplayground.features.quotes.ui.screens.form.controller.QuoteFormScreenController
 import com.example.madplayground.features.settings.ui.screens.api.SettingsScreen
 import com.example.madplayground.features.settings.ui.screens.controller.SettingsScreenController
 
@@ -54,13 +56,13 @@ fun ContentContainerController(
 
     val navHostController: NavHostController = rememberNavController()
 
-    val eventHandler = Message.Handler<ContentContainer.Event> { event ->
+    val eventHandler = Message.Handler<ContentContainer.Event> { theEvent ->
 
-        when (event) {
+        when (theEvent) {
 
             ContentContainer.Event.FABClicked              -> {
-                contentContainerViewModel.actionHandler(
-                    ContentContainer.ViewModel.Action.AddNewQuote()
+                navHostController.navigate(
+                    route = QuoteFormScreen.ROUTE
                 )
             }
 
@@ -91,6 +93,10 @@ fun ContentContainerController(
                     }
 
                     ContentContainer.ScreenContext.SETTINGS -> {
+                        navHostController.popBackStack()
+                    }
+
+                    ContentContainer.ScreenContext.QUOTE_FORM -> {
                         navHostController.popBackStack()
                     }
 
@@ -144,6 +150,25 @@ fun ContentContainerController(
 
                 }
 
+                composable(
+                    route = QuoteFormScreen.ROUTE
+                ) {
+
+                    QuoteFormScreenController(
+                        navController = navHostController,
+                        modifier = screenModifier
+                    )
+
+                    LaunchedEffect(key1 = true) {
+                        contentContainerViewModel.actionHandler(
+                            ContentContainer.ViewModel.Action.SwitchContexts(
+                                ContentContainer.ScreenContext.QUOTE_FORM
+                            )
+                        )
+                    }
+
+                }
+
             }
 
             navigation(
@@ -175,7 +200,11 @@ fun ContentContainerController(
 
     }
 
-    LaunchedEffect(key1 = windowConfiguration) {
+    LaunchedEffect(
+        key1 = windowConfiguration,
+        key2 = contentContainerState.screenContext
+    ) {
+
         when (
             windowConfiguration.combinedWindowType
         ) {
@@ -278,6 +307,25 @@ fun ContentContainerController(
                     message = "$windowConfiguration not handled!"
                 )
 
+            }
+
+        }
+
+        when (contentContainerState.screenContext) {
+
+            ContentContainer.ScreenContext.HOME       -> {
+                /* no-op */
+            }
+
+            ContentContainer.ScreenContext.SETTINGS   -> {
+                /* no-op */
+            }
+
+            ContentContainer.ScreenContext.QUOTE_FORM -> {
+                showNavigationRail = false
+                showBottomNavBar = false
+                showScaffoldFAB = false
+                showTopAppBar = true
             }
 
         }

@@ -10,6 +10,7 @@
     <string name="title_theme_type">Theme Type</string>
     <string name="title_icon_type">Icon Type</string>
     <string name="title_shape_type">Shape Type</string>
+    <string name="title_compose_quote">Compose Quote</string>
     <!-- endregion Titles -->
 
     <!-- region Labels -->
@@ -26,12 +27,18 @@
     <string name="label_always_visible">Always Visible</string>
     <string name="label_when_selected">When Selected</string>
     <string name="label_never">Never</string>
+    <string name="label_content">Content</string>
+    <string name="label_author">Author</string>
+    <string name="label_cancel">Cancel</string>
+    <string name="label_save">Save</string>
 
     <!-- endregion Labels -->
 
     <!-- region Messages -->
 
-    <string name="message_add_quote">"Time to add a quote!"</string>
+    <string name="message_add_quote">Time to add a quote!</string>
+    <string name="message_empty_content">Content can not be empty</string>
+    <string name="message_saving">Saving</string>
 
     <!-- endregion Messages -->
 

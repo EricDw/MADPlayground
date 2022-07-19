@@ -16,8 +16,12 @@ class QuotesController : Quotes {
         _quoteOfTheDay.asStateFlow()
 
     override suspend fun addNewQuote(
-        quote: Quote
+        content: String,
+        author: String?,
     ) {
-        _quoteOfTheDay.value = quote
+        _quoteOfTheDay.value = QuoteController(
+            content = content,
+            author = author
+        )
     }
 }
