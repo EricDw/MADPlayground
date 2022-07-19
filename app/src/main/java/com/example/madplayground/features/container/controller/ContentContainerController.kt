@@ -211,27 +211,53 @@ fun ContentContainerController(
 
             CombinedWindowType.COMPACT_WIDTH_COMPACT_HEIGHT   -> {
 
-                showTopAppBar = false
-                showBottomNavBar = false
-                showNavigationRail = false
-                showScaffoldFAB = true
+                when (contentContainerState.screenContext) {
+
+                    ContentContainer.ScreenContext.QUOTE_FORM -> {
+                        showNavigationRail = false
+                        showBottomNavBar = false
+                        showScaffoldFAB = false
+                        showTopAppBar = true
+                    }
+
+                    else -> {
+                        showTopAppBar = false
+                        showBottomNavBar = false
+                        showNavigationRail = false
+                        showScaffoldFAB = true
+                    }
+
+                }
 
                 logs.logDebug(
                     tag = tag,
-                    message = "$windowConfiguration not handled!"
+                    message = "$windowConfiguration handled!"
                 )
 
             }
 
             CombinedWindowType.COMPACT_WIDTH_MEDIUM_HEIGHT    -> {
 
-                showBottomNavBar = true
-                showNavigationRail = false
-                showScaffoldFAB = true
+                when (contentContainerState.screenContext) {
+
+                    ContentContainer.ScreenContext.QUOTE_FORM -> {
+                        showNavigationRail = false
+                        showBottomNavBar = false
+                        showScaffoldFAB = false
+                        showTopAppBar = true
+                    }
+
+                    else -> {
+                        showBottomNavBar = true
+                        showNavigationRail = false
+                        showScaffoldFAB = true
+                    }
+
+                }
 
                 logs.logDebug(
                     tag = tag,
-                    message = "$windowConfiguration not handled!"
+                    message = "$windowConfiguration handled!"
                 )
 
             }
@@ -248,13 +274,26 @@ fun ContentContainerController(
 
             CombinedWindowType.MEDIUM_WIDTH_COMPACT_HEIGHT    -> {
 
-                showBottomNavBar = false
-                showNavigationRail = true
-                showScaffoldFAB = false
+                when (contentContainerState.screenContext) {
+
+                    ContentContainer.ScreenContext.QUOTE_FORM -> {
+                        showNavigationRail = false
+                        showBottomNavBar = false
+                        showScaffoldFAB = false
+                        showTopAppBar = true
+                    }
+
+                    else -> {
+                        showBottomNavBar = false
+                        showNavigationRail = true
+                        showScaffoldFAB = false
+                    }
+
+                }
 
                 logs.logDebug(
                     tag = tag,
-                    message = "$windowConfiguration not handled!"
+                    message = "$windowConfiguration handled!"
                 )
 
             }
@@ -280,11 +319,28 @@ fun ContentContainerController(
             }
 
             CombinedWindowType.EXPANDED_WIDTH_COMPACT_HEIGHT  -> {
-                // TODO: Configure State
+
+                when (contentContainerState.screenContext) {
+
+                    ContentContainer.ScreenContext.QUOTE_FORM -> {
+                        showNavigationRail = false
+                        showBottomNavBar = false
+                        showScaffoldFAB = false
+                        showTopAppBar = true
+                    }
+
+                    else -> {
+                        showBottomNavBar = false
+                        showNavigationRail = true
+                        showScaffoldFAB = false
+                    }
+
+                }
+
 
                 logs.logDebug(
                     tag = tag,
-                    message = "$windowConfiguration not handled!"
+                    message = "$windowConfiguration handled!"
                 )
 
             }
@@ -311,24 +367,6 @@ fun ContentContainerController(
 
         }
 
-        when (contentContainerState.screenContext) {
-
-            ContentContainer.ScreenContext.HOME       -> {
-                /* no-op */
-            }
-
-            ContentContainer.ScreenContext.SETTINGS   -> {
-                /* no-op */
-            }
-
-            ContentContainer.ScreenContext.QUOTE_FORM -> {
-                showNavigationRail = false
-                showBottomNavBar = false
-                showScaffoldFAB = false
-                showTopAppBar = true
-            }
-
-        }
 
     }
 

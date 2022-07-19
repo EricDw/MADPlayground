@@ -349,6 +349,18 @@ private fun TopBar(
         }
     }
 
+    val backgroundColor = when (state.screenContext) {
+
+        ContentContainer.ScreenContext.QUOTE_FORM -> {
+            MaterialTheme.colors.primary
+        }
+
+        else -> {
+            MaterialTheme.colors.primarySurface
+        }
+
+    }
+
     TopAppBar(
         navigationIcon = if (!showNavigationIcon) {
             null
@@ -380,6 +392,7 @@ private fun TopBar(
         actions = {
         },
         elevation = elevation,
+        backgroundColor = backgroundColor
     )
 }
 
