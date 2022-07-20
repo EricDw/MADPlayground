@@ -1,4 +1,4 @@
-package com.example.madplayground.features.container.controller
+package com.example.madplayground.features.container.ui.screen.controller
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -14,9 +14,9 @@ import androidx.navigation.navigation
 import com.example.madplayground.features.messages.apis.Message
 import com.example.madplayground.features.config.CombinedWindowType
 import com.example.madplayground.features.config.LocalWindowConfiguration
-import com.example.madplayground.features.container.ContentContainer
+import com.example.madplayground.features.container.ui.screen.ContentContainer
 import com.example.madplayground.features.container.api.ContentContainer
-import com.example.madplayground.features.container.viewmodel.ContentContainerViewModel
+import com.example.madplayground.features.container.ui.viewmodel.AndroidContentContainerViewModel
 import com.example.madplayground.ui.logs.LocalLogs
 import com.example.madplayground.features.home.api.HomeScreen
 import com.example.madplayground.features.home.controller.HomeScreenController
@@ -27,7 +27,7 @@ import com.example.madplayground.features.settings.ui.screens.controller.Setting
 
 @Composable
 fun ContentContainerController(
-    contentContainerViewModel: ContentContainer.ViewModel = hiltViewModel<ContentContainerViewModel>(),
+    contentContainerViewModel: ContentContainer.ViewModel = hiltViewModel<AndroidContentContainerViewModel>(),
 ) {
 
     val tag = "ContentContainerController"
@@ -50,8 +50,8 @@ fun ContentContainerController(
         mutableStateOf(false)
     }
 
-    var showScaffoldFAB: Boolean by remember {
-        mutableStateOf(false)
+    var showBottomFAB: Boolean by remember {
+        mutableStateOf(true)
     }
 
     val navHostController: NavHostController = rememberNavController()
@@ -114,7 +114,7 @@ fun ContentContainerController(
         showTopAppBar = showTopAppBar,
         showBottomNavBar = showBottomNavBar,
         showNavigationRail = showNavigationRail,
-        showScaffoldFAB = showScaffoldFAB,
+        showBottomFAB = showBottomFAB,
         eventHandler = eventHandler
     ) { rootPadding ->
 
@@ -216,15 +216,19 @@ fun ContentContainerController(
                     ContentContainer.ScreenContext.QUOTE_FORM -> {
                         showNavigationRail = false
                         showBottomNavBar = false
-                        showScaffoldFAB = false
+                        showBottomFAB = false
                         showTopAppBar = true
+                    }
+
+                    ContentContainer.ScreenContext.SETTINGS -> {
+                        showBottomFAB = false
                     }
 
                     else -> {
                         showTopAppBar = false
                         showBottomNavBar = true
                         showNavigationRail = false
-                        showScaffoldFAB = true
+                        showBottomFAB = true
                     }
 
                 }
@@ -243,14 +247,18 @@ fun ContentContainerController(
                     ContentContainer.ScreenContext.QUOTE_FORM -> {
                         showNavigationRail = false
                         showBottomNavBar = false
-                        showScaffoldFAB = false
+                        showBottomFAB = false
                         showTopAppBar = true
+                    }
+
+                    ContentContainer.ScreenContext.SETTINGS -> {
+                        showBottomFAB = false
                     }
 
                     else -> {
                         showBottomNavBar = true
                         showNavigationRail = false
-                        showScaffoldFAB = true
+                        showBottomFAB = true
                     }
 
                 }
@@ -279,14 +287,14 @@ fun ContentContainerController(
                     ContentContainer.ScreenContext.QUOTE_FORM -> {
                         showNavigationRail = false
                         showBottomNavBar = false
-                        showScaffoldFAB = false
+                        showBottomFAB = false
                         showTopAppBar = true
                     }
 
                     else -> {
                         showBottomNavBar = false
                         showNavigationRail = true
-                        showScaffoldFAB = false
+                        showBottomFAB = false
                     }
 
                 }
@@ -325,14 +333,14 @@ fun ContentContainerController(
                     ContentContainer.ScreenContext.QUOTE_FORM -> {
                         showNavigationRail = false
                         showBottomNavBar = false
-                        showScaffoldFAB = false
+                        showBottomFAB = false
                         showTopAppBar = true
                     }
 
                     else -> {
                         showBottomNavBar = false
                         showNavigationRail = true
-                        showScaffoldFAB = false
+                        showBottomFAB = false
                     }
 
                 }

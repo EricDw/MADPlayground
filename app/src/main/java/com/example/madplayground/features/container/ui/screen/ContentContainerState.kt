@@ -1,4 +1,4 @@
-package com.example.madplayground.features.container
+package com.example.madplayground.features.container.ui.screen
 
 import androidx.compose.runtime.*
 import com.example.madplayground.features.settings.apis.Settings

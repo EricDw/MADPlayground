@@ -1,4 +1,4 @@
-package com.example.madplayground.features.container
+package com.example.madplayground.features.container.ui.screen
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.slideInHorizontally
@@ -8,14 +8,16 @@ import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.madplayground.R
+import com.example.madplayground.features.container.api.ContentContainer
+import com.example.madplayground.features.container.ui.components.ContextualFloatingActionButton
+import com.example.madplayground.features.container.ui.components.ContextualNavigationRail
+import com.example.madplayground.features.container.ui.components.ContextualTopAppBar
 import com.example.madplayground.features.messages.apis.Message
 import com.example.madplayground.features.settings.apis.Settings
-import com.example.madplayground.features.container.api.ContentContainer
 import com.example.madplayground.features.theme.ThemeController
 import com.example.madplayground.features.theme.models.LocalIconography
 
@@ -26,7 +28,7 @@ fun ContentContainer(
     showTopAppBar: Boolean = true,
     showBottomNavBar: Boolean = true,
     showNavigationRail: Boolean = false,
-    showScaffoldFAB: Boolean = false,
+    showBottomFAB: Boolean = true,
     eventHandler: Message.Handler<ContentContainer.Event> = Message.Handler { /* no-op */ },
     content: @Composable (scaffoldPadding: PaddingValues) -> Unit,
 ) {
@@ -36,11 +38,11 @@ fun ContentContainer(
         derivedStateOf {
             when (state.screenContext) {
 
-                ContentContainer.ScreenContext.HOME     -> {
+                ContentContainer.ScreenContext.HOME       -> {
                     false
                 }
 
-                ContentContainer.ScreenContext.SETTINGS -> {
+                ContentContainer.ScreenContext.SETTINGS   -> {
                     false
                 }
 
@@ -52,10 +54,6 @@ fun ContentContainer(
 
         }
 
-    }
-
-    var isFABVisible by remember {
-        mutableStateOf(true)
     }
 
     var isNavigationButtonEnabled by remember {
@@ -83,7 +81,6 @@ fun ContentContainer(
 
         }
 
-
     }
 
     val snackbarHostState = remember {
@@ -106,13 +103,13 @@ fun ContentContainer(
             scaffoldState = scaffoldState,
             modifier = modifier,
             topBar = {
-                if (showTopAppBar)
-                    TopBar(
-                        isNavigationButtonEnabled = isNavigationButtonEnabled,
-                        showNavigationIcon = isTopNavigationIconVisible,
-                        eventHandler = eventHandler,
-                        state = state
-                    )
+
+                ContextualTopAppBar(
+                    screenContext = state.screenContext,
+                    eventHandler = eventHandler,
+                    isVisible = showTopAppBar
+                )
+
             },
             bottomBar = {
 
@@ -174,25 +171,19 @@ fun ContentContainer(
                 }
 
             },
+            snackbarHost = { _ ->
+                /* no-op */
+            },
             floatingActionButton = {
 
-                if (showScaffoldFAB && state.screenContext != ContentContainer.ScreenContext.SETTINGS) {
+                ContextualFloatingActionButton(
+                    screenContext = state.screenContext,
+                    eventHandler = eventHandler,
+                    isVisible = showBottomFAB
+                )
 
-                    FloatingActionButton(
-                        onClick = {
-                            eventHandler(
-                                ContentContainer.Event.FABClicked
-                            )
-                        }
-                    ) {
-                        Icon(
-                            imageVector = LocalIconography.current.editIcon,
-                            contentDescription = null
-                        )
-                    }
-
-                }
             },
+            drawerContent = null,
             drawerGesturesEnabled = isDrawerUnlocked,
         ) { scaffoldPadding ->
 
@@ -200,101 +191,12 @@ fun ContentContainer(
                 modifier = Modifier.fillMaxSize()
             ) {
 
-                if (showNavigationRail) {
-                    NavigationRail(
-                        header = when (state.screenContext) {
-                            ContentContainer.ScreenContext.HOME     -> {
-                                {
-                                    AnimatedVisibility(visible = isFABVisible) {
-                                        FloatingActionButton(
-                                            onClick = {
-                                                eventHandler(
-                                                    ContentContainer.Event.FABClicked
-                                                )
-                                            }
-                                        ) {
-                                            Icon(
-                                                imageVector = LocalIconography.current.editIcon,
-                                                contentDescription = null
-                                            )
-                                        }
-                                    }
-                                }
-                            }
-
-                            ContentContainer.ScreenContext.SETTINGS -> {
-                                {
-                                    NavigationIcon(
-                                        isNavigationButtonEnabled = isNavigationButtonEnabled,
-                                        eventHandler = eventHandler,
-                                        state = state
-                                    )
-                                }
-                            }
-                            else -> {
-                                {/* no-op */}
-                            }
-                        },
-                    ) {
-                        Column(
-                            modifier = Modifier.fillMaxHeight(),
-                            verticalArrangement = Arrangement.Center
-                        ) {
-
-                            NavigationRailItem(
-                                selected = state.screenContext == ContentContainer.ScreenContext.HOME,
-                                onClick = {
-                                    eventHandler(
-                                        ContentContainer.Event.HomeTabClicked
-                                    )
-                                },
-                                icon = {
-                                    Icon(
-                                        imageVector = LocalIconography.current.homeIcon,
-                                        contentDescription = "Home Tab"
-                                    )
-                                },
-                                label = if (state.navigationLabelVisibility == Settings.NavigationLabelVisibility.NEVER) {
-                                    null
-                                } else {
-                                    {
-                                        Text(
-                                            text = stringResource(id = R.string.title_home)
-                                        )
-                                    }
-                                },
-                                alwaysShowLabel = state.navigationLabelVisibility == Settings.NavigationLabelVisibility.ALWAYS
-                            )
-
-                            NavigationRailItem(
-                                selected = state.screenContext == ContentContainer.ScreenContext.SETTINGS,
-                                onClick = {
-                                    eventHandler(
-                                        ContentContainer.Event.SettingsTabClicked
-                                    )
-                                },
-                                icon = {
-                                    Icon(
-                                        imageVector = LocalIconography.current.settingsIcon,
-                                        contentDescription = "Settings Tab"
-                                    )
-                                },
-                                label = if (state.navigationLabelVisibility == Settings.NavigationLabelVisibility.NEVER) {
-                                    null
-                                } else {
-                                    {
-                                        Text(
-                                            text = stringResource(id = R.string.title_settings)
-                                        )
-                                    }
-                                },
-                                alwaysShowLabel = state.navigationLabelVisibility == Settings.NavigationLabelVisibility.ALWAYS
-                            )
-
-                        }
-
-                    }
-                }
+                ContextualNavigationRail(
+                    screenContext = state.screenContext,
+                    eventHandler = eventHandler,
+                    isVisible = showNavigationRail,
+                    navigationLabelVisibility = state.navigationLabelVisibility
+                )
 
                 content(
                     scaffoldPadding
@@ -303,6 +205,7 @@ fun ContentContainer(
             }
 
         }
+
     }
 
     LaunchedEffect(key1 = state.screenContext) {
@@ -310,18 +213,15 @@ fun ContentContainer(
             state.screenContext
         ) {
 
-            ContentContainer.ScreenContext.HOME     -> {
-                isFABVisible = true
+            ContentContainer.ScreenContext.HOME       -> {
                 isNavigationButtonEnabled = false
             }
 
-            ContentContainer.ScreenContext.SETTINGS -> {
-                isFABVisible = false
+            ContentContainer.ScreenContext.SETTINGS   -> {
                 isNavigationButtonEnabled = true
             }
 
             ContentContainer.ScreenContext.QUOTE_FORM -> {
-                isFABVisible = false
                 isNavigationButtonEnabled = true
             }
 
@@ -344,7 +244,7 @@ private fun TopBar(
             0.dp
         }
 
-        else -> {
+        else                                      -> {
             1.dp
         }
     }
@@ -355,7 +255,7 @@ private fun TopBar(
             MaterialTheme.colors.primary
         }
 
-        else -> {
+        else                                      -> {
             MaterialTheme.colors.primarySurface
         }
 
@@ -373,11 +273,11 @@ private fun TopBar(
 
             val titleId = when (state.screenContext) {
 
-                ContentContainer.ScreenContext.HOME     -> {
+                ContentContainer.ScreenContext.HOME       -> {
                     R.string.title_home
                 }
 
-                ContentContainer.ScreenContext.SETTINGS -> {
+                ContentContainer.ScreenContext.SETTINGS   -> {
                     R.string.title_settings
                 }
                 ContentContainer.ScreenContext.QUOTE_FORM -> {
@@ -418,12 +318,12 @@ private fun NavigationIcon(
 
             val icon = when (state.screenContext) {
 
-                ContentContainer.ScreenContext.HOME     -> {
+                ContentContainer.ScreenContext.HOME       -> {
                     LocalIconography.current.menuIcon
 
                 }
 
-                ContentContainer.ScreenContext.SETTINGS -> {
+                ContentContainer.ScreenContext.SETTINGS   -> {
                     LocalIconography.current.backIcon
                 }
 

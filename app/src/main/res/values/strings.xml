@@ -42,4 +42,14 @@
 
     <!-- endregion Messages -->
 
+    <!-- region Content Descriptions -->
+
+    <string name="description_add_quote">Add new quote</string>
+    <string name="description_go_back">Navigate back</string>
+    <string name="description_home_tab">Home tab</string>
+    <string name="description_settings_tab">Settings tab</string>
+    <string name="description_menu">Menu</string>
+
+    <!-- endregion Content Descriptions -->
+
 </resources>

@@ -14,7 +14,7 @@ import com.example.madplayground.features.config.LocalWindowConfiguration
 import com.example.madplayground.features.config.WindowConfiguration
 import com.example.madplayground.features.config.WindowHeightType
 import com.example.madplayground.features.config.WindowWidthType
-import com.example.madplayground.features.container.controller.ContentContainerController
+import com.example.madplayground.features.container.ui.screen.controller.ContentContainerController
 import com.example.madplayground.ui.logs.LocalLogs
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject

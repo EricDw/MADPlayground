@@ -3,7 +3,6 @@ package com.example.madplayground.features.container.api
 import com.example.madplayground.features.messages.apis.Message
 import com.example.madplayground.features.settings.apis.Settings
 import kotlinx.coroutines.flow.StateFlow
-import kotlin.random.Random
 
 interface ContentContainer {
 
@@ -51,8 +50,8 @@ interface ContentContainer {
         sealed interface Action : Message {
 
             data class SwitchContexts(
-                val newContext: ScreenContext
-            ): Action
+                val newContext: ScreenContext,
+            ) : Action
 
         }
 
