@@ -1,6 +1,6 @@
 package com.example.madplayground.features.logs.controllers.fakes
 
-import com.example.madplayground.features.logs.api.Logs
+import com.example.madplayground.domain.logs.models.Logs
 
 class TestLogsController : Logs {
 

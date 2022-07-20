@@ -1,13 +1,13 @@
 package com.example.madplayground.features.settings.ui.screens.viewmodel
 
-import com.example.madplayground.features.app.apis.App
-import com.example.madplayground.features.app.controllers.ApplicationController
-import com.example.madplayground.features.settings.controllers.fakes.FakeSettingsController
-import com.example.madplayground.features.settings.ui.screens.api.SettingsScreen
+import com.example.madplayground.app.models.App
+import com.example.madplayground.app.source.ApplicationController
+import com.example.madplayground.features.settings.source.fakes.FakeSettingsController
+import com.example.madplayground.ui.settings.models.SettingsScreen
 import com.example.madplayground.features.logs.controllers.fakes.TestLogsController
-import com.example.madplayground.features.quotes.controllers.QuotesController
-import com.example.madplayground.features.settings.apis.Settings
-import kotlinx.coroutines.CoroutineScope
+import com.example.madplayground.domain.quotes.source.QuotesController
+import com.example.madplayground.domain.settings.models.Settings
+import com.example.madplayground.ui.settings.source.SettingsScreenViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.UnconfinedTestDispatcher

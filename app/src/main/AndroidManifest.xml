@@ -4,7 +4,7 @@
     package="com.example.madplayground">
 
     <application
-        android:name=".features.app.controllers.AndroidApplicationController"
+        android:name=".app.source.AndroidApplicationController"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -15,7 +15,7 @@
         android:theme="@style/Theme.MADPlayground"
         tools:targetApi="31">
         <activity
-            android:name=".features.app.controllers.MainActivityController"
+            android:name=".app.source.MainActivityController"
             android:exported="true"
             android:theme="@style/Theme.MADPlayground">
             <intent-filter>
