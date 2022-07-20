@@ -1,8 +1,5 @@
 package com.example.madplayground.features.container.ui.screen
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.slideInHorizontally
-import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.*
@@ -10,12 +7,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.example.madplayground.R
 import com.example.madplayground.features.container.api.ContentContainer
 import com.example.madplayground.features.container.ui.components.ContextualFloatingActionButton
 import com.example.madplayground.features.container.ui.components.ContextualNavigationRail
 import com.example.madplayground.features.container.ui.components.ContextualTopAppBar
+import com.example.madplayground.features.container.ui.util.ScreenContextPreviewParameterProvider
 import com.example.madplayground.features.messages.apis.Message
 import com.example.madplayground.features.settings.apis.Settings
 import com.example.madplayground.features.theme.ThemeController
@@ -55,13 +53,6 @@ fun ContentContainer(
         }
 
     }
-
-    var isNavigationButtonEnabled by remember {
-        mutableStateOf(false)
-    }
-
-    val isTopNavigationIconVisible =
-        !showNavigationRail && state.screenContext != ContentContainer.ScreenContext.HOME
 
     val drawerState = rememberDrawerState(
         initialValue = DrawerValue.Closed
@@ -208,145 +199,25 @@ fun ContentContainer(
 
     }
 
-    LaunchedEffect(key1 = state.screenContext) {
-        when (
-            state.screenContext
-        ) {
-
-            ContentContainer.ScreenContext.HOME       -> {
-                isNavigationButtonEnabled = false
-            }
-
-            ContentContainer.ScreenContext.SETTINGS   -> {
-                isNavigationButtonEnabled = true
-            }
-
-            ContentContainer.ScreenContext.QUOTE_FORM -> {
-                isNavigationButtonEnabled = true
-            }
-
-        }
-
-    }
-
 }
 
+@Preview(
+    showBackground = true,
+    showSystemUi = true
+)
 @Composable
-private fun TopBar(
-    isNavigationButtonEnabled: Boolean,
-    showNavigationIcon: Boolean,
-    eventHandler: Message.Handler<ContentContainer.Event>,
-    state: ContentContainer.State,
+private fun ContentContainerPreview(
+    @PreviewParameter(ScreenContextPreviewParameterProvider::class)
+    screenContext: ContentContainer.ScreenContext
 ) {
 
-    val elevation = when (state.screenContext) {
-        ContentContainer.ScreenContext.QUOTE_FORM -> {
-            0.dp
-        }
-
-        else                                      -> {
-            1.dp
-        }
+    val state = rememberContentContainerState {
+        this.screenContext = screenContext
     }
-
-    val backgroundColor = when (state.screenContext) {
-
-        ContentContainer.ScreenContext.QUOTE_FORM -> {
-            MaterialTheme.colors.primary
-        }
-
-        else                                      -> {
-            MaterialTheme.colors.primarySurface
-        }
-
-    }
-
-    TopAppBar(
-        navigationIcon = if (!showNavigationIcon) {
-            null
-        } else {
-            {
-                NavigationIcon(isNavigationButtonEnabled, eventHandler, state)
-            }
-        },
-        title = {
-
-            val titleId = when (state.screenContext) {
-
-                ContentContainer.ScreenContext.HOME       -> {
-                    R.string.title_home
-                }
-
-                ContentContainer.ScreenContext.SETTINGS   -> {
-                    R.string.title_settings
-                }
-                ContentContainer.ScreenContext.QUOTE_FORM -> {
-                    R.string.title_compose_quote
-                }
-            }
-
-            Text(
-                text = stringResource(id = titleId),
-            )
-        },
-        actions = {
-        },
-        elevation = elevation,
-        backgroundColor = backgroundColor
-    )
-}
-
-@Composable
-private fun NavigationIcon(
-    isNavigationButtonEnabled: Boolean,
-    eventHandler: Message.Handler<ContentContainer.Event>,
-    state: ContentContainer.State,
-) {
-    AnimatedVisibility(
-        visible = isNavigationButtonEnabled,
-        enter = slideInHorizontally(),
-        exit = slideOutHorizontally(),
-    ) {
-
-        IconButton(
-            onClick = {
-                eventHandler(
-                    ContentContainer.Event.NavigationButtonClicked
-                )
-            }
-        ) {
-
-            val icon = when (state.screenContext) {
-
-                ContentContainer.ScreenContext.HOME       -> {
-                    LocalIconography.current.menuIcon
-
-                }
-
-                ContentContainer.ScreenContext.SETTINGS   -> {
-                    LocalIconography.current.backIcon
-                }
-
-                ContentContainer.ScreenContext.QUOTE_FORM -> {
-                    LocalIconography.current.backIcon
-                }
-            }
-
-            Icon(
-                imageVector = icon,
-                contentDescription = ""
-            )
-        }
-
-    }
-}
-
-@Preview(showBackground = true, showSystemUi = true)
-@Composable
-fun AppPreview() {
 
     ContentContainer(
         modifier = Modifier.fillMaxSize(),
+        state = state,
     ) { scaffoldPadding ->
 
         Box(
@@ -357,7 +228,7 @@ fun AppPreview() {
         ) {
 
             Text(
-                text = "Hello World",
+                text = screenContext.name,
             )
         }
 

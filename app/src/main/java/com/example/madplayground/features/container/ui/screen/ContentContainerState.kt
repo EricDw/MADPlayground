@@ -29,6 +29,8 @@ class ContentContainerState : ContentContainer.State {
 }
 
 @Composable
-fun rememberContentContainerState(): ContentContainerState = remember {
-    ContentContainerState()
+fun rememberContentContainerState(
+    initializer: ContentContainerState.() -> Unit = { /* no-op */ },
+): ContentContainerState = remember {
+    ContentContainerState().apply(initializer)
 }

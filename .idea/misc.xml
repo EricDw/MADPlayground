@@ -7,6 +7,7 @@
         <entry key="app/src/main/java/com/example/madplayground/features/container/ui/components/ContextualFloatingActionButton.kt" value="1.0" />
         <entry key="app/src/main/java/com/example/madplayground/features/container/ui/components/ContextualNavigationRail.kt" value="0.10277777777777777" />
         <entry key="app/src/main/java/com/example/madplayground/features/container/ui/components/ContextualTopAppBar.kt" value="0.13055555555555556" />
+        <entry key="app/src/main/java/com/example/madplayground/features/container/ui/screen/ContentContainerUI.kt" value="0.10319444444444445" />
         <entry key="app/src/main/java/com/example/madplayground/features/home/HomeScreenUI.kt" value="0.22037037037037038" />
         <entry key="app/src/main/java/com/example/madplayground/features/quotes/ui/screens/form/QuoteFormScreenUI.kt" value="0.30925925925925923" />
         <entry key="app/src/main/java/com/example/madplayground/ui/app/AppUI.kt" value="0.2574074074074074" />
