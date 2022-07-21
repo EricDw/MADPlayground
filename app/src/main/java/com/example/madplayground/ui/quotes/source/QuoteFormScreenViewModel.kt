@@ -1,9 +1,10 @@
 package com.example.madplayground.ui.quotes.source
 
-import com.example.madplayground.app.models.App
+import com.example.madplayground.domain.logs.models.Logs
 import com.example.madplayground.domain.messages.Message
 import com.example.madplayground.domain.moments.source.buildCreateMomentForm
 import com.example.madplayground.domain.moments.usecases.CreateMomentUseCase
+import com.example.madplayground.domain.settings.models.Settings
 import com.example.madplayground.ui.moments.models.MomentFormScreen.State
 import com.example.madplayground.ui.moments.models.MomentFormScreen.ViewModel
 import com.example.madplayground.ui.moments.models.MomentFormScreen.ViewModel.Action
@@ -17,12 +18,12 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class MomentFormScreenViewModel(
-    private val app: App,
+    private val logs: Logs,
     private val createMomentUseCase: CreateMomentUseCase,
     private val scope: CoroutineScope = CoroutineScope(
         Dispatchers.Main.immediate + SupervisorJob()
     ),
-) : ViewModel, App by app {
+) : ViewModel, Logs by logs {
 
     private val tag = this::class.simpleName
 
@@ -35,12 +36,12 @@ class MomentFormScreenViewModel(
 
     init {
 
-        logs.logDebug(
+        logDebug(
             tag = tag,
             message = "Initializing"
         )
 
-        logs.logDebug(
+        logDebug(
             tag = tag,
             message = "Initialized"
         )
@@ -49,7 +50,7 @@ class MomentFormScreenViewModel(
 
     override val actionHandler: Message.Handler<Action> = Message.Handler { theAction ->
 
-        logs.logDebug(
+        logDebug(
             tag = tag,
             message = "Received: $theAction"
         )
@@ -96,7 +97,7 @@ class MomentFormScreenViewModel(
 
                                 is CreateMomentUseCase.Result.Error    -> {
 
-                                    logs.logError(
+                                    logError(
                                         tag = tag,
                                         message = "Error not handled",
                                         error = theResult.cause

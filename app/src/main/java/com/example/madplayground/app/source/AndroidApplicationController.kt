@@ -1,22 +1,23 @@
 package com.example.madplayground.app.source
 
 import android.app.Application
-import com.example.madplayground.app.models.App
+import com.example.madplayground.domain.logs.models.Logs
 import dagger.hilt.android.HiltAndroidApp
 import javax.inject.Inject
 
 @HiltAndroidApp
-class AndroidApplicationController: Application() {
+class AndroidApplicationController : Application() {
 
     private val tag = this::class.simpleName
 
-    @Inject lateinit var app: App
+    @Inject
+    lateinit var logs: Logs
 
     override fun onCreate() {
         // Variables are injected after super
         super.onCreate()
 
-        app.logs.logDebug(
+        logs.logDebug(
             tag = tag,
             message = "Created"
         )

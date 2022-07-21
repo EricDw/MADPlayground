@@ -10,7 +10,7 @@ import androidx.navigation.NavHostController
 import com.example.madplayground.domain.messages.Message
 import com.example.madplayground.features.moments.ui.screens.form.MomentFormScreen
 import com.example.madplayground.ui.moments.models.MomentFormScreen
-import com.example.madplayground.ui.moments.source.AndroidMomentFormScreenViewModel
+import com.example.madplayground.ui.quotes.source.AndroidMomentFormScreenViewModel
 
 @Composable
 fun MomentFormScreenController(

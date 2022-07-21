@@ -2,22 +2,25 @@ package com.example.madplayground.ui.settings.source
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.madplayground.app.models.App
+import com.example.madplayground.domain.logs.models.Logs
 import com.example.madplayground.domain.messages.Message
+import com.example.madplayground.domain.settings.models.Settings
 import com.example.madplayground.ui.settings.models.SettingsScreen
-import com.example.madplayground.ui.settings.models.SettingsScreen.*
-import com.example.madplayground.ui.settings.models.SettingsScreen.ViewModel.*
+import com.example.madplayground.ui.settings.models.SettingsScreen.State
+import com.example.madplayground.ui.settings.models.SettingsScreen.ViewModel.Action
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
 
 @HiltViewModel
 class AndroidSettingsScreenViewModel @Inject constructor(
-    private val app: App,
+    logs: Logs,
+    settings: Settings,
 ) : ViewModel(), SettingsScreen.ViewModel {
 
     private val delegate = SettingsScreenViewModel(
-        app = app,
+        logs = logs,
+        settings = settings,
         scope = viewModelScope
     )
 

@@ -50,8 +50,6 @@ android {
 
 dependencies {
 
-    testImplementation 'junit:junit:4.12'
-    testImplementation 'junit:junit:4.12'
     kapt 'org.jetbrains.kotlinx:kotlinx-metadata-jvm:0.5.0'
 
     // Core Extensions
@@ -60,9 +58,12 @@ dependencies {
     // DataStore
     implementation "androidx.datastore:datastore-preferences:1.0.0"
 
-    // Window Manager
+    // region Window Manager
+
     implementation "androidx.window:window:1.1.0-alpha02"
     implementation "androidx.compose.material3:material3-window-size-class:1.0.0-alpha14"
+
+    // endregion Window Manager
 
     // region Compose
 
@@ -120,6 +121,9 @@ dependencies {
     implementation 'androidx.hilt:hilt-navigation-compose:1.0.0'
 
     // endregion Hilt
+
+    // Date Time
+    implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.4.0")
 
     // region Testing
 

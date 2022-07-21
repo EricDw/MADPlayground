@@ -6,6 +6,7 @@ import kotlinx.coroutines.flow.Flow
 fun interface RetrieveMomentUseCase {
 
     sealed interface Result {
+
         object Running: Result
 
         data class Complete(

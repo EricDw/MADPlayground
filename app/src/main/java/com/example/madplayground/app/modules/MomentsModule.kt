@@ -1,8 +1,10 @@
 package com.example.madplayground.app.modules
 
-import com.example.madplayground.domain.moments.models.Moments
 import com.example.madplayground.domain.moments.repository.MomentRepository
-import com.example.madplayground.domain.moments.source.*
+import com.example.madplayground.domain.moments.source.CreateMomentUseCaseImpl
+import com.example.madplayground.domain.moments.source.DeleteMomentUseCaseImpl
+import com.example.madplayground.domain.moments.source.RetrieveMomentUseCaseImpl
+import com.example.madplayground.domain.moments.source.UpdateMomentUseCaseImpl
 import com.example.madplayground.domain.moments.usecases.CreateMomentUseCase
 import com.example.madplayground.domain.moments.usecases.DeleteMomentUseCase
 import com.example.madplayground.domain.moments.usecases.RetrieveMomentUseCase
@@ -11,23 +13,14 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
 object MomentsModule {
 
     @Provides
-    @Singleton
-    fun provideMoments(): Moments {
-
-        return MomentsController()
-
-    }
-
-    @Provides
     fun provideCreateMomentUseCase(
-        repository: MomentRepository
+        repository: MomentRepository,
     ): CreateMomentUseCase {
 
         return CreateMomentUseCaseImpl(
@@ -38,7 +31,7 @@ object MomentsModule {
 
     @Provides
     fun provideRetrieveMomentUseCase(
-        repository: MomentRepository
+        repository: MomentRepository,
     ): RetrieveMomentUseCase {
 
         return RetrieveMomentUseCaseImpl(

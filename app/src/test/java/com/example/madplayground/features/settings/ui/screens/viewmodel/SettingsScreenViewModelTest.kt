@@ -34,16 +34,9 @@ class SettingsScreenViewModelTest {
 
         val settings = FakeSettingsController()
 
-        val moments = MomentsController()
-
-        val app: App = ApplicationController(
-            logs = logs,
-            settings = settings,
-            moments = moments
-        )
-
         viewModel = SettingsScreenViewModel(
-            app = app
+            logs = logs,
+            settings = settings
         )
 
     }

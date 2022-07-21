@@ -2,15 +2,18 @@ package com.example.madplayground.domain.moments.source
 
 import com.example.madplayground.domain.moments.models.CreateMomentForm
 import com.example.madplayground.domain.moments.models.Moment
+import kotlinx.datetime.LocalDateTime
 import java.util.*
 
 class MomentWriteModel(
     form: CreateMomentForm,
 ) : Moment {
 
-    data class ValidationError(
-        val causes: List<Throwable>,
-    ) : Throwable()
+    override val id: Moment.Id = Moment.Id(UUID.randomUUID().toString())
+
+    override lateinit var description: String
+
+    override lateinit var date: LocalDateTime
 
     init {
 
@@ -22,6 +25,22 @@ class MomentWriteModel(
                 "Description can not be Empty"
             )
 
+        } else {
+
+            description = form.description
+
+        }
+
+        if (form.date.isBlank()) {
+
+            errors + IllegalStateException(
+                "Date can not be Empty"
+            )
+
+        } else {
+
+            date = LocalDateTime.parse(form.date)
+
         }
 
         if (errors.isNotEmpty())
@@ -31,10 +50,8 @@ class MomentWriteModel(
 
     }
 
-    override val id: String = UUID.randomUUID().toString()
-
-    override val description: String = form.description
-
-    override val author: String? = null
+    data class ValidationError(
+        val causes: List<Throwable>,
+    ) : Throwable()
 
 }

@@ -2,7 +2,7 @@ package com.example.madplayground.ui.home.source
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.madplayground.app.models.App
+import com.example.madplayground.domain.logs.models.Logs
 import com.example.madplayground.domain.moments.models.Moment
 import com.example.madplayground.domain.moments.usecases.RetrieveMomentUseCase
 import com.example.madplayground.ui.home.models.HomeScreen
@@ -14,9 +14,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeScreenViewModel @Inject constructor(
-    private val app: App,
+    private val logs: Logs,
     private val retrieveMomentUseCase: RetrieveMomentUseCase,
-) : ViewModel(), HomeScreen.ViewModel, App by app {
+) : ViewModel(), HomeScreen.ViewModel, Logs by logs {
 
     private val tag = this::class.simpleName
 
@@ -57,7 +57,7 @@ class HomeScreenViewModel @Inject constructor(
 
     private fun Moment.toState(): MomentUiState {
         return MomentUiStateImpl(
-            id = id,
+            id = id.value,
             description = description
         )
     }

@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.update
 
 class MomentRepositoryImpl : MomentRepository {
 
-    private val moments = mutableMapOf<String, Moment>()
+    private val moments = mutableMapOf<Moment.Id, Moment>()
 
     private val currentMoment = MutableStateFlow<Moment?>(null)
     private val currentMomentReadFlow = currentMoment.asStateFlow()

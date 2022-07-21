@@ -1,24 +1,24 @@
 package com.example.madplayground.ui.settings.source
 
-import com.example.madplayground.app.models.App
+import com.example.madplayground.domain.logs.models.Logs
 import com.example.madplayground.domain.messages.Message
 import com.example.madplayground.domain.settings.models.Settings
 import com.example.madplayground.ui.settings.models.SettingsScreen
-import com.example.madplayground.ui.settings.models.SettingsScreen.*
-import com.example.madplayground.ui.settings.models.SettingsScreen.ViewModel.*
-import kotlinx.coroutines.*
+import com.example.madplayground.ui.settings.models.SettingsScreen.State
+import com.example.madplayground.ui.settings.models.SettingsScreen.ViewModel.Action
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class SettingsScreenViewModel @Inject constructor(
-    private val app: App,
-    private val scope: CoroutineScope = CoroutineScope(Dispatchers.Main.immediate)
-) : SettingsScreen.ViewModel {
+    private val logs: Logs,
+    private val settings: Settings,
+    private val scope: CoroutineScope = CoroutineScope(Dispatchers.Main.immediate),
+) : SettingsScreen.ViewModel, Logs by logs, Settings by settings {
 
     private val tag = this::class.simpleName
-
-    private val logs
-        get() = app.logs
 
     private val settingsScreenState = SettingsScreenState()
 
@@ -29,60 +29,56 @@ class SettingsScreenViewModel @Inject constructor(
 
     init {
 
-        logs.logDebug(
+        logDebug(
             tag = tag,
             message = "Initializing"
         )
 
-        app.settings.themeType
-            .onEach { themeType ->
+        themeType.onEach { themeType ->
 
-                logs.logDebug(
-                    tag = tag,
-                    message = "ThemeType Changed too: $themeType"
-                )
+            logDebug(
+                tag = tag,
+                message = "ThemeType Changed too: $themeType"
+            )
 
-                settingsScreenState.themeType.update { themeType }
+            settingsScreenState.themeType.update { themeType }
 
-            }.launchIn(scope)
+        }.launchIn(scope)
 
-        app.settings.iconographyType
-            .onEach { iconographyType ->
+        iconographyType.onEach { iconographyType ->
 
-                logs.logDebug(
-                    tag = tag,
-                    message = "IconographyType Changed too: $iconographyType"
-                )
+            logDebug(
+                tag = tag,
+                message = "IconographyType Changed too: $iconographyType"
+            )
 
-                settingsScreenState.iconType.update { iconographyType }
+            settingsScreenState.iconType.update { iconographyType }
 
-            }.launchIn(scope)
+        }.launchIn(scope)
 
-        app.settings.shapeType
-            .onEach { shapeType ->
+        shapeType.onEach { shapeType ->
 
-                logs.logDebug(
-                    tag = tag,
-                    message = "ShapeType Changed too: $shapeType"
-                )
+            logDebug(
+                tag = tag,
+                message = "ShapeType Changed too: $shapeType"
+            )
 
-                settingsScreenState.shapeType.update { shapeType }
+            settingsScreenState.shapeType.update { shapeType }
 
-            }.launchIn(scope)
+        }.launchIn(scope)
 
-        app.settings.navigationLabelVisibility
-            .onEach { visibility ->
+        navigationLabelVisibility.onEach { visibility ->
 
-                logs.logDebug(
-                    tag = tag,
-                    message = "NavigationLabelVisibility Changed too: $visibility"
-                )
+            logDebug(
+                tag = tag,
+                message = "NavigationLabelVisibility Changed too: $visibility"
+            )
 
-                settingsScreenState.navigationLabelVisibility.update { visibility }
+            settingsScreenState.navigationLabelVisibility.update { visibility }
 
-            }.launchIn(scope)
+        }.launchIn(scope)
 
-        logs.logDebug(
+        logDebug(
             tag = tag,
             message = "Initialized"
         )
@@ -91,14 +87,14 @@ class SettingsScreenViewModel @Inject constructor(
 
     override val actionHandler: Message.Handler<Action> = Message.Handler { theAction ->
 
-        logs.logDebug(
+        logDebug(
             tag = tag,
             message = "Received: $theAction"
         )
 
         when (theAction) {
 
-            Action.CycleThemeType -> {
+            Action.CycleThemeType       -> {
 
                 val newThemeType = when (
                     settingsScreenState.themeType.value
@@ -120,7 +116,7 @@ class SettingsScreenViewModel @Inject constructor(
 
                 scope.launch {
 
-                    app.settings.setThemeType(
+                    setThemeType(
                         newThemeType
                     )
 
@@ -128,7 +124,7 @@ class SettingsScreenViewModel @Inject constructor(
 
             }
 
-            Action.CycleIconType -> {
+            Action.CycleIconType        -> {
 
                 val newIconType = when (
                     settingsScreenState.iconType.value
@@ -156,13 +152,13 @@ class SettingsScreenViewModel @Inject constructor(
                 }
 
                 scope.launch {
-                    app.settings.setIconographyType(
+                    setIconographyType(
                         newIconType
                     )
                 }
             }
 
-            Action.CycleShapeType -> {
+            Action.CycleShapeType       -> {
 
                 val newShapeType = when (
                     settingsScreenState.shapeType.value
@@ -179,7 +175,7 @@ class SettingsScreenViewModel @Inject constructor(
                 }
 
                 scope.launch {
-                    app.settings.setShapeType(
+                    setShapeType(
                         newShapeType = newShapeType
                     )
                 }
@@ -206,7 +202,7 @@ class SettingsScreenViewModel @Inject constructor(
                 }
 
                 scope.launch {
-                    app.settings.setNavigationLabelVisibility(
+                    setNavigationLabelVisibility(
                         newVisibility = newVisibility
                     )
                 }
