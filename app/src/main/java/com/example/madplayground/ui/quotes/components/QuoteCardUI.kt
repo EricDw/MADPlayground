@@ -1,4 +1,4 @@
-package com.example.madplayground.ui.moments.components
+package com.example.madplayground.ui.quotes.components
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Card
@@ -27,7 +27,7 @@ fun MomentCard(
         ) {
 
             Text(
-                text = state.content,
+                text = state.description,
                 modifier = Modifier.padding(16.dp)
             )
 
@@ -45,7 +45,7 @@ fun MomentCard(
 fun PostCardPreview() {
 
     val state = rememberMomentState {
-        content = "Hello World"
+        description = "Hello World"
     }
 
     MomentCard(

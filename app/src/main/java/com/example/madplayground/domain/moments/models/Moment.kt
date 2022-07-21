@@ -4,7 +4,7 @@ interface Moment {
 
     val id: String
 
-    val content: String
+    val description: String
 
     val author: String?
 
@@ -12,7 +12,7 @@ interface Moment {
 
         val id: String
 
-        val content: String
+        val description: String
 
         val author: String?
 

@@ -27,7 +27,7 @@
     <string name="label_always_visible">Always Visible</string>
     <string name="label_when_selected">When Selected</string>
     <string name="label_never">Never</string>
-    <string name="label_content">Content</string>
+    <string name="label_description">Description</string>
     <string name="label_author">Author</string>
     <string name="label_cancel">Cancel</string>
     <string name="label_save">Save</string>

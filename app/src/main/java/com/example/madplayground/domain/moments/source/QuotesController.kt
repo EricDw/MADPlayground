@@ -20,7 +20,7 @@ class MomentsController : Moments {
         author: String?,
     ) {
         _momentOfTheDay.value = MomentController(
-            content = content,
+            description = content,
             author = author
         )
     }

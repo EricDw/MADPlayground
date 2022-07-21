@@ -89,7 +89,7 @@ fun MomentFormScreen(
                     label = {
 
                         Text(
-                            text = stringResource(id = R.string.label_content)
+                            text = stringResource(id = R.string.label_description)
                         )
 
                     },

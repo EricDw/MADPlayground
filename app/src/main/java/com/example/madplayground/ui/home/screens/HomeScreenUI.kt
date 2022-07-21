@@ -12,8 +12,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.madplayground.R
-import com.example.madplayground.ui.moments.components.MomentCard
-import com.example.madplayground.ui.moments.components.MomentState
+import com.example.madplayground.ui.quotes.components.MomentCard
+import com.example.madplayground.ui.quotes.components.MomentState
 import com.example.madplayground.ui.home.models.HomeScreen
 import com.example.madplayground.ui.home.source.rememberHomeScreenState
 
@@ -59,7 +59,7 @@ fun HomeScreenPreview() {
     val state = rememberHomeScreenState {
 
         (0..5).map {
-            MomentState(id = "$it", content = "Post $it")
+            MomentState(id = "$it", description = "Post $it")
         }.also { theMoments ->
             moments.addAll(theMoments)
         }

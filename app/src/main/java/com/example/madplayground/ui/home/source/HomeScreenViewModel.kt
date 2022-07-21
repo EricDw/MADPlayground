@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.madplayground.app.models.App
 import com.example.madplayground.domain.moments.models.Moment
-import com.example.madplayground.ui.moments.components.MomentState
+import com.example.madplayground.ui.quotes.components.MomentState
 import com.example.madplayground.ui.home.models.HomeScreen
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
@@ -33,7 +33,7 @@ class HomeScreenViewModel @Inject constructor(
     private fun Moment.toState(): Moment.State {
         return MomentState(
             id = id,
-            content = content
+            description = description
         )
     }
 
