@@ -48,7 +48,7 @@ fun MomentFormScreenController(
             }
 
             is MomentFormScreen.Event.CancelClicked         -> {
-                if (state.author.value.isEmpty() && state.content.value.isEmpty()) {
+                if (state.author.value.isEmpty() && state.description.value.isEmpty()) {
                     navController.popBackStack()
                 } else {
                     TODO("Show Alert Dialog")

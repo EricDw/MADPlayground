@@ -10,12 +10,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.example.madplayground.domain.moments.models.Moment
+import com.example.madplayground.ui.quotes.models.MomentUiState
+import com.example.madplayground.ui.quotes.source.rememberMomentUiState
 
 @Composable
 fun MomentCard(
     modifier: Modifier = Modifier,
     elevation: Dp = 1.dp,
-    state: Moment.State = rememberMomentState(),
+    state: MomentUiState = rememberMomentUiState(),
 ) {
     Card(
         modifier = modifier,
@@ -44,7 +46,7 @@ fun MomentCard(
 @Composable
 fun PostCardPreview() {
 
-    val state = rememberMomentState {
+    val state = rememberMomentUiState {
         description = "Hello World"
     }
 

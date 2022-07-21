@@ -7,7 +7,7 @@ interface MomentFormScreen {
 
     interface State {
 
-        val content: StateFlow<String>
+        val description: StateFlow<String>
 
         val author: StateFlow<String>
 

@@ -1,11 +1,11 @@
-package com.example.madplayground.ui.moments.source
+package com.example.madplayground.ui.quotes.source
 
 import com.example.madplayground.ui.moments.models.MomentFormScreen
 import kotlinx.coroutines.flow.MutableStateFlow
 
 class MomentFormScreenState : MomentFormScreen.State {
 
-    override val content = MutableStateFlow("")
+    override val description = MutableStateFlow("")
 
     override val author = MutableStateFlow("")
 

@@ -1,4 +1,4 @@
-package com.example.madplayground.features.home
+package com.example.madplayground.ui.home.screens
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -13,9 +13,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.madplayground.R
 import com.example.madplayground.ui.quotes.components.MomentCard
-import com.example.madplayground.ui.quotes.components.MomentState
 import com.example.madplayground.ui.home.models.HomeScreen
 import com.example.madplayground.ui.home.source.rememberHomeScreenState
+import com.example.madplayground.ui.quotes.source.MomentUiStateImpl
 
 @Composable
 fun HomeScreen(
@@ -59,7 +59,7 @@ fun HomeScreenPreview() {
     val state = rememberHomeScreenState {
 
         (0..5).map {
-            MomentState(id = "$it", description = "Post $it")
+            MomentUiStateImpl(id = "$it", description = "Post $it")
         }.also { theMoments ->
             moments.addAll(theMoments)
         }

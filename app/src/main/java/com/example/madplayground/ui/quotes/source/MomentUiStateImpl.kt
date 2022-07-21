@@ -1,19 +1,20 @@
-package com.example.madplayground.ui.quotes.components
+package com.example.madplayground.ui.quotes.source
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import com.example.madplayground.domain.moments.models.Moment
+import com.example.madplayground.ui.quotes.models.MomentUiState
 import java.util.*
 
-data class MomentState(
+data class MomentUiStateImpl(
     override var id: String = UUID.randomUUID().toString(),
     override var description: String = "",
     override val author: String? = null
-) : Moment.State
+) : MomentUiState
 
 @Composable
-fun rememberMomentState(
-    initializer: MomentState.() -> Unit = {},
-): MomentState = remember {
-    MomentState().apply(initializer)
+fun rememberMomentUiState(
+    initializer: MomentUiStateImpl.() -> Unit = {},
+): MomentUiState = remember {
+    MomentUiStateImpl().apply(initializer)
 }

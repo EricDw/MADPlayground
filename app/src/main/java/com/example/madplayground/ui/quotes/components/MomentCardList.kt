@@ -1,4 +1,4 @@
-package com.example.madplayground.ui.moments.components
+package com.example.madplayground.ui.quotes.components
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -8,13 +8,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.madplayground.domain.moments.models.Moment
-import com.example.madplayground.ui.quotes.components.MomentCard
+import com.example.madplayground.ui.quotes.models.MomentUiState
 
 @Composable
 private fun MomentCardList(
     modifier: Modifier,
-    moments: List<Moment.State>,
+    moments: List<MomentUiState>,
 ) {
     LazyColumn(
         modifier = modifier.fillMaxSize(),
@@ -42,10 +41,10 @@ private fun MomentCardList(
         itemsIndexed(
             items = moments,
             key = { _, moment -> moment.id },
-        ) { index, thePost ->
+        ) { index, theMoment ->
 
             MomentCard(
-                state = thePost,
+                state = theMoment,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(

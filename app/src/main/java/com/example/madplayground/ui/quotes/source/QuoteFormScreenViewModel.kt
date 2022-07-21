@@ -1,18 +1,24 @@
-package com.example.madplayground.ui.moments.source
+package com.example.madplayground.ui.quotes.source
 
 import com.example.madplayground.app.models.App
 import com.example.madplayground.domain.messages.Message
+import com.example.madplayground.domain.moments.source.buildCreateMomentForm
+import com.example.madplayground.domain.moments.usecases.CreateMomentUseCase
 import com.example.madplayground.ui.moments.models.MomentFormScreen.State
 import com.example.madplayground.ui.moments.models.MomentFormScreen.ViewModel
 import com.example.madplayground.ui.moments.models.MomentFormScreen.ViewModel.Action
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 
 class MomentFormScreenViewModel(
     private val app: App,
+    private val createMomentUseCase: CreateMomentUseCase,
     private val scope: CoroutineScope = CoroutineScope(
         Dispatchers.Main.immediate + SupervisorJob()
     ),
@@ -52,7 +58,7 @@ class MomentFormScreenViewModel(
 
             is Action.ChangeContent -> {
 
-                screenState.content.update {
+                screenState.description.update {
                     theAction.newContent
                 }
 
@@ -68,22 +74,47 @@ class MomentFormScreenViewModel(
 
             Action.SubmitForm       -> {
 
-                screenState.submitting.update {
-                    true
-                }
-
                 scope.launch {
 
-                    delay(1000)
-
-                    moments.addNewMoment(
-                        screenState.content.value,
-                        screenState.author.value.takeIf { it.isNotBlank() }
-                    )
-
-                    screenState.submitted.update {
-                        true
+                    val form = buildCreateMomentForm {
+                        description = screenState.description.value
                     }
+
+                    createMomentUseCase
+                        .invoke(form)
+                        .collect { theResult ->
+
+                            when (theResult) {
+
+                                is CreateMomentUseCase.Result.Complete -> {
+
+                                    screenState.submitted.update {
+                                        true
+                                    }
+
+                                }
+
+                                is CreateMomentUseCase.Result.Error    -> {
+
+                                    logs.logError(
+                                        tag = tag,
+                                        message = "Error not handled",
+                                        error = theResult.cause
+                                    )
+
+                                }
+
+                                is CreateMomentUseCase.Result.Running  -> {
+
+                                    screenState.submitting.update {
+                                        true
+                                    }
+
+                                }
+
+                            }
+
+                        }
 
                 }
 

@@ -16,7 +16,7 @@ import com.example.madplayground.R
 import com.example.madplayground.domain.messages.Message
 import com.example.madplayground.ui.moments.models.MomentFormScreen.Event
 import com.example.madplayground.ui.moments.models.MomentFormScreen.State
-import com.example.madplayground.ui.moments.source.rememberMomentFromScreenState
+import com.example.madplayground.ui.quotes.source.rememberMomentFromScreenState
 
 @OptIn(ExperimentalMaterialApi::class, ExperimentalAnimationApi::class)
 @Composable
@@ -26,7 +26,7 @@ fun MomentFormScreen(
     eventHandler: Message.Handler<Event> = Message.Handler { /* no-op */ },
 ) {
 
-    val content by state.content.collectAsState()
+    val content by state.description.collectAsState()
 
     val author by state.author.collectAsState()
 

@@ -2,6 +2,7 @@ package com.example.madplayground.ui.home.models
 
 import com.example.madplayground.domain.messages.Message
 import com.example.madplayground.domain.moments.models.Moment
+import com.example.madplayground.ui.quotes.models.MomentUiState
 import kotlinx.coroutines.flow.StateFlow
 
 interface HomeScreen {
@@ -18,9 +19,9 @@ interface HomeScreen {
 
     interface State {
 
-        val moments: List<Moment.State>
+        val moments: List<MomentUiState>
 
-        val momentOfTheDay: Moment.State?
+        val momentOfTheDay: MomentUiState?
 
     }
 

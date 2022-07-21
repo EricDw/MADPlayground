@@ -5,7 +5,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.madplayground.features.home.HomeScreen
+import com.example.madplayground.ui.home.screens.HomeScreen
 import com.example.madplayground.ui.home.models.HomeScreen
 import com.example.madplayground.ui.home.source.HomeScreenViewModel
 
