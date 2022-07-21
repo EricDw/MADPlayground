@@ -20,8 +20,8 @@ import com.example.madplayground.ui.container.source.AndroidContentContainerView
 import com.example.madplayground.ui.logs.LocalLogs
 import com.example.madplayground.ui.home.models.HomeScreen
 import com.example.madplayground.ui.home.screens.controller.HomeScreenController
-import com.example.madplayground.ui.quotes.models.QuoteFormScreen
-import com.example.madplayground.ui.quotes.screens.controller.QuoteFormScreenController
+import com.example.madplayground.ui.moments.models.MomentFormScreen
+import com.example.madplayground.ui.moments.screens.controller.MomentFormScreenController
 import com.example.madplayground.ui.settings.models.SettingsScreen
 import com.example.madplayground.ui.settings.screen.controller.SettingsScreenController
 
@@ -62,7 +62,7 @@ fun ContentContainerController(
 
             ContentContainer.Event.FABClicked              -> {
                 navHostController.navigate(
-                    route = QuoteFormScreen.ROUTE
+                    route = MomentFormScreen.ROUTE
                 )
             }
 
@@ -151,10 +151,10 @@ fun ContentContainerController(
                 }
 
                 composable(
-                    route = QuoteFormScreen.ROUTE
+                    route = MomentFormScreen.ROUTE
                 ) {
 
-                    QuoteFormScreenController(
+                    MomentFormScreenController(
                         navController = navHostController,
                         modifier = screenModifier
                     )

@@ -2,13 +2,13 @@ package com.example.madplayground.ui.home.source
 
 import androidx.compose.runtime.*
 import com.example.madplayground.ui.home.models.HomeScreen
-import com.example.madplayground.domain.quotes.models.Quote
+import com.example.madplayground.domain.moments.models.Moment
 
 class HomeScreenState : HomeScreen.State {
 
-    override val quotes: MutableList<Quote.State> = mutableStateListOf()
+    override val moments: MutableList<Moment.State> = mutableStateListOf()
 
-    override var quoteOfTheDay: Quote.State? by mutableStateOf(null)
+    override var momentOfTheDay: Moment.State? by mutableStateOf(null)
 
 }
 

@@ -1,6 +1,6 @@
-package com.example.madplayground.domain.quotes.models
+package com.example.madplayground.domain.moments.models
 
-interface Quote {
+interface Moment {
 
     val id: String
 

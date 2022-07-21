@@ -1,7 +1,7 @@
 package com.example.madplayground.app.modules
 
-import com.example.madplayground.domain.quotes.models.Quotes
-import com.example.madplayground.domain.quotes.source.QuotesController
+import com.example.madplayground.domain.moments.models.Moments
+import com.example.madplayground.domain.moments.source.MomentsController
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -10,13 +10,13 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object QuotesModule {
+object MomentsModule {
 
     @Provides
     @Singleton
-    fun provideQuotes(): Quotes {
+    fun provideMoments(): Moments {
 
-        return QuotesController()
+        return MomentsController()
 
     }
 

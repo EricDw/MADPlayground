@@ -5,7 +5,7 @@ import com.example.madplayground.app.source.ApplicationController
 import com.example.madplayground.features.settings.source.fakes.FakeSettingsController
 import com.example.madplayground.ui.settings.models.SettingsScreen
 import com.example.madplayground.features.logs.controllers.fakes.TestLogsController
-import com.example.madplayground.domain.quotes.source.QuotesController
+import com.example.madplayground.domain.moments.source.MomentsController
 import com.example.madplayground.domain.settings.models.Settings
 import com.example.madplayground.ui.settings.source.SettingsScreenViewModel
 import kotlinx.coroutines.Dispatchers
@@ -34,12 +34,12 @@ class SettingsScreenViewModelTest {
 
         val settings = FakeSettingsController()
 
-        val quotes = QuotesController()
+        val moments = MomentsController()
 
         val app: App = ApplicationController(
             logs = logs,
             settings = settings,
-            quotes = quotes
+            moments = moments
         )
 
         viewModel = SettingsScreenViewModel(

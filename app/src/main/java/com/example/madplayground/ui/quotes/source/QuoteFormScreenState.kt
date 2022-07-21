@@ -1,9 +1,9 @@
-package com.example.madplayground.ui.quotes.source
+package com.example.madplayground.ui.moments.source
 
-import com.example.madplayground.ui.quotes.models.QuoteFormScreen
+import com.example.madplayground.ui.moments.models.MomentFormScreen
 import kotlinx.coroutines.flow.MutableStateFlow
 
-class QuoteFormScreenState : QuoteFormScreen.State {
+class MomentFormScreenState : MomentFormScreen.State {
 
     override val content = MutableStateFlow("")
 
@@ -15,6 +15,6 @@ class QuoteFormScreenState : QuoteFormScreen.State {
 
 }
 
-fun rememberQuoteFromScreenState(): QuoteFormScreenState {
-    return QuoteFormScreenState()
+fun rememberMomentFromScreenState(): MomentFormScreenState {
+    return MomentFormScreenState()
 }

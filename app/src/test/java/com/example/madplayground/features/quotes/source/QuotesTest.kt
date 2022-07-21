@@ -1,9 +1,9 @@
-package com.example.madplayground.features.quotes.source
+package com.example.madplayground.features.moments.source
 
 import org.junit.After
 import org.junit.Before
 
-class QuotesTest {
+class MomentsTest {
 
     @Before
     fun setUp() {

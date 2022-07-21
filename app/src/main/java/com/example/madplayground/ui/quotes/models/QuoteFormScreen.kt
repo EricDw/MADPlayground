@@ -1,9 +1,9 @@
-package com.example.madplayground.ui.quotes.models
+package com.example.madplayground.ui.moments.models
 
 import com.example.madplayground.domain.messages.Message
 import kotlinx.coroutines.flow.StateFlow
 
-interface QuoteFormScreen {
+interface MomentFormScreen {
 
     interface State {
 
@@ -59,7 +59,7 @@ interface QuoteFormScreen {
 
     companion object {
 
-        const val ROUTE: String = "quote_form_screen"
+        const val ROUTE: String = "moment_form_screen"
 
     }
 

@@ -1,4 +1,4 @@
-package com.example.madplayground.ui.quotes.components
+package com.example.madplayground.ui.moments.components
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Card
@@ -9,13 +9,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.example.madplayground.domain.quotes.models.Quote
+import com.example.madplayground.domain.moments.models.Moment
 
 @Composable
-fun QuoteCard(
+fun MomentCard(
     modifier: Modifier = Modifier,
     elevation: Dp = 1.dp,
-    state: Quote.State = rememberQuoteState(),
+    state: Moment.State = rememberMomentState(),
 ) {
     Card(
         modifier = modifier,
@@ -44,11 +44,11 @@ fun QuoteCard(
 @Composable
 fun PostCardPreview() {
 
-    val state = rememberQuoteState {
+    val state = rememberMomentState {
         content = "Hello World"
     }
 
-    QuoteCard(
+    MomentCard(
         state = state,
         elevation = 4.dp,
         modifier = Modifier.wrapContentSize()

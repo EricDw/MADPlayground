@@ -59,15 +59,15 @@ fun ContextualFloatingActionButton(
         when (screenContext) {
 
             ContentContainer.ScreenContext.HOME       -> {
-                contentDescriptionId = R.string.description_add_quote
+                contentDescriptionId = R.string.description_add_moment
             }
 
             ContentContainer.ScreenContext.SETTINGS   -> {
-                contentDescriptionId = R.string.description_add_quote
+                contentDescriptionId = R.string.description_add_moment
             }
 
             ContentContainer.ScreenContext.QUOTE_FORM -> {
-                contentDescriptionId = R.string.description_add_quote
+                contentDescriptionId = R.string.description_add_moment
             }
 
         }

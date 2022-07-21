@@ -1,4 +1,4 @@
-package com.example.madplayground.features.settings.ui.screens
+package com.example.madplayground.ui.settings.screen
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.clickable
@@ -17,6 +17,7 @@ import com.example.madplayground.R
 import com.example.madplayground.domain.messages.Message
 import com.example.madplayground.domain.settings.models.Settings
 import com.example.madplayground.ui.settings.models.SettingsScreen
+import com.example.madplayground.ui.settings.source.rememberSettingsScreenState
 
 @Composable
 fun SettingsScreen(

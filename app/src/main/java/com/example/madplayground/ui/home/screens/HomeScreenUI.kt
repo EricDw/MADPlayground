@@ -12,9 +12,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.madplayground.R
-import com.example.madplayground.ui.quotes.components.QuoteCard
-import com.example.madplayground.ui.quotes.components.QuoteState
+import com.example.madplayground.ui.moments.components.MomentCard
+import com.example.madplayground.ui.moments.components.MomentState
 import com.example.madplayground.ui.home.models.HomeScreen
+import com.example.madplayground.ui.home.source.rememberHomeScreenState
 
 @Composable
 fun HomeScreen(
@@ -22,24 +23,24 @@ fun HomeScreen(
     state: HomeScreen.State = rememberHomeScreenState(),
 ) {
 
-    val quoteOfTheDay = state.quoteOfTheDay
+    val momentOfTheDay = state.momentOfTheDay
 
     Box(
         modifier = modifier,
         contentAlignment = Alignment.Center
     ) {
 
-        if (quoteOfTheDay == null) {
+        if (momentOfTheDay == null) {
 
             Text(
-                text = stringResource(id = R.string.message_add_quote)
+                text = stringResource(id = R.string.message_add_moment)
             )
 
         } else {
 
-            QuoteCard(
+            MomentCard(
                 modifier = Modifier.wrapContentSize(),
-                state = quoteOfTheDay
+                state = momentOfTheDay
             )
 
         }
@@ -58,9 +59,9 @@ fun HomeScreenPreview() {
     val state = rememberHomeScreenState {
 
         (0..5).map {
-            QuoteState(id = "$it", content = "Post $it")
-        }.also { theQuotes ->
-            quotes.addAll(theQuotes)
+            MomentState(id = "$it", content = "Post $it")
+        }.also { theMoments ->
+            moments.addAll(theMoments)
         }
 
     }

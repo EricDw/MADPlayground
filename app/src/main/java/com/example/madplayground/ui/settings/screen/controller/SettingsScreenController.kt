@@ -6,7 +6,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.madplayground.domain.messages.Message
-import com.example.madplayground.features.settings.ui.screens.SettingsScreen
+import com.example.madplayground.ui.settings.screen.SettingsScreen
 import com.example.madplayground.ui.settings.models.SettingsScreen
 import com.example.madplayground.ui.settings.source.AndroidSettingsScreenViewModel
 

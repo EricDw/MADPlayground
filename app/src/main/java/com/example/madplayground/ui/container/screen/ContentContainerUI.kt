@@ -2,21 +2,25 @@ package com.example.madplayground.ui.container.screen
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.example.madplayground.R
-import com.example.madplayground.ui.container.models.ContentContainer
-import com.example.madplayground.ui.container.components.ContextualFloatingActionButton
-import com.example.madplayground.ui.container.components.ContextualNavigationRail
-import com.example.madplayground.ui.container.components.ContextualTopAppBar
-import com.example.madplayground.ui.container.util.ScreenContextPreviewParameterProvider
 import com.example.madplayground.domain.messages.Message
 import com.example.madplayground.domain.settings.models.Settings
 import com.example.madplayground.features.theme.ThemeController
+import com.example.madplayground.ui.container.components.ContextualFloatingActionButton
+import com.example.madplayground.ui.container.components.ContextualNavigationRail
+import com.example.madplayground.ui.container.components.ContextualTopAppBar
+import com.example.madplayground.ui.container.models.ContentContainer
+import com.example.madplayground.ui.container.source.rememberContentContainerState
+import com.example.madplayground.ui.container.util.ScreenContextPreviewParameterProvider
 import com.example.madplayground.ui.theme.models.LocalIconography
 
 @Composable
@@ -208,7 +212,7 @@ fun ContentContainer(
 @Composable
 private fun ContentContainerPreview(
     @PreviewParameter(ScreenContextPreviewParameterProvider::class)
-    screenContext: ContentContainer.ScreenContext
+    screenContext: ContentContainer.ScreenContext,
 ) {
 
     val state = rememberContentContainerState {

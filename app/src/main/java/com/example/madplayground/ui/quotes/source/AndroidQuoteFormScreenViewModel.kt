@@ -1,22 +1,22 @@
-package com.example.madplayground.ui.quotes.source
+package com.example.madplayground.ui.moments.source
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.madplayground.app.models.App
 import com.example.madplayground.domain.messages.Message
-import com.example.madplayground.ui.quotes.models.QuoteFormScreen
-import com.example.madplayground.ui.quotes.models.QuoteFormScreen.*
-import com.example.madplayground.ui.quotes.models.QuoteFormScreen.ViewModel.*
+import com.example.madplayground.ui.moments.models.MomentFormScreen
+import com.example.madplayground.ui.moments.models.MomentFormScreen.*
+import com.example.madplayground.ui.moments.models.MomentFormScreen.ViewModel.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
 
 @HiltViewModel
-class AndroidQuoteFormScreenViewModel @Inject constructor(
+class AndroidMomentFormScreenViewModel @Inject constructor(
     app: App,
-) : ViewModel(), QuoteFormScreen.ViewModel {
+) : ViewModel(), MomentFormScreen.ViewModel {
 
-    private val delegate = QuoteFormScreenViewModel(
+    private val delegate = MomentFormScreenViewModel(
         app = app,
         scope = viewModelScope,
     )

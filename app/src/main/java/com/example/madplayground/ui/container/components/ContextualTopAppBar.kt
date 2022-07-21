@@ -118,7 +118,7 @@ fun ContextualTopAppBar(
 
                 }
 
-                titleId = R.string.title_compose_quote
+                titleId = R.string.title_compose_moment
 
             }
 

@@ -1,4 +1,4 @@
-package com.example.madplayground.features.quotes.ui.screens.form
+package com.example.madplayground.features.moments.ui.screens.form
 
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.ExperimentalAnimationApi
@@ -14,14 +14,15 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.madplayground.R
 import com.example.madplayground.domain.messages.Message
-import com.example.madplayground.ui.quotes.models.QuoteFormScreen.Event
-import com.example.madplayground.ui.quotes.models.QuoteFormScreen.State
+import com.example.madplayground.ui.moments.models.MomentFormScreen.Event
+import com.example.madplayground.ui.moments.models.MomentFormScreen.State
+import com.example.madplayground.ui.moments.source.rememberMomentFromScreenState
 
 @OptIn(ExperimentalMaterialApi::class, ExperimentalAnimationApi::class)
 @Composable
-fun QuoteFormScreen(
+fun MomentFormScreen(
     modifier: Modifier = Modifier,
-    state: State = rememberQuoteFromScreenState(),
+    state: State = rememberMomentFromScreenState(),
     eventHandler: Message.Handler<Event> = Message.Handler { /* no-op */ },
 ) {
 
@@ -155,8 +156,8 @@ fun QuoteFormScreen(
     showSystemUi = true,
 )
 @Composable
-private fun QuoteFromScreenPreview() {
-    QuoteFormScreen(
+private fun MomentFromScreenPreview() {
+    MomentFormScreen(
         modifier = Modifier.fillMaxSize()
     )
 }
