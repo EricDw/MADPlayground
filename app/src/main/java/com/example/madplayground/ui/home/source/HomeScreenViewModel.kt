@@ -1,22 +1,28 @@
 package com.example.madplayground.ui.home.source
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.example.madplayground.domain.logs.models.Logs
 import com.example.madplayground.domain.moments.models.Moment
-import com.example.madplayground.domain.moments.usecases.RetrieveMomentUseCase
+import com.example.madplayground.domain.moments.usecases.RetrieveAllMomentUseCase
 import com.example.madplayground.ui.home.models.HomeScreen
 import com.example.madplayground.ui.quotes.models.MomentUiState
 import com.example.madplayground.ui.quotes.source.MomentUiStateImpl
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
-@HiltViewModel
-class HomeScreenViewModel @Inject constructor(
+class HomeScreenViewModel(
     private val logs: Logs,
-    private val retrieveMomentUseCase: RetrieveMomentUseCase,
-) : ViewModel(), HomeScreen.ViewModel, Logs by logs {
+    private val retrieveAllMomentUseCase: RetrieveAllMomentUseCase,
+    scope: CoroutineScope? = null,
+) : HomeScreen.ViewModel, Logs by logs {
+
+    private val scope: CoroutineScope =
+        scope ?: CoroutineScope(
+            context = Dispatchers.Main.immediate + SupervisorJob()
+        )
 
     private val tag = this::class.simpleName
 
@@ -28,38 +34,67 @@ class HomeScreenViewModel @Inject constructor(
         _state.asStateFlow()
 
     init {
-        retrieveMomentUseCase().onEach { result ->
+
+        logDebug(
+            tag = tag,
+            message = "Initializing"
+        )
+
+        retrieveAllMomentUseCase.invoke().onEach { result ->
+
+            logDebug(
+                tag = tag,
+                message = "On-Result: $result"
+            )
 
             when (result) {
 
-                is RetrieveMomentUseCase.Result.Complete -> {
-                    screenState.momentOfTheDay = result.moment?.toState()
+                is RetrieveAllMomentUseCase.Result.Complete -> {
+
+                    result.moments.map { moments ->
+
+                        moments.map(::toUiState)
+
+                    }.onEach { uiStates ->
+
+                        screenState.moments.clear()
+                        screenState.moments.addAll(uiStates)
+
+                    }.launchIn(this.scope)
+
                 }
 
-                RetrieveMomentUseCase.Result.Error       -> {
-                    logs.logDebug(
+                is RetrieveAllMomentUseCase.Result.Error    -> {
+
+                    logError(
                         tag = tag,
-                        message = "Error Retrieving Moment",
+                        message = "Error retrieving Moments: $result"
                     )
+
                 }
 
-                RetrieveMomentUseCase.Result.Running     -> {
-                    logs.logDebug(
-                        tag = tag,
-                        message = "Retrieving Moment",
-                    )
+                is RetrieveAllMomentUseCase.Result.Running  -> {
+
                 }
 
             }
 
-        }.launchIn(viewModelScope)
+        }.launchIn(scope = this.scope)
+
+        logDebug(
+            tag = tag,
+            message = "Initialized"
+        )
+
     }
 
-    private fun Moment.toState(): MomentUiState {
-        return MomentUiStateImpl(
-            id = id.value,
-            description = description
-        )
+    private fun toUiState(moment: Moment): MomentUiState {
+        return with(moment) {
+            MomentUiStateImpl(
+                id = id.value,
+                description = description
+            )
+        }
     }
 
 }

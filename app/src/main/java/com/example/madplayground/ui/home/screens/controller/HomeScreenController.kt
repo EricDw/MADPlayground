@@ -7,12 +7,12 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.madplayground.ui.home.screens.HomeScreen
 import com.example.madplayground.ui.home.models.HomeScreen
-import com.example.madplayground.ui.home.source.HomeScreenViewModel
+import com.example.madplayground.ui.home.source.AndroidHomeScreenViewModel
 
 @Composable
 fun HomeScreenController(
     modifier: Modifier = Modifier,
-    homeScreenViewModel: HomeScreen.ViewModel = hiltViewModel<HomeScreenViewModel>(),
+    homeScreenViewModel: HomeScreen.ViewModel = hiltViewModel<AndroidHomeScreenViewModel>(),
 ) {
 
     val state by homeScreenViewModel.state.collectAsState()

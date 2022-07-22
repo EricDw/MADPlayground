@@ -11,7 +11,7 @@ import androidx.compose.ui.unit.dp
 import com.example.madplayground.ui.quotes.models.MomentUiState
 
 @Composable
-private fun MomentCardList(
+fun MomentCardList(
     modifier: Modifier,
     moments: List<MomentUiState>,
 ) {

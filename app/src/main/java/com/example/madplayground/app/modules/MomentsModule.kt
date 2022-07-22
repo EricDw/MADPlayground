@@ -1,14 +1,8 @@
 package com.example.madplayground.app.modules
 
 import com.example.madplayground.domain.moments.repository.MomentRepository
-import com.example.madplayground.domain.moments.source.CreateMomentUseCaseImpl
-import com.example.madplayground.domain.moments.source.DeleteMomentUseCaseImpl
-import com.example.madplayground.domain.moments.source.RetrieveMomentUseCaseImpl
-import com.example.madplayground.domain.moments.source.UpdateMomentUseCaseImpl
-import com.example.madplayground.domain.moments.usecases.CreateMomentUseCase
-import com.example.madplayground.domain.moments.usecases.DeleteMomentUseCase
-import com.example.madplayground.domain.moments.usecases.RetrieveMomentUseCase
-import com.example.madplayground.domain.moments.usecases.UpdateMomentUseCase
+import com.example.madplayground.domain.moments.source.*
+import com.example.madplayground.domain.moments.usecases.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -35,6 +29,17 @@ object MomentsModule {
     ): RetrieveMomentUseCase {
 
         return RetrieveMomentUseCaseImpl(
+            repository = repository
+        )
+
+    }
+
+    @Provides
+    fun provideRetrieveAllMomentUseCase(
+        repository: MomentRepository,
+    ): RetrieveAllMomentUseCase {
+
+        return RetrieveAllMomentUseCaseImpl(
             repository = repository
         )
 

@@ -2,22 +2,21 @@ package com.example.madplayground.domain.moments.usecases
 
 import com.example.madplayground.domain.moments.models.Moment
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.StateFlow
 
-fun interface RetrieveMomentUseCase {
+fun interface RetrieveAllMomentUseCase {
 
     sealed interface Result {
 
         object Running: Result
 
         data class Complete(
-            val moment: Moment?
+            val moments: StateFlow<List<Moment>>
         ): Result
 
         object Error: Result
     }
 
-    operator fun invoke(
-        id: Moment.Id
-    ): Flow<Result>
+    operator fun invoke(): Flow<Result>
 
 }

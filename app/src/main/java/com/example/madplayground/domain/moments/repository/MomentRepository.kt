@@ -9,6 +9,10 @@ interface MomentRepository {
         moment: Moment
     )
 
-    suspend fun getMoment(): StateFlow<Moment?>
+    suspend fun getMomentById(
+        id: Moment.Id
+    ): Moment?
+
+    suspend fun getAllMoments(): StateFlow<List<Moment>>
 
 }

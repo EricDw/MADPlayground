@@ -11,7 +11,16 @@ class MomentRepositoryImpl : MomentRepository {
 
     private val moments = mutableMapOf<Moment.Id, Moment>()
 
+    private val _momentsStateFlow =
+        MutableStateFlow(
+            moments.values.toList()
+        )
+
+    private val momentsStateFlow =
+        _momentsStateFlow.asStateFlow()
+
     private val currentMoment = MutableStateFlow<Moment?>(null)
+
     private val currentMomentReadFlow = currentMoment.asStateFlow()
 
     override suspend fun addMoment(
@@ -19,9 +28,17 @@ class MomentRepositoryImpl : MomentRepository {
     ) {
         moments[moment.id] = moment
         currentMoment.update { moment }
+        _momentsStateFlow.update { moments.values.toList() }
     }
 
-    override suspend fun getMoment(): StateFlow<Moment?> {
-        return currentMomentReadFlow
+    override suspend fun getMomentById(
+        id: Moment.Id
+    ): Moment? {
+        return moments[id]
     }
+
+    override suspend fun getAllMoments(): StateFlow<List<Moment>> {
+        return momentsStateFlow
+    }
+
 }

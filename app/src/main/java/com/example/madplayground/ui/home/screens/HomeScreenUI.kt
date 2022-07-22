@@ -15,6 +15,7 @@ import com.example.madplayground.R
 import com.example.madplayground.ui.quotes.components.MomentCard
 import com.example.madplayground.ui.home.models.HomeScreen
 import com.example.madplayground.ui.home.source.rememberHomeScreenState
+import com.example.madplayground.ui.quotes.components.MomentCardList
 import com.example.madplayground.ui.quotes.source.MomentUiStateImpl
 
 @Composable
@@ -23,29 +24,10 @@ fun HomeScreen(
     state: HomeScreen.State = rememberHomeScreenState(),
 ) {
 
-    val momentOfTheDay = state.momentOfTheDay
-
-    Box(
+    MomentCardList(
         modifier = modifier,
-        contentAlignment = Alignment.Center
-    ) {
-
-        if (momentOfTheDay == null) {
-
-            Text(
-                text = stringResource(id = R.string.message_add_moment)
-            )
-
-        } else {
-
-            MomentCard(
-                modifier = Modifier.wrapContentSize(),
-                state = momentOfTheDay
-            )
-
-        }
-
-    }
+        moments = state.moments
+    )
 
 }
 
