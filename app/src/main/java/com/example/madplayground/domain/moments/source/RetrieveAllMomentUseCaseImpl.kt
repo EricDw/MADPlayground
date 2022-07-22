@@ -19,7 +19,7 @@ class RetrieveAllMomentUseCaseImpl(
 
             emit(
                 RetrieveAllMomentUseCase.Result.Complete(
-                    repository.getAllMoments()
+                    repository.getAllMomentsFlow()
                 )
             )
 

@@ -1,4 +1,4 @@
-package com.example.madplayground.app.source
+package com.example.madplayground.ui.controller
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity

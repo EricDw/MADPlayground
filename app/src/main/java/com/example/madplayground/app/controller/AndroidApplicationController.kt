@@ -1,4 +1,4 @@
-package com.example.madplayground.app.source
+package com.example.madplayground.app.controller
 
 import android.app.Application
 import com.example.madplayground.domain.logs.models.Logs
@@ -14,8 +14,7 @@ class AndroidApplicationController : Application() {
     lateinit var logs: Logs
 
     override fun onCreate() {
-        // Variables are injected after super
-        super.onCreate()
+        super.onCreate() // Injection happens here
 
         logs.logDebug(
             tag = tag,
@@ -23,4 +22,5 @@ class AndroidApplicationController : Application() {
         )
 
     }
+
 }

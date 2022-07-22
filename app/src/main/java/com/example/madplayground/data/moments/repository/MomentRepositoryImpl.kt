@@ -37,7 +37,11 @@ class MomentRepositoryImpl : MomentRepository {
         return moments[id]
     }
 
-    override suspend fun getAllMoments(): StateFlow<List<Moment>> {
+    override suspend fun getAllMoments(): List<Moment> {
+        return moments.values.toList()
+    }
+
+    override suspend fun getAllMomentsFlow(): StateFlow<List<Moment>> {
         return momentsStateFlow
     }
 
