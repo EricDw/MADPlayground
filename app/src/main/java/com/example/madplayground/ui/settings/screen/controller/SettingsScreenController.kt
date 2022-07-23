@@ -33,7 +33,7 @@ fun SettingsScreenController(
             SettingsScreen.Event.IconTypeClicked        -> {
 
                 settingsScreenViewModel.actionHandler(
-                    SettingsScreen.ViewModel.Action.CycleIconType
+                    SettingsScreen.ViewModel.Action.CycleIconographyType
                 )
 
             }

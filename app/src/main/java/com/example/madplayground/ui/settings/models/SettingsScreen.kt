@@ -48,7 +48,7 @@ interface SettingsScreen {
                 }
             }
 
-            object CycleIconType : Action {
+            object CycleIconographyType : Action {
                 override fun toString(): String {
                     return this::class.simpleName ?: super.toString()
                 }

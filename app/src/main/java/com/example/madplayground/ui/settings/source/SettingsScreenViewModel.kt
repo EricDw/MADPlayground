@@ -2,7 +2,7 @@ package com.example.madplayground.ui.settings.source
 
 import com.example.madplayground.domain.logs.models.Logs
 import com.example.madplayground.domain.messages.Message
-import com.example.madplayground.domain.settings.models.Settings
+import com.example.madplayground.domain.settings.usecases.*
 import com.example.madplayground.ui.settings.models.SettingsScreen
 import com.example.madplayground.ui.settings.models.SettingsScreen.State
 import com.example.madplayground.ui.settings.models.SettingsScreen.ViewModel.Action
@@ -10,13 +10,19 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-class SettingsScreenViewModel @Inject constructor(
+class SettingsScreenViewModel(
     private val logs: Logs,
-    private val settings: Settings,
+    retrieveThemeTypeUseCase: RetrieveThemeTypeUseCase,
+    retrieveIconographyTypeUseCase: RetrieveIconographyTypeUseCase,
+    retrieveShapeTypeUseCase: RetrieveShapeTypeUseCase,
+    retrieveNavigationLabelVisibilityUseCase: RetrieveNavigationLabelVisibilityUseCase,
+    cycleThemeTypeUseCase: CycleThemeTypeUseCase,
+    cycleIconographyTypeUseCase: CycleIconographyTypeUseCase,
+    cycleShapeTypeUseCase: CycleShapeTypeUseCase,
+    cycleNavigationLabelVisibilityUseCase: CycleNavigationLabelVisibilityUseCase,
     private val scope: CoroutineScope = CoroutineScope(Dispatchers.Main.immediate),
-) : SettingsScreen.ViewModel, Logs by logs, Settings by settings {
+) : SettingsScreen.ViewModel, Logs by logs {
 
     private val tag = this::class.simpleName
 
@@ -34,7 +40,7 @@ class SettingsScreenViewModel @Inject constructor(
             message = "Initializing"
         )
 
-        themeType.onEach { themeType ->
+        retrieveThemeTypeUseCase().onEach { themeType ->
 
             logDebug(
                 tag = tag,
@@ -45,7 +51,7 @@ class SettingsScreenViewModel @Inject constructor(
 
         }.launchIn(scope)
 
-        iconographyType.onEach { iconographyType ->
+        retrieveIconographyTypeUseCase().onEach { iconographyType ->
 
             logDebug(
                 tag = tag,
@@ -56,7 +62,7 @@ class SettingsScreenViewModel @Inject constructor(
 
         }.launchIn(scope)
 
-        shapeType.onEach { shapeType ->
+        retrieveShapeTypeUseCase().onEach { shapeType ->
 
             logDebug(
                 tag = tag,
@@ -67,7 +73,7 @@ class SettingsScreenViewModel @Inject constructor(
 
         }.launchIn(scope)
 
-        navigationLabelVisibility.onEach { visibility ->
+        retrieveNavigationLabelVisibilityUseCase().onEach { visibility ->
 
             logDebug(
                 tag = tag,
@@ -96,115 +102,40 @@ class SettingsScreenViewModel @Inject constructor(
 
             Action.CycleThemeType       -> {
 
-                val newThemeType = when (
-                    settingsScreenState.themeType.value
-                ) {
-
-                    Settings.ThemeType.LIGHT  -> {
-                        Settings.ThemeType.DARK
-                    }
-
-                    Settings.ThemeType.DARK   -> {
-                        Settings.ThemeType.SYSTEM
-                    }
-
-                    Settings.ThemeType.SYSTEM -> {
-                        Settings.ThemeType.LIGHT
-                    }
-
-                }
-
                 scope.launch {
 
-                    setThemeType(
-                        newThemeType
-                    )
+                    cycleThemeTypeUseCase()
 
                 }
 
             }
 
-            Action.CycleIconType        -> {
-
-                val newIconType = when (
-                    settingsScreenState.iconType.value
-                ) {
-
-                    Settings.IconographyType.DEFAULT  -> {
-                        Settings.IconographyType.SHARP
-                    }
-
-                    Settings.IconographyType.SHARP    -> {
-                        Settings.IconographyType.OUTLINED
-                    }
-
-                    Settings.IconographyType.OUTLINED -> {
-                        Settings.IconographyType.ROUNDED
-                    }
-
-                    Settings.IconographyType.ROUNDED  -> {
-                        Settings.IconographyType.TWO_TONE
-                    }
-
-                    Settings.IconographyType.TWO_TONE -> {
-                        Settings.IconographyType.DEFAULT
-                    }
-                }
+            Action.CycleIconographyType -> {
 
                 scope.launch {
-                    setIconographyType(
-                        newIconType
-                    )
+
+                    cycleIconographyTypeUseCase()
+
                 }
+
             }
 
             Action.CycleShapeType       -> {
 
-                val newShapeType = when (
-                    settingsScreenState.shapeType.value
-                ) {
-
-                    Settings.ShapeType.ROUNDED -> {
-                        Settings.ShapeType.CUT
-                    }
-
-                    Settings.ShapeType.CUT     -> {
-                        Settings.ShapeType.ROUNDED
-                    }
-
-                }
-
                 scope.launch {
-                    setShapeType(
-                        newShapeType = newShapeType
-                    )
+
+                    cycleShapeTypeUseCase()
+
                 }
+
             }
 
             Action.CycleLabelVisibility -> {
 
-                val newVisibility = when (
-                    settingsScreenState.navigationLabelVisibility.value
-                ) {
-
-                    Settings.NavigationLabelVisibility.NEVER         -> {
-                        Settings.NavigationLabelVisibility.ALWAYS
-                    }
-
-                    Settings.NavigationLabelVisibility.ALWAYS        -> {
-                        Settings.NavigationLabelVisibility.WHEN_SELECTED
-                    }
-
-                    Settings.NavigationLabelVisibility.WHEN_SELECTED -> {
-                        Settings.NavigationLabelVisibility.NEVER
-                    }
-
-                }
-
                 scope.launch {
-                    setNavigationLabelVisibility(
-                        newVisibility = newVisibility
-                    )
+
+                    cycleNavigationLabelVisibilityUseCase()
+
                 }
             }
 
