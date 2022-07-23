@@ -1,4 +1,4 @@
-package com.example.madplayground.ui.quotes.components
+package com.example.madplayground.ui.moments.components
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -8,7 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.madplayground.ui.quotes.models.MomentUiState
+import com.example.madplayground.ui.moments.models.MomentUiState
 
 @Composable
 fun MomentCardList(

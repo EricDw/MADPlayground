@@ -17,6 +17,8 @@ data class Iconography(
     val homeIcon: ImageVector = Icons.Default.Home,
     val backIcon: ImageVector = Icons.Default.ArrowBack,
     val editIcon: ImageVector = Icons.Default.Edit,
+    val dateIcon: ImageVector = Icons.Default.CalendarToday,
+    val timeIcon: ImageVector = Icons.Default.Alarm,
 )
 
 fun defaultIconography() = Iconography()
@@ -27,6 +29,7 @@ fun sharpIconography() = Iconography(
     homeIcon = Icons.Sharp.Home,
     backIcon = Icons.Sharp.ArrowBack,
     editIcon = Icons.Sharp.Edit,
+    dateIcon = Icons.Sharp.CalendarToday,
 )
 
 fun outlinedIconography() = Iconography(
@@ -35,6 +38,7 @@ fun outlinedIconography() = Iconography(
     homeIcon = Icons.Outlined.Home,
     backIcon = Icons.Outlined.ArrowBack,
     editIcon = Icons.Outlined.Edit,
+    dateIcon = Icons.Outlined.CalendarToday,
 )
 
 fun roundedIconography() = Iconography(
@@ -43,6 +47,7 @@ fun roundedIconography() = Iconography(
     homeIcon = Icons.Rounded.Home,
     backIcon = Icons.Rounded.ArrowBack,
     editIcon = Icons.Rounded.Edit,
+    dateIcon = Icons.Rounded.CalendarToday,
 )
 
 fun twoToneIconography() = Iconography(
@@ -51,6 +56,7 @@ fun twoToneIconography() = Iconography(
     homeIcon = Icons.TwoTone.Home,
     backIcon = Icons.TwoTone.ArrowBack,
     editIcon = Icons.TwoTone.Edit,
+    dateIcon = Icons.TwoTone.CalendarToday,
 )
 
 val LocalIconography = compositionLocalOf {

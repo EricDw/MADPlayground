@@ -1,4 +1,4 @@
-package com.example.madplayground.ui.quotes.components
+package com.example.madplayground.ui.moments.components
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Card
@@ -9,9 +9,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.example.madplayground.domain.moments.models.Moment
-import com.example.madplayground.ui.quotes.models.MomentUiState
-import com.example.madplayground.ui.quotes.source.rememberMomentUiState
+import com.example.madplayground.ui.moments.models.MomentUiState
+import com.example.madplayground.ui.moments.source.rememberMomentUiState
 
 @Composable
 fun MomentCard(

@@ -8,10 +8,13 @@ internal class CreateMomentFormBuilderImpl : CreateMomentForm.Builder {
 
     override var date: String = ""
 
+    override var time: String? = null
+
     fun build(): CreateMomentForm {
         return CreateMomentFormImpl(
             description = description,
-            date = date
+            date = date,
+            time = time,
         )
     }
 

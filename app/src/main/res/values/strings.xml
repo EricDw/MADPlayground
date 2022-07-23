@@ -28,7 +28,8 @@
     <string name="label_when_selected">When Selected</string>
     <string name="label_never">Never</string>
     <string name="label_description">Description</string>
-    <string name="label_author">Author</string>
+    <string name="label_date">Date</string>
+    <string name="label_time">Time</string>
     <string name="label_cancel">Cancel</string>
     <string name="label_save">Save</string>
 
@@ -36,7 +37,7 @@
 
     <!-- region Messages -->
 
-    <string name="message_add_moment">Time to add a moment!</string>
+    <string name="message_add_moment">Time to capture a moment!</string>
     <string name="message_empty_content">Content can not be empty</string>
     <string name="message_saving">Saving</string>
 
@@ -49,6 +50,8 @@
     <string name="description_home_tab">Home tab</string>
     <string name="description_settings_tab">Settings tab</string>
     <string name="description_menu">Menu</string>
+    <string name="description_date">Date</string>
+    <string name="description_time">Time</string>
 
     <!-- endregion Content Descriptions -->
 

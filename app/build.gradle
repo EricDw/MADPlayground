@@ -81,6 +81,9 @@ dependencies {
     // Material 2 for Compose
     implementation "androidx.compose.material:material:$compose_ui_version"
 
+    // Material Icons Extended
+    implementation "androidx.compose.material:material-icons-extended:$compose_ui_version"
+
     // Material 3 for Compose
     implementation 'androidx.compose.material3:material3:1.0.0-alpha14'
 

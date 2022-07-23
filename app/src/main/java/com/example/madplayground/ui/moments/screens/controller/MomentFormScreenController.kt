@@ -8,15 +8,16 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.madplayground.domain.messages.Message
-import com.example.madplayground.features.moments.ui.screens.form.MomentFormScreen
+import com.example.madplayground.ui.moments.screens.MomentFormScreen
 import com.example.madplayground.ui.moments.models.MomentFormScreen
-import com.example.madplayground.ui.quotes.source.AndroidMomentFormScreenViewModel
+import com.example.madplayground.ui.moments.models.MomentFormViewModel
+import com.example.madplayground.ui.moments.source.AndroidMomentFormScreenMomentFormViewModel
 
 @Composable
 fun MomentFormScreenController(
     navController: NavHostController,
     modifier: Modifier = Modifier,
-    viewModel: MomentFormScreen.ViewModel = hiltViewModel<AndroidMomentFormScreenViewModel>(),
+    viewModel: MomentFormViewModel = hiltViewModel<AndroidMomentFormScreenMomentFormViewModel>(),
 ) {
 
     val state by viewModel.state.collectAsState()
@@ -27,28 +28,32 @@ fun MomentFormScreenController(
 
         when (theEvent) {
 
-            is MomentFormScreen.Event.NavigationIconClicked -> {
-                navController.popBackStack()
+            is MomentFormScreen.Event.DateChanged -> {
+                viewModel.actionHandler(
+                    MomentFormViewModel.Action.ChangeDate(
+                        newDate = theEvent.newDate
+                    )
+                )
             }
 
-            is MomentFormScreen.Event.AuthorChanged         -> {
+            is MomentFormScreen.Event.TimeChanged -> {
                 viewModel.actionHandler(
-                    MomentFormScreen.ViewModel.Action.ChangeAuthor(
-                        newAuthor = theEvent.newAuthor
+                    MomentFormViewModel.Action.ChangeTime(
+                        newTime = theEvent.newTime
                     )
                 )
             }
 
             is MomentFormScreen.Event.ContentChanged        -> {
                 viewModel.actionHandler(
-                    MomentFormScreen.ViewModel.Action.ChangeContent(
+                    MomentFormViewModel.Action.ChangeContent(
                         newContent = theEvent.newContent
                     )
                 )
             }
 
             is MomentFormScreen.Event.CancelClicked         -> {
-                if (state.author.value.isEmpty() && state.description.value.isEmpty()) {
+                if (state.date.value.isEmpty() && state.description.value.isEmpty()) {
                     navController.popBackStack()
                 } else {
                     TODO("Show Alert Dialog")
@@ -57,7 +62,7 @@ fun MomentFormScreenController(
 
             is MomentFormScreen.Event.SaveClicked           -> {
                 viewModel.actionHandler(
-                    MomentFormScreen.ViewModel.Action.SubmitForm
+                    MomentFormViewModel.Action.SubmitForm
                 )
             }
 

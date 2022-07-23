@@ -4,14 +4,12 @@ import com.example.madplayground.domain.logs.models.Logs
 import com.example.madplayground.domain.moments.models.Moment
 import com.example.madplayground.domain.moments.usecases.RetrieveAllMomentUseCase
 import com.example.madplayground.ui.home.models.HomeScreen
-import com.example.madplayground.ui.quotes.models.MomentUiState
-import com.example.madplayground.ui.quotes.source.MomentUiStateImpl
-import dagger.hilt.android.lifecycle.HiltViewModel
+import com.example.madplayground.ui.moments.models.MomentUiState
+import com.example.madplayground.ui.moments.source.MomentUiStateImpl
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.*
-import javax.inject.Inject
 
 class HomeScreenViewModel(
     private val logs: Logs,

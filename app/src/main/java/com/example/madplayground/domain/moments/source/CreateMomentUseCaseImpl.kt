@@ -20,7 +20,9 @@ class CreateMomentUseCaseImpl(
             emit(CreateMomentUseCase.Result.Running)
 
             val moment = try {
+
                 MomentWriteModel(form = form)
+
             } catch (validationError: MomentWriteModel.ValidationError) {
 
                 emit(
