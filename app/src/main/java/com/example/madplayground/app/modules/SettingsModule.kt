@@ -3,6 +3,7 @@ package com.example.madplayground.app.modules
 import android.content.Context
 import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.preferencesDataStoreFile
+import com.example.madplayground.data.settings.source.SettingsController
 import com.example.madplayground.domain.settings.models.Settings
 import com.example.madplayground.domain.settings.source.*
 import com.example.madplayground.domain.settings.usecases.*

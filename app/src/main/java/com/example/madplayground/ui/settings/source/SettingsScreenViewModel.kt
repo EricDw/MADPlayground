@@ -1,5 +1,7 @@
 package com.example.madplayground.ui.settings.source
 
+import com.example.madplayground.common.Result
+import com.example.madplayground.common.asResult
 import com.example.madplayground.domain.logs.models.Logs
 import com.example.madplayground.domain.messages.Message
 import com.example.madplayground.domain.settings.usecases.*
@@ -51,14 +53,39 @@ class SettingsScreenViewModel(
 
         }.launchIn(scope)
 
-        retrieveIconographyTypeUseCase().onEach { iconographyType ->
+        retrieveIconographyTypeUseCase().asResult().onEach { result ->
 
-            logDebug(
-                tag = tag,
-                message = "IconographyType Changed too: $iconographyType"
-            )
+            when (result) {
 
-            settingsScreenState.iconType.update { iconographyType }
+                is Result.Error   -> {
+                    logError(
+                        tag = tag,
+                        message = "Error Loading IconographyType",
+                        error = result.exception
+                    )
+
+                }
+
+                is Result.Loading -> {
+                    logDebug(
+                        tag = tag,
+                        message = "Loading IconographyType",
+                    )
+                }
+
+                is Result.Success -> {
+
+                    logDebug(
+                        tag = tag,
+                        message = "IconographyType Changed too: ${result.data}"
+                    )
+
+                    settingsScreenState.iconType.update { result.data }
+
+                }
+
+            }
+
 
         }.launchIn(scope)
 
