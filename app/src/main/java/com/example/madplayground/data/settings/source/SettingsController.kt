@@ -1,4 +1,4 @@
-package com.example.madplayground.domain.settings.source
+package com.example.madplayground.data.settings.source
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
