@@ -22,6 +22,10 @@
         <entry key="app/src/main/java/com/example/madplayground/ui/components/QuoteCardUI.kt" value="0.22037037037037038" />
         <entry key="app/src/main/java/com/example/madplayground/ui/container/ContentContainerUI.kt" value="0.1881856540084388" />
         <entry key="app/src/main/java/com/example/madplayground/ui/container/M3ContentContainerUI.kt" value="0.20925925925925926" />
+        <entry key="app/src/main/java/com/example/madplayground/ui/container/components/ContextualFloatingActionButton.kt" value="0.8506493506493507" />
+        <entry key="app/src/main/java/com/example/madplayground/ui/container/components/ContextualNavigationRail.kt" value="0.10296974743269498" />
+        <entry key="app/src/main/java/com/example/madplayground/ui/container/components/ContextualTopAppBar.kt" value="0.27870370370370373" />
+        <entry key="app/src/main/java/com/example/madplayground/ui/container/screen/ContentContainerUI.kt" value="0.10296974743269498" />
         <entry key="app/src/main/java/com/example/madplayground/ui/home/screens/HomeScreenUI.kt" value="0.1881856540084388" />
         <entry key="app/src/main/java/com/example/madplayground/ui/moments/components/MomentCardUI.kt" value="0.27870370370370373" />
         <entry key="app/src/main/java/com/example/madplayground/ui/moments/screens/MomentFormScreenUI.kt" value="0.1883445945945946" />

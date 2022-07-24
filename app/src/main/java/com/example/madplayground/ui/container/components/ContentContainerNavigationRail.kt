@@ -1,25 +1,27 @@
 package com.example.madplayground.ui.container.components
 
 import androidx.annotation.StringRes
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.example.madplayground.R
-import com.example.madplayground.ui.container.models.ContentContainer
-import com.example.madplayground.ui.container.util.ScreenContextPreviewParameterProvider
-import com.example.madplayground.domain.messages.Message
 import com.example.madplayground.domain.settings.models.Settings
+import com.example.madplayground.ui.container.models.ContentContainer
+import com.example.madplayground.ui.screen.HomeScreen
+import com.example.madplayground.ui.screen.MomentFormScreen
+import com.example.madplayground.ui.screen.Screen
+import com.example.madplayground.ui.screen.SettingsScreen
 import com.example.madplayground.ui.theme.models.LocalIconography
 
 @Composable
-fun ContextualNavigationRail(
-    screenContext: ContentContainer.ScreenContext,
-    eventHandler: Message.Handler<ContentContainer.Event>,
+fun ContentContainerNavigationRail(
+    contentContainer: ContentContainer,
     modifier: Modifier = Modifier,
     navigationLabelVisibility: Settings.NavigationLabelVisibility = Settings.NavigationLabelVisibility.WHEN_SELECTED,
     isVisible: Boolean = true,
@@ -39,7 +41,7 @@ fun ContextualNavigationRail(
 
     if (isVisible) {
         NavigationRail(
-            modifier= modifier,
+            modifier = modifier,
             header = header,
         ) {
 
@@ -55,7 +57,7 @@ fun ContextualNavigationRail(
                     navigationLabelVisibility = navigationLabelVisibility,
                     textId = R.string.title_home
                 ) {
-                    eventHandler(
+                    contentContainer.currentScreen.onEvent(
                         ContentContainer.Event.HomeTabClicked
                     )
                 }
@@ -67,7 +69,7 @@ fun ContextualNavigationRail(
                     navigationLabelVisibility = navigationLabelVisibility,
                     textId = R.string.title_settings
                 ) {
-                    eventHandler(
+                    contentContainer.currentScreen.onEvent(
                         ContentContainer.Event.SettingsTabClicked
                     )
                 }
@@ -78,17 +80,20 @@ fun ContextualNavigationRail(
     }
 
     LaunchedEffect(
-        key1 = screenContext
+        key1 = contentContainer.currentScreen
     ) {
 
-        when (screenContext) {
+        when (contentContainer.currentScreen) {
 
-            ContentContainer.ScreenContext.HOME       -> {
+            is Screen.EMPTY     -> {
+                /* no-op */
+            }
+
+            is HomeScreen       -> {
 
                 header = {
-                    ContextualFloatingActionButton(
-                        screenContext = screenContext,
-                        eventHandler = eventHandler
+                    ContentContainerFloatingActionButton(
+                        contentContainer = contentContainer,
                     )
                 }
 
@@ -97,12 +102,12 @@ fun ContextualNavigationRail(
 
             }
 
-            ContentContainer.ScreenContext.SETTINGS   -> {
+            is SettingsScreen   -> {
 
                 header = {
                     NavigationIcon(
                         icon = LocalIconography.current.backIcon,
-                        eventHandler = eventHandler,
+                        eventHandler = contentContainer.currentScreen::onEvent,
                         descriptionId = R.string.description_go_back
                     )
                 }
@@ -112,12 +117,12 @@ fun ContextualNavigationRail(
 
             }
 
-            ContentContainer.ScreenContext.QUOTE_FORM -> {
+            is MomentFormScreen -> {
 
                 header = {
                     NavigationIcon(
                         icon = LocalIconography.current.backIcon,
-                        eventHandler = eventHandler,
+                        eventHandler = contentContainer.currentScreen::onEvent,
                         descriptionId = R.string.description_go_back
                     )
                 }
@@ -137,7 +142,7 @@ fun ContextualNavigationRail(
 private fun NavigationIcon(
     icon: ImageVector,
     descriptionId: Int? = null,
-    eventHandler: Message.Handler<ContentContainer.Event>,
+    eventHandler: (ContentContainer.Event) -> Unit,
 ) {
 
     IconButton(
@@ -167,7 +172,7 @@ private fun RailItem(
     isSelected: Boolean,
     navigationLabelVisibility: Settings.NavigationLabelVisibility,
     textId: Int,
-    onClick: () -> Unit
+    onClick: () -> Unit,
 ) {
     NavigationRailItem(
         selected = isSelected,
@@ -189,20 +194,4 @@ private fun RailItem(
         },
         alwaysShowLabel = navigationLabelVisibility == Settings.NavigationLabelVisibility.ALWAYS
     )
-}
-
-@Preview
-@Composable
-private fun ContextualNavigationRailPreview(
-    @PreviewParameter(
-        ScreenContextPreviewParameterProvider::class
-    )
-    screenContext: ContentContainer.ScreenContext,
-) {
-
-    ContextualNavigationRail(
-        screenContext = screenContext,
-        eventHandler = { /* no-op */ },
-    )
-
 }

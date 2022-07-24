@@ -11,18 +11,18 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navigation
-import com.example.madplayground.domain.messages.Message
-import com.example.madplayground.ui.config.CombinedWindowType
+import com.example.madplayground.ui.config.CombinedWindowType.*
 import com.example.madplayground.ui.config.LocalWindowConfiguration
-import com.example.madplayground.ui.container.screen.ContentContainer
 import com.example.madplayground.ui.container.models.ContentContainer
+import com.example.madplayground.ui.container.screen.ContentContainer
 import com.example.madplayground.ui.container.source.AndroidContentContainerViewModel
-import com.example.madplayground.ui.logs.LocalLogs
-import com.example.madplayground.ui.home.models.HomeScreen
 import com.example.madplayground.ui.home.screens.controller.HomeScreenController
-import com.example.madplayground.ui.moments.models.MomentFormScreen
+import com.example.madplayground.ui.logs.LocalLogs
 import com.example.madplayground.ui.moments.screens.controller.MomentFormScreenController
-import com.example.madplayground.ui.settings.models.SettingsScreen
+import com.example.madplayground.ui.screen.HomeScreen
+import com.example.madplayground.ui.screen.MomentFormScreen
+import com.example.madplayground.ui.screen.Screen
+import com.example.madplayground.ui.screen.SettingsScreen
 import com.example.madplayground.ui.settings.screen.controller.SettingsScreenController
 
 @Composable
@@ -39,11 +39,11 @@ fun ContentContainerController(
     val contentContainerState by contentContainerViewModel.stateFlow.collectAsState()
 
     var showTopAppBar: Boolean by remember {
-        mutableStateOf(true)
+        mutableStateOf(false)
     }
 
     var showBottomNavBar: Boolean by remember {
-        mutableStateOf(true)
+        mutableStateOf(false)
     }
 
     var showNavigationRail: Boolean by remember {
@@ -51,71 +51,41 @@ fun ContentContainerController(
     }
 
     var showBottomFAB: Boolean by remember {
-        mutableStateOf(true)
+        mutableStateOf(false)
     }
 
     val navHostController: NavHostController = rememberNavController()
 
-    val eventHandler = Message.Handler<ContentContainer.Event> { theEvent ->
+    var currentScreen: Screen by remember {
+        mutableStateOf(Screen.EMPTY)
+    }
 
-        when (theEvent) {
+    val containerInterface = remember {
+        object : ContentContainer.Controller {
 
-            ContentContainer.Event.FABClicked              -> {
-                navHostController.navigate(
-                    route = MomentFormScreen.ROUTE
-                )
-            }
+            override val state: ContentContainer.State
+                get() = contentContainerState
 
-            ContentContainer.Event.HomeTabClicked          -> {
+            override val navHostController = navHostController
 
-                if (contentContainerState.screenContext != ContentContainer.ScreenContext.HOME)
-                    navHostController.navigateToGraph(
-                        ContentContainer.HOME_GRAPH_ROUTE
-                    )
+            override val currentScreen: Screen
+                get() = currentScreen
 
-            }
-
-            ContentContainer.Event.SettingsTabClicked      -> {
-
-                if (contentContainerState.screenContext != ContentContainer.ScreenContext.SETTINGS)
-                    navHostController.navigateToGraph(
-                        ContentContainer.SETTINGS_GRAPH_ROUTE
-                    )
-
-            }
-
-            ContentContainer.Event.NavigationButtonClicked -> {
-
-                when (contentContainerState.screenContext) {
-
-                    ContentContainer.ScreenContext.HOME       -> {
-                        /* no-op */
-                    }
-
-                    ContentContainer.ScreenContext.SETTINGS   -> {
-                        navHostController.popBackStack()
-                    }
-
-                    ContentContainer.ScreenContext.QUOTE_FORM -> {
-                        navHostController.popBackStack()
-                    }
-
-                }
-
+            override fun setScreen(newScreen: Screen) {
+                currentScreen = newScreen
             }
 
         }
-
     }
 
     ContentContainer(
+        contentContainer = containerInterface,
         modifier = Modifier.fillMaxSize(),
         state = contentContainerState,
         showTopAppBar = showTopAppBar,
         showBottomNavBar = showBottomNavBar,
         showNavigationRail = showNavigationRail,
         showBottomFAB = showBottomFAB,
-        eventHandler = eventHandler
     ) { rootPadding ->
 
         val screenModifier = Modifier
@@ -132,65 +102,35 @@ fun ContentContainerController(
                 route = ContentContainer.HOME_GRAPH_ROUTE
             ) {
 
-                composable(
-                    route = HomeScreen.ROUTE
-                ) {
+                composable(route = HomeScreen.ROUTE) {
 
                     HomeScreenController(
+                        contentContainer = containerInterface,
                         modifier = screenModifier
                     )
-
-                    LaunchedEffect(key1 = true) {
-                        contentContainerViewModel.actionHandler(
-                            ContentContainer.ViewModel.Action.SwitchContexts(
-                                ContentContainer.ScreenContext.HOME
-                            )
-                        )
-                    }
 
                 }
 
-                composable(
-                    route = MomentFormScreen.ROUTE
-                ) {
+                composable(route = MomentFormScreen.ROUTE) {
 
                     MomentFormScreenController(
-                        navController = navHostController,
-                        modifier = screenModifier
+                        container = containerInterface,
+                        modifier = screenModifier,
                     )
-
-                    LaunchedEffect(key1 = true) {
-                        contentContainerViewModel.actionHandler(
-                            ContentContainer.ViewModel.Action.SwitchContexts(
-                                ContentContainer.ScreenContext.QUOTE_FORM
-                            )
-                        )
-                    }
 
                 }
 
             }
 
-            navigation(
-                startDestination = SettingsScreen.ROUTE,
-                route = ContentContainer.SETTINGS_GRAPH_ROUTE
-            ) {
+            navigation(startDestination = SettingsScreen.ROUTE,
+                       route = ContentContainer.SETTINGS_GRAPH_ROUTE) {
 
-                composable(
-                    route = SettingsScreen.ROUTE
-                ) {
+                composable(route = SettingsScreen.ROUTE) {
 
                     SettingsScreenController(
+                        contentContainer = containerInterface,
                         modifier = screenModifier,
                     )
-
-                    LaunchedEffect(key1 = true) {
-                        contentContainerViewModel.actionHandler(
-                            ContentContainer.ViewModel.Action.SwitchContexts(
-                                ContentContainer.ScreenContext.SETTINGS
-                            )
-                        )
-                    }
 
                 }
 
@@ -202,35 +142,41 @@ fun ContentContainerController(
 
     LaunchedEffect(
         key1 = windowConfiguration,
-        key2 = contentContainerState.screenContext
+        key2 = currentScreen,
     ) {
 
-        when (
-            windowConfiguration.combinedWindowType
-        ) {
+        when (windowConfiguration.combinedWindowType) {
 
-            CombinedWindowType.COMPACT_WIDTH_COMPACT_HEIGHT   -> {
+            COMPACT_WIDTH_COMPACT_HEIGHT   -> {
 
-                when (contentContainerState.screenContext) {
+                when (currentScreen) {
 
-                    ContentContainer.ScreenContext.QUOTE_FORM -> {
-                        showNavigationRail = false
+                    is Screen.EMPTY     -> {
+                        showTopAppBar = false
                         showBottomNavBar = false
-                        showBottomFAB = false
-                        showTopAppBar = true
-                    }
-
-                    ContentContainer.ScreenContext.SETTINGS   -> {
+                        showNavigationRail = false
                         showBottomFAB = false
                     }
 
-                    else -> {
+                    is HomeScreen       -> {
                         showTopAppBar = false
                         showBottomNavBar = true
                         showNavigationRail = false
                         showBottomFAB = true
                     }
 
+                    is SettingsScreen   -> {
+                        showTopAppBar = true
+                        showBottomFAB = false
+                    }
+
+                    is MomentFormScreen -> {
+                        showTopAppBar = false
+                        showBottomNavBar = false
+                        showNavigationRail = false
+                        showBottomFAB = false
+                    }
+
                 }
 
                 logs.logDebug(
@@ -240,27 +186,33 @@ fun ContentContainerController(
 
             }
 
-            CombinedWindowType.COMPACT_WIDTH_MEDIUM_HEIGHT    -> {
+            COMPACT_WIDTH_MEDIUM_HEIGHT    -> {
 
-                when (contentContainerState.screenContext) {
+                when (currentScreen) {
 
-                    ContentContainer.ScreenContext.QUOTE_FORM -> {
-                        showNavigationRail = false
-                        showBottomNavBar = false
-                        showBottomFAB = false
+                    is Screen.EMPTY     -> {
+
+                    }
+
+                    is HomeScreen       -> {
                         showTopAppBar = true
-                    }
-
-                    ContentContainer.ScreenContext.SETTINGS   -> {
-                        showBottomFAB = false
-                    }
-
-                    else -> {
                         showBottomNavBar = true
                         showNavigationRail = false
                         showBottomFAB = true
                     }
 
+                    is SettingsScreen   -> {
+                        showTopAppBar = true
+                        showBottomFAB = false
+                    }
+
+                    is MomentFormScreen -> {
+                        showTopAppBar = false
+                        showBottomNavBar = false
+                        showNavigationRail = false
+                        showBottomFAB = false
+                    }
+
                 }
 
                 logs.logDebug(
@@ -270,8 +222,34 @@ fun ContentContainerController(
 
             }
 
-            CombinedWindowType.COMPACT_WIDTH_EXPANDED_HEIGHT  -> {
-                // TODO: Configure State
+            COMPACT_WIDTH_EXPANDED_HEIGHT  -> {
+
+                when (currentScreen) {
+
+                    is Screen.EMPTY     -> {
+
+                    }
+
+                    is HomeScreen       -> {
+                        showTopAppBar = true
+                        showBottomNavBar = true
+                        showNavigationRail = false
+                        showBottomFAB = true
+                    }
+
+                    is SettingsScreen   -> {
+                        showTopAppBar = true
+                        showBottomFAB = false
+                    }
+
+                    is MomentFormScreen -> {
+                        showTopAppBar = false
+                        showBottomNavBar = false
+                        showNavigationRail = false
+                        showBottomFAB = false
+                    }
+
+                }
 
                 logs.logDebug(
                     tag = tag,
@@ -280,71 +258,34 @@ fun ContentContainerController(
 
             }
 
-            CombinedWindowType.MEDIUM_WIDTH_COMPACT_HEIGHT    -> {
+            MEDIUM_WIDTH_COMPACT_HEIGHT    -> {
 
-                when (contentContainerState.screenContext) {
+                when (currentScreen) {
 
-                    ContentContainer.ScreenContext.QUOTE_FORM -> {
-                        showNavigationRail = false
-                        showBottomNavBar = false
-                        showBottomFAB = false
-                        showTopAppBar = true
+                    is Screen.EMPTY     -> {
+
                     }
 
-                    else -> {
+                    is HomeScreen       -> {
                         showBottomNavBar = false
                         showNavigationRail = true
                         showBottomFAB = false
                     }
 
-                }
-
-                logs.logDebug(
-                    tag = tag,
-                    message = "$windowConfiguration handled!"
-                )
-
-            }
-
-            CombinedWindowType.MEDIUM_WIDTH_MEDIUM_HEIGHT     -> {
-                // TODO: Configure State
-
-                logs.logDebug(
-                    tag = tag,
-                    message = "$windowConfiguration not handled!"
-                )
-
-            }
-
-            CombinedWindowType.MEDIUM_WIDTH_EXPANDED_HEIGHT   -> {
-                // TODO: Configure State
-
-                logs.logDebug(
-                    tag = tag,
-                    message = "$windowConfiguration not handled!"
-                )
-
-            }
-
-            CombinedWindowType.EXPANDED_WIDTH_COMPACT_HEIGHT  -> {
-
-                when (contentContainerState.screenContext) {
-
-                    ContentContainer.ScreenContext.QUOTE_FORM -> {
-                        showNavigationRail = false
-                        showBottomNavBar = false
-                        showBottomFAB = false
-                        showTopAppBar = true
-                    }
-
-                    else -> {
+                    is SettingsScreen   -> {
                         showBottomNavBar = false
                         showNavigationRail = true
                         showBottomFAB = false
                     }
 
-                }
+                    is MomentFormScreen -> {
+                        showTopAppBar = false
+                        showBottomNavBar = false
+                        showNavigationRail = false
+                        showBottomFAB = false
+                    }
 
+                }
 
                 logs.logDebug(
                     tag = tag,
@@ -353,49 +294,204 @@ fun ContentContainerController(
 
             }
 
-            CombinedWindowType.EXPANDED_WIDTH_MEDIUM_HEIGHT   -> {
-                // TODO: Configure State
+            MEDIUM_WIDTH_MEDIUM_HEIGHT     -> {
+
+                when (currentScreen) {
+
+                    is Screen.EMPTY     -> {
+
+                    }
+
+                    is HomeScreen       -> {
+                        showTopAppBar = true
+                        showBottomNavBar = false
+                        showNavigationRail = true
+                        showBottomFAB = false
+                    }
+
+                    is SettingsScreen   -> {
+                        showTopAppBar = true
+                        showBottomNavBar = false
+                        showNavigationRail = true
+                        showBottomFAB = false
+                    }
+
+                    is MomentFormScreen -> {
+                        showTopAppBar = false
+                        showBottomNavBar = false
+                        showNavigationRail = false
+                        showBottomFAB = false
+                    }
+
+                }
 
                 logs.logDebug(
                     tag = tag,
-                    message = "$windowConfiguration not handled!"
+                    message = "$windowConfiguration handled!"
                 )
 
             }
 
-            CombinedWindowType.EXPANDED_WIDTH_EXPANDED_HEIGHT -> {
-                // TODO: Configure State
+            MEDIUM_WIDTH_EXPANDED_HEIGHT   -> {
+
+                when (currentScreen) {
+
+                    is Screen.EMPTY     -> {
+                        showTopAppBar = false
+                        showBottomNavBar = false
+                        showNavigationRail = false
+                        showBottomFAB = false
+                    }
+
+                    is HomeScreen       -> {
+                        showTopAppBar = true
+                        showBottomNavBar = false
+                        showNavigationRail = true
+                        showBottomFAB = false
+                    }
+
+                    is SettingsScreen   -> {
+                        showTopAppBar = true
+                        showBottomNavBar = false
+                        showNavigationRail = true
+                        showBottomFAB = false
+                    }
+
+                    is MomentFormScreen -> {
+                        showTopAppBar = false
+                        showBottomNavBar = false
+                        showNavigationRail = false
+                        showBottomFAB = false
+                    }
+
+                }
 
                 logs.logDebug(
                     tag = tag,
-                    message = "$windowConfiguration not handled!"
+                    message = "$windowConfiguration handled!"
+                )
+
+            }
+
+            EXPANDED_WIDTH_COMPACT_HEIGHT  -> {
+
+                when (currentScreen) {
+
+                    is Screen.EMPTY     -> {
+                        showTopAppBar = false
+                        showBottomNavBar = false
+                        showNavigationRail = false
+                        showBottomFAB = false
+                    }
+
+                    is HomeScreen       -> {
+                        showBottomNavBar = false
+                        showNavigationRail = true
+                        showBottomFAB = false
+                    }
+
+                    is SettingsScreen   -> {
+                        showBottomNavBar = false
+                        showNavigationRail = true
+                        showBottomFAB = false
+                    }
+
+                    is MomentFormScreen -> {
+                        showTopAppBar = false
+                        showNavigationRail = false
+                        showBottomNavBar = false
+                        showBottomFAB = false
+                    }
+
+                }
+
+                logs.logDebug(
+                    tag = tag,
+                    message = "$windowConfiguration handled!"
+                )
+
+            }
+
+            EXPANDED_WIDTH_MEDIUM_HEIGHT   -> {
+
+                when (currentScreen) {
+
+                    is Screen.EMPTY     -> {
+                        showTopAppBar = false
+                        showBottomNavBar = false
+                        showNavigationRail = false
+                        showBottomFAB = false
+                    }
+
+                    is HomeScreen       -> {
+                        showBottomNavBar = false
+                        showNavigationRail = true
+                        showBottomFAB = false
+                    }
+
+                    is SettingsScreen   -> {
+                        showBottomNavBar = false
+                        showNavigationRail = true
+                        showBottomFAB = false
+                    }
+
+                    is MomentFormScreen -> {
+                        showTopAppBar = false
+                        showBottomNavBar = false
+                        showNavigationRail = false
+                        showBottomFAB = false
+                    }
+
+                }
+
+                logs.logDebug(
+                    tag = tag,
+                    message = "$windowConfiguration handled!"
+                )
+
+            }
+
+            EXPANDED_WIDTH_EXPANDED_HEIGHT -> {
+
+                when (currentScreen) {
+
+                    is Screen.EMPTY     -> {
+                        showTopAppBar = false
+                        showBottomNavBar = false
+                        showNavigationRail = false
+                        showBottomFAB = false
+                    }
+
+                    is HomeScreen       -> {
+                        showBottomNavBar = false
+                        showNavigationRail = true
+                        showBottomFAB = false
+                    }
+
+                    is SettingsScreen   -> {
+                        showBottomNavBar = false
+                        showNavigationRail = true
+                        showBottomFAB = false
+                    }
+
+                    is MomentFormScreen -> {
+                        showTopAppBar = false
+                        showBottomNavBar = false
+                        showNavigationRail = false
+                        showBottomFAB = false
+                    }
+
+                }
+
+                logs.logDebug(
+                    tag = tag,
+                    message = "$windowConfiguration handled!"
                 )
 
             }
 
         }
 
-
     }
 
-}
-
-private fun NavHostController.navigateToGraph(route: String) {
-    navigate(
-        route
-    ) {
-        // Pop up to the start destination of the graph to
-        // avoid building up a large stack of destinations
-        // on the back stack as users select items
-        popUpTo(
-            id = graph.findStartDestination().id
-        ) {
-            saveState = true
-        }
-        // Avoid multiple copies of the same destination when
-        // re-selecting the same item
-        launchSingleTop = true
-        // Restore state when re-selecting a previously selected item
-        restoreState = true
-    }
 }

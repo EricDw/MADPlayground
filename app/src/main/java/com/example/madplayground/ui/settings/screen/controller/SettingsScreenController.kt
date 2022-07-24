@@ -1,17 +1,18 @@
 package com.example.madplayground.ui.settings.screen.controller
 
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.madplayground.domain.messages.Message
+import com.example.madplayground.ui.container.models.ContentContainer
+import com.example.madplayground.ui.container.util.navigateToGraph
+import com.example.madplayground.ui.screen.SettingsScreen
 import com.example.madplayground.ui.settings.screen.SettingsScreen
-import com.example.madplayground.ui.settings.models.SettingsScreen
 import com.example.madplayground.ui.settings.source.AndroidSettingsScreenViewModel
 
 @Composable
 fun SettingsScreenController(
+    contentContainer: ContentContainer.Controller,
     modifier: Modifier = Modifier,
     settingsScreenViewModel: SettingsScreen.ViewModel = hiltViewModel<AndroidSettingsScreenViewModel>(),
 ) {
@@ -54,6 +55,48 @@ fun SettingsScreenController(
 
             }
 
+            SettingsScreen.Event.BackClicked            -> {
+                contentContainer.navHostController.popBackStack()
+            }
+
+        }
+
+    }
+
+    val screenInterface = remember {
+
+        object : SettingsScreen {
+
+            override fun onEvent(event: ContentContainer.Event) {
+
+                when (event) {
+
+                    ContentContainer.Event.FABClicked              -> {
+                        TODO()
+                    }
+
+                    ContentContainer.Event.HomeTabClicked          -> {
+                        contentContainer.navHostController.navigateToGraph(
+                            ContentContainer.HOME_GRAPH_ROUTE
+                        )
+                    }
+
+                    ContentContainer.Event.NavigationButtonClicked -> {
+                        contentContainer.navHostController.popBackStack()
+                    }
+
+                    ContentContainer.Event.SettingsTabClicked      -> {
+                        /* no-op */
+                    }
+
+                }
+
+            }
+
+            override fun onEvent(event: SettingsScreen.Event) {
+                settingsScreenEventHandler(event)
+            }
+
         }
 
     }
@@ -63,5 +106,9 @@ fun SettingsScreenController(
         modifier = modifier,
         eventHandler = settingsScreenEventHandler,
     )
+
+    LaunchedEffect(key1 = screenInterface) {
+        contentContainer.setScreen(screenInterface)
+    }
 
 }

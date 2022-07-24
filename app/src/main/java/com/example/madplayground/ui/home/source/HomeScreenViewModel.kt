@@ -3,7 +3,7 @@ package com.example.madplayground.ui.home.source
 import com.example.madplayground.domain.logs.models.Logs
 import com.example.madplayground.domain.moments.models.Moment
 import com.example.madplayground.domain.moments.usecases.RetrieveAllMomentUseCase
-import com.example.madplayground.ui.home.models.HomeScreen
+import com.example.madplayground.ui.screen.HomeScreen
 import com.example.madplayground.ui.moments.models.MomentUiState
 import com.example.madplayground.ui.moments.source.MomentUiStateImpl
 import kotlinx.coroutines.CoroutineScope

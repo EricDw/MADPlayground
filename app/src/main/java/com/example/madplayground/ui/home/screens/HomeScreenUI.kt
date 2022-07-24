@@ -6,7 +6,7 @@ import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.madplayground.ui.home.models.HomeScreen
+import com.example.madplayground.ui.screen.HomeScreen
 import com.example.madplayground.ui.home.source.rememberHomeScreenState
 import com.example.madplayground.ui.moments.components.MomentCardList
 import com.example.madplayground.ui.moments.source.MomentUiStateImpl

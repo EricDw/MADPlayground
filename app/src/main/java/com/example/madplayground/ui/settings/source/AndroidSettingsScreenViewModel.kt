@@ -5,9 +5,9 @@ import androidx.lifecycle.viewModelScope
 import com.example.madplayground.domain.logs.models.Logs
 import com.example.madplayground.domain.messages.Message
 import com.example.madplayground.domain.settings.usecases.*
-import com.example.madplayground.ui.settings.models.SettingsScreen
-import com.example.madplayground.ui.settings.models.SettingsScreen.State
-import com.example.madplayground.ui.settings.models.SettingsScreen.ViewModel.Action
+import com.example.madplayground.ui.screen.SettingsScreen
+import com.example.madplayground.ui.screen.SettingsScreen.State
+import com.example.madplayground.ui.screen.SettingsScreen.ViewModel.Action
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject

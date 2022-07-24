@@ -1,20 +1,10 @@
-package com.example.madplayground.ui.home.models
+package com.example.madplayground.ui.screen
 
 import com.example.madplayground.domain.messages.Message
 import com.example.madplayground.ui.moments.models.MomentUiState
 import kotlinx.coroutines.flow.StateFlow
 
-interface HomeScreen {
-
-    companion object {
-
-        const val ROUTE: String = "home_screen"
-
-    }
-
-    sealed interface Event {
-
-    }
+interface HomeScreen : Screen {
 
     interface State {
 
@@ -31,6 +21,12 @@ interface HomeScreen {
         sealed interface Action : Message {
 
         }
+
+    }
+
+    companion object {
+
+        const val ROUTE: String = "home_screen"
 
     }
 

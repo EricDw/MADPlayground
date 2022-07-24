@@ -3,9 +3,9 @@ package com.example.madplayground.ui.settings.source
 import com.example.madplayground.domain.logs.models.Logs
 import com.example.madplayground.domain.messages.Message
 import com.example.madplayground.domain.settings.usecases.*
-import com.example.madplayground.ui.settings.models.SettingsScreen
-import com.example.madplayground.ui.settings.models.SettingsScreen.State
-import com.example.madplayground.ui.settings.models.SettingsScreen.ViewModel.Action
+import com.example.madplayground.ui.screen.SettingsScreen
+import com.example.madplayground.ui.screen.SettingsScreen.State
+import com.example.madplayground.ui.screen.SettingsScreen.ViewModel.Action
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*

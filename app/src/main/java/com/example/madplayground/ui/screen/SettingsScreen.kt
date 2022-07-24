@@ -1,16 +1,17 @@
-package com.example.madplayground.ui.settings.models
+package com.example.madplayground.ui.screen
 
 import com.example.madplayground.domain.messages.Message
 import com.example.madplayground.domain.settings.models.Settings
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.StateFlow
 
-interface SettingsScreen {
+interface SettingsScreen: Screen {
 
-    companion object {
-        const val ROUTE: String = "settings"
-    }
+    fun onEvent(event: Event)
 
     sealed interface Event : Message {
+
+        object BackClicked : Event
 
         object ThemeTypeClicked : Event
 
@@ -68,6 +69,10 @@ interface SettingsScreen {
 
         }
 
+    }
+
+    companion object {
+        const val ROUTE: String = "settings"
     }
 
 }

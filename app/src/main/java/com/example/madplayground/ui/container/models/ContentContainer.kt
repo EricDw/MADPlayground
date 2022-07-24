@@ -1,18 +1,23 @@
 package com.example.madplayground.ui.container.models
 
+import androidx.navigation.NavHostController
 import com.example.madplayground.domain.messages.Message
 import com.example.madplayground.domain.settings.models.Settings
+import com.example.madplayground.ui.screen.Screen
 import kotlinx.coroutines.flow.StateFlow
 
 interface ContentContainer {
 
-    companion object {
-        const val HOME_GRAPH_ROUTE: String = "home_graph"
-        const val SETTINGS_GRAPH_ROUTE: String = "settings_graph"
-    }
+    val state: State
 
-    enum class ScreenContext {
-        HOME, SETTINGS, QUOTE_FORM;
+    val currentScreen: Screen
+
+    interface Controller : ContentContainer {
+
+        val navHostController: NavHostController
+
+        fun setScreen(newScreen: Screen)
+
     }
 
     sealed interface Event : Message {
@@ -28,8 +33,6 @@ interface ContentContainer {
     }
 
     interface State {
-
-        val screenContext: ScreenContext
 
         val themeType: Settings.ThemeType
 
@@ -49,12 +52,14 @@ interface ContentContainer {
 
         sealed interface Action : Message {
 
-            data class SwitchContexts(
-                val newContext: ScreenContext,
-            ) : Action
 
         }
 
+    }
+
+    companion object {
+        const val HOME_GRAPH_ROUTE: String = "home_graph"
+        const val SETTINGS_GRAPH_ROUTE: String = "settings_graph"
     }
 
 }

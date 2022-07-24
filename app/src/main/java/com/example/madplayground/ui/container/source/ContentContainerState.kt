@@ -6,10 +6,6 @@ import com.example.madplayground.ui.container.models.ContentContainer
 
 class ContentContainerState : ContentContainer.State {
 
-    override var screenContext: ContentContainer.ScreenContext by mutableStateOf(
-        ContentContainer.ScreenContext.HOME
-    )
-
     override var themeType: Settings.ThemeType by mutableStateOf(
         Settings.ThemeType.SYSTEM
     )

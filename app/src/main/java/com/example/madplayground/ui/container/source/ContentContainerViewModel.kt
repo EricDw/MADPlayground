@@ -89,18 +89,10 @@ class ContentContainerViewModel(
 
     override val actionHandler = Message.Handler<Action> { action ->
 
-        logDebug(
+        logError(
             tag = tag,
-            message = "Handling: $action"
+            message = "Action: $action Not Handled!"
         )
-
-        when (action) {
-
-            is Action.SwitchContexts -> {
-                state.screenContext = action.newContext
-            }
-
-        }
 
     }
 

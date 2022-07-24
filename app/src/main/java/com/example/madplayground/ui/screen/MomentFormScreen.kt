@@ -1,8 +1,18 @@
-package com.example.madplayground.ui.moments.models
+package com.example.madplayground.ui.screen
 
+import androidx.compose.material.BackdropScaffoldState
+import androidx.compose.material.ExperimentalMaterialApi
 import com.example.madplayground.domain.messages.Message
+import kotlinx.coroutines.CoroutineScope
 
-interface MomentFormScreen {
+@OptIn(ExperimentalMaterialApi::class)
+interface MomentFormScreen : Screen {
+
+    val scope: CoroutineScope
+
+    val scaffoldState: BackdropScaffoldState
+
+    fun onEvent(event: Event)
 
     sealed interface Event : Message {
 
@@ -21,6 +31,12 @@ interface MomentFormScreen {
         object CancelClicked: Event
 
         object SaveClicked: Event
+
+        object DismissDialogRequested: Event
+
+        object DiscardChangesClicked: Event
+
+        object BackClicked: Event
 
     }
 

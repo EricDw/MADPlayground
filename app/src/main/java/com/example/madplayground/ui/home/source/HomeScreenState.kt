@@ -1,7 +1,7 @@
 package com.example.madplayground.ui.home.source
 
 import androidx.compose.runtime.*
-import com.example.madplayground.ui.home.models.HomeScreen
+import com.example.madplayground.ui.screen.HomeScreen
 import com.example.madplayground.ui.moments.models.MomentUiState
 
 class HomeScreenState : HomeScreen.State {

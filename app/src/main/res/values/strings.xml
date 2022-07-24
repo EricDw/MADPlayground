@@ -11,6 +11,7 @@
     <string name="title_icon_type">Icon Type</string>
     <string name="title_shape_type">Shape Type</string>
     <string name="title_compose_moment">Compose Moment</string>
+    <string name="title_discard_changes">Discard Changes</string>
     <!-- endregion Titles -->
 
     <!-- region Labels -->
@@ -31,6 +32,8 @@
     <string name="label_date">Date</string>
     <string name="label_time">Time</string>
     <string name="label_cancel">Cancel</string>
+    <string name="label_no">No</string>
+    <string name="label_discard">Discard</string>
     <string name="label_save">Save</string>
 
     <!-- endregion Labels -->
@@ -40,6 +43,7 @@
     <string name="message_add_moment">Time to capture a moment!</string>
     <string name="message_empty_content">Content can not be empty</string>
     <string name="message_saving">Saving</string>
+    <string name="message_discard_changes">You have unsaved changes.\nDo you want to discard them?</string>
 
     <!-- endregion Messages -->
 
@@ -50,6 +54,8 @@
     <string name="description_home_tab">Home tab</string>
     <string name="description_settings_tab">Settings tab</string>
     <string name="description_menu">Menu</string>
+    <string name="description_open_menu">Open Menu</string>
+    <string name="description_close_menu">Close Menu</string>
     <string name="description_date">Date</string>
     <string name="description_time">Time</string>
 
