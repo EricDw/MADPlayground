@@ -6,7 +6,7 @@ internal class CreateMomentFormBuilderImpl : CreateMomentForm.Builder {
 
     override var description: String = ""
 
-    override var date: String = ""
+    override var date: String? = null
 
     override var time: String? = null
 

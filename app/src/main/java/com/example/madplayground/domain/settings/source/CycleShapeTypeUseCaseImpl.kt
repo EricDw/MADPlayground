@@ -1,18 +1,17 @@
 package com.example.madplayground.domain.settings.source
 
+import com.example.madplayground.cache.settings.models.SettingsCache
 import com.example.madplayground.domain.settings.models.Settings
 import com.example.madplayground.domain.settings.usecases.CycleShapeTypeUseCase
-import com.example.madplayground.domain.settings.usecases.CycleThemeTypeUseCase
-import com.example.madplayground.domain.settings.usecases.RetrieveThemeTypeUseCase
 
 class CycleShapeTypeUseCaseImpl(
-    private val settings: Settings,
+    private val cache: SettingsCache,
 ) : CycleShapeTypeUseCase {
 
     override suspend fun invoke() {
 
         val newShapeType = when (
-            settings.shapeType.value
+            cache.shapeType.value
         ) {
 
             Settings.ShapeType.ROUNDED -> {
@@ -25,7 +24,7 @@ class CycleShapeTypeUseCaseImpl(
 
         }
 
-        return settings.setShapeType(newShapeType)
+        return cache.setShapeType(newShapeType)
     }
 
 }

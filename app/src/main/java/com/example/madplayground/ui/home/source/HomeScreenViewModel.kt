@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.*
 
 class HomeScreenViewModel(
     private val logs: Logs,
-    private val retrieveAllMomentUseCase: RetrieveAllMomentUseCase,
+    retrieveAllMomentUseCase: RetrieveAllMomentUseCase,
     scope: CoroutineScope? = null,
 ) : HomeScreen.ViewModel, Logs by logs {
 
@@ -89,7 +89,7 @@ class HomeScreenViewModel(
     private fun toUiState(moment: Moment): MomentUiState {
         return with(moment) {
             MomentUiStateImpl(
-                id = id.value,
+                id = id.value.toString(),
                 description = description
             )
         }

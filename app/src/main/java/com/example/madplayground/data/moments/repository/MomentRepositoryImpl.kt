@@ -1,48 +1,34 @@
 package com.example.madplayground.data.moments.repository
 
+import com.example.madplayground.data.moments.models.MomentsLocalRepository
 import com.example.madplayground.domain.moments.models.Moment
 import com.example.madplayground.domain.moments.repository.MomentRepository
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.flow.*
 
-class MomentRepositoryImpl : MomentRepository {
-
-    private val moments = mutableMapOf<Moment.Id, Moment>()
-
-    private val _momentsStateFlow =
-        MutableStateFlow(
-            moments.values.toList()
-        )
-
-    private val momentsStateFlow =
-        _momentsStateFlow.asStateFlow()
-
-    private val currentMoment = MutableStateFlow<Moment?>(null)
-
-    private val currentMomentReadFlow = currentMoment.asStateFlow()
+class MomentRepositoryImpl(
+    private val localRepository: MomentsLocalRepository
+) : MomentRepository {
 
     override suspend fun addMoment(
         moment: Moment
     ) {
-        moments[moment.id] = moment
-        currentMoment.update { moment }
-        _momentsStateFlow.update { moments.values.toList() }
+       localRepository.addMoment(
+           moment
+       )
     }
 
     override suspend fun getMomentById(
         id: Moment.Id
     ): Moment? {
-        return moments[id]
+        return localRepository.getMomentById(id = id)
     }
 
     override suspend fun getAllMoments(): List<Moment> {
-        return moments.values.toList()
+        return localRepository.getAllMoments()
     }
 
-    override suspend fun getAllMomentsFlow(): StateFlow<List<Moment>> {
-        return momentsStateFlow
+    override suspend fun getAllMomentsFlow(): Flow<List<Moment>> {
+        return localRepository.getAllMomentsFlow()
     }
 
 }

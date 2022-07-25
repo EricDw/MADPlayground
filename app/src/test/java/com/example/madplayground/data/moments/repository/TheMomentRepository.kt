@@ -1,5 +1,6 @@
 package com.example.madplayground.data.moments.repository
 
+import com.example.madplayground.cache.moments.source.MomentsLocalRepositoryImpl
 import com.example.madplayground.data.moments.fakes.FakeMoment
 import com.example.madplayground.domain.moments.models.Moment
 import com.example.madplayground.domain.moments.repository.MomentRepository
@@ -18,7 +19,11 @@ class TheMomentRepository {
     @Before
     fun setUp() {
 
-        repository = MomentRepositoryImpl()
+        val cache = MomentsLocalRepositoryImpl()
+
+        repository = MomentRepositoryImpl(
+            localRepository = cache
+        )
 
     }
 

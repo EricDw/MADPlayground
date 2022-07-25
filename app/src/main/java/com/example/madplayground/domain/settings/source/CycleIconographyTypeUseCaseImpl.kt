@@ -1,18 +1,17 @@
 package com.example.madplayground.domain.settings.source
 
+import com.example.madplayground.cache.settings.models.SettingsCache
 import com.example.madplayground.domain.settings.models.Settings
 import com.example.madplayground.domain.settings.usecases.CycleIconographyTypeUseCase
-import com.example.madplayground.domain.settings.usecases.CycleThemeTypeUseCase
-import com.example.madplayground.domain.settings.usecases.RetrieveThemeTypeUseCase
 
 class CycleIconographyTypeUseCaseImpl(
-    private val settings: Settings,
+    private val cache: SettingsCache,
 ) : CycleIconographyTypeUseCase {
 
     override suspend fun invoke() {
 
         val newIconographyType = when (
-            settings.iconographyType.value
+            cache.iconographyType.value
         ) {
 
             Settings.IconographyType.DEFAULT  -> {
@@ -36,7 +35,7 @@ class CycleIconographyTypeUseCaseImpl(
             }
         }
 
-        return settings.setIconographyType(newIconographyType)
+        return cache.setIconographyType(newIconographyType)
     }
 
 }

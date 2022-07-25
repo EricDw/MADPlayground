@@ -86,8 +86,8 @@ class MomentFormViewModelImpl(
 
                     val form = buildCreateMomentForm {
                         description = screenState.description.value
-                        date = screenState.date.value
-                        time = screenState.time.value
+                        date = screenState.date.value.takeUnless { it.isBlank() }
+                        time = screenState.time.value.takeUnless { it.isBlank() }
                     }
 
                     createMomentUseCase

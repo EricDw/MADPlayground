@@ -1,17 +1,17 @@
 package com.example.madplayground.domain.settings.source
 
+import com.example.madplayground.cache.settings.models.SettingsCache
 import com.example.madplayground.domain.settings.models.Settings
 import com.example.madplayground.domain.settings.usecases.CycleThemeTypeUseCase
-import com.example.madplayground.domain.settings.usecases.RetrieveThemeTypeUseCase
 
 class CycleThemeTypeUseCaseImpl(
-    private val settings: Settings,
+    private val cache: SettingsCache,
 ) : CycleThemeTypeUseCase {
 
     override suspend fun invoke() {
 
         val newThemeType = when (
-            settings.themeType.value
+            cache.themeType.value
         ) {
 
             Settings.ThemeType.LIGHT  -> {
@@ -28,7 +28,7 @@ class CycleThemeTypeUseCaseImpl(
 
         }
 
-        return settings.setThemeType(newThemeType)
+        return cache.setThemeType(newThemeType)
     }
 
 }

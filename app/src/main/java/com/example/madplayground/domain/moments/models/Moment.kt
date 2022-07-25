@@ -1,19 +1,25 @@
 package com.example.madplayground.domain.moments.models
 
+import kotlinx.datetime.LocalDate
 import kotlinx.datetime.LocalDateTime
+import kotlinx.datetime.LocalTime
 import java.util.UUID
 
 interface Moment {
 
     val id: Id
 
+    val createdDateTime: LocalDateTime
+
     val description: String
 
-    val date: LocalDateTime
+    val date: LocalDate?
+
+    val time: LocalTime?
 
     @JvmInline
     value class Id(
-        val value: String = UUID.randomUUID().toString(),
+        val value: UUID = UUID.randomUUID(),
     )
 
 }

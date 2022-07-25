@@ -1,129 +1,101 @@
 package com.example.madplayground.app.modules
 
-import android.content.Context
-import androidx.datastore.preferences.core.PreferenceDataStoreFactory
-import androidx.datastore.preferences.preferencesDataStoreFile
-import com.example.madplayground.data.settings.source.SettingsController
-import com.example.madplayground.domain.settings.models.Settings
+import com.example.madplayground.cache.settings.models.SettingsCache
 import com.example.madplayground.domain.settings.source.*
 import com.example.madplayground.domain.settings.usecases.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
-import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
 object SettingsModule {
 
     @Provides
-    @Singleton
-    fun provideSettings(
-        @ApplicationContext context: Context,
-    ): Settings {
-
-        val ioScope = CoroutineScope(Dispatchers.IO + SupervisorJob())
-
-        val dataStore = PreferenceDataStoreFactory.create {
-            context.preferencesDataStoreFile("settings")
-        }
-
-        return SettingsController(
-            dataStore = dataStore,
-            scope = ioScope
-        )
-
-    }
-
-    @Provides
     fun provideRetrieveThemeTypeUseCase(
-        settings: Settings
+        cache: SettingsCache,
     ): RetrieveThemeTypeUseCase {
 
         return RetrieveThemeTypeUseCaseImpl(
-            settings = settings
+            cache = cache
         )
 
     }
 
     @Provides
     fun provideRetrieveIconographyTypeUseCase(
-        settings: Settings
+        cache: SettingsCache,
     ): RetrieveIconographyTypeUseCase {
 
         return RetrieveIconographyTypeUseCaseImpl(
-            settings = settings
+            cache = cache
         )
 
     }
 
     @Provides
     fun provideRetrieveShapeTypeUseCase(
-        settings: Settings
+        cache: SettingsCache,
     ): RetrieveShapeTypeUseCase {
 
         return RetrieveShapeTypeUseCaseImpl(
-            settings = settings
+            cache = cache
         )
 
     }
 
     @Provides
     fun provideRetrieveNavTypeUseCase(
-        settings: Settings
+        cache: SettingsCache,
     ): RetrieveNavigationLabelVisibilityUseCase {
 
         return RetrieveNavigationLabelVisibilityUseCaseImpl(
-            settings = settings
+            cache = cache
         )
 
     }
 
     @Provides
     fun provideCycleThemeTypeUseCase(
-        settings: Settings
+        cache: SettingsCache,
     ): CycleThemeTypeUseCase {
 
         return CycleThemeTypeUseCaseImpl(
-            settings = settings
+            cache = cache
         )
 
     }
 
     @Provides
     fun provideCycleIconographyTypeUseCase(
-        settings: Settings
+        cache: SettingsCache,
     ): CycleIconographyTypeUseCase {
 
         return CycleIconographyTypeUseCaseImpl(
-            settings = settings
+            cache = cache
         )
 
     }
 
     @Provides
     fun provideCycleShapeTypeUseCase(
-        settings: Settings
+        cache: SettingsCache,
     ): CycleShapeTypeUseCase {
 
         return CycleShapeTypeUseCaseImpl(
-            settings = settings
+            cache = cache
         )
 
     }
 
     @Provides
     fun provideCycleNavigationLabelVisibilityUseCase(
-        settings: Settings
+        cache: SettingsCache,
     ): CycleNavigationLabelVisibilityUseCase {
 
         return CycleNavigationLabelVisibilityUseCaseImpl(
-            settings = settings
+            cache = cache
         )
 
     }

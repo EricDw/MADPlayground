@@ -11,7 +11,7 @@ fun interface RetrieveAllMomentUseCase {
         object Running: Result
 
         data class Complete(
-            val moments: StateFlow<List<Moment>>
+            val moments: Flow<List<Moment>>
         ): Result
 
         object Error: Result

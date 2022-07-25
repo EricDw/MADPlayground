@@ -1,16 +1,17 @@
 package com.example.madplayground.domain.settings.source
 
+import com.example.madplayground.cache.settings.models.SettingsCache
 import com.example.madplayground.domain.settings.models.Settings
 import com.example.madplayground.domain.settings.usecases.CycleNavigationLabelVisibilityUseCase
 
 class CycleNavigationLabelVisibilityUseCaseImpl(
-    private val settings: Settings
+    private val cache: SettingsCache,
 ) : CycleNavigationLabelVisibilityUseCase {
 
     override suspend fun invoke() {
 
         val newVisibility = when (
-            settings.navigationLabelVisibility.value
+            cache.navigationLabelVisibility.value
         ) {
 
             Settings.NavigationLabelVisibility.NEVER         -> {
@@ -27,7 +28,7 @@ class CycleNavigationLabelVisibilityUseCaseImpl(
 
         }
 
-        return settings.setNavigationLabelVisibility(newVisibility)
+        return cache.setNavigationLabelVisibility(newVisibility)
     }
 
 }

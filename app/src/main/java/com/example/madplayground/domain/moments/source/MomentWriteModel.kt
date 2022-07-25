@@ -2,18 +2,25 @@ package com.example.madplayground.domain.moments.source
 
 import com.example.madplayground.domain.moments.models.CreateMomentForm
 import com.example.madplayground.domain.moments.models.Moment
-import kotlinx.datetime.LocalDateTime
+import kotlinx.datetime.*
+import kotlinx.datetime.TimeZone
+import java.time.DateTimeException
 import java.util.*
 
 class MomentWriteModel(
     form: CreateMomentForm,
+    clock: Clock = Clock.System,
 ) : Moment {
 
-    override val id: Moment.Id = Moment.Id(UUID.randomUUID().toString())
+    override val id: Moment.Id = Moment.Id()
 
     override lateinit var description: String
 
-    override lateinit var date: LocalDateTime
+    override lateinit var createdDateTime: LocalDateTime
+
+    override var date: LocalDate? = null
+
+    override var time: LocalTime? = null
 
     init {
 
@@ -31,22 +38,49 @@ class MomentWriteModel(
 
         }
 
-        if (form.date.isBlank()) {
+        if (form.date?.isBlank() == true) {
 
             errors + IllegalStateException(
-                "Date can not be Empty"
+                "Time can not be blank"
             )
 
         } else {
 
-            date = LocalDateTime.parse(form.date)
+            try {
+
+                date = form.date?.let(LocalDate::parse)
+
+            } catch (exception: DateTimeException) {
+                errors + exception
+            }
 
         }
 
-        if (errors.isNotEmpty())
+        if (form.time?.isBlank() == true) {
+
+            errors + IllegalStateException(
+                "Time can not be blank"
+            )
+
+        } else {
+
+            try {
+
+                time = form.time?.let(LocalTime::parse)
+
+            } catch (exception: DateTimeException) {
+                errors + exception
+            }
+
+        }
+
+        if (errors.isNotEmpty()) {
             throw ValidationError(
                 causes = errors
             )
+        }
+
+        createdDateTime = clock.now().toLocalDateTime(TimeZone.UTC)
 
     }
 

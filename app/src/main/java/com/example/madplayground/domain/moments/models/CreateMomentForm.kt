@@ -4,7 +4,7 @@ interface CreateMomentForm {
 
     val description: String
 
-    val date: String
+    val date: String?
 
     val time: String?
 
@@ -12,7 +12,7 @@ interface CreateMomentForm {
 
         var description: String
 
-        var date: String
+        var date: String?
 
         var time: String?
 

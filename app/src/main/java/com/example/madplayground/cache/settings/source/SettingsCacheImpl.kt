@@ -1,18 +1,19 @@
-package com.example.madplayground.data.settings.source
+package com.example.madplayground.cache.settings.source
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
+import com.example.madplayground.cache.settings.models.SettingsCache
 import com.example.madplayground.domain.settings.models.Settings
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.*
 
-class SettingsController(
+class SettingsCacheImpl(
     private val dataStore: DataStore<Preferences>,
     private val scope: CoroutineScope,
-) : Settings {
+) : SettingsCache {
 
     private val themeKey = stringPreferencesKey("theme_type")
     private val iconographyKey = stringPreferencesKey("iconography_type")
