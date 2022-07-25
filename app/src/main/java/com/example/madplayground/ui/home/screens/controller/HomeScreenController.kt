@@ -60,7 +60,7 @@ fun HomeScreenController(
     )
 
     LaunchedEffect(key1 = screenInterface) {
-        contentContainer.setScreen(screenInterface)
+        contentContainer.currentScreen = screenInterface
     }
 
 }

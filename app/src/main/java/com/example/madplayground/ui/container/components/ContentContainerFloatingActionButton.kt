@@ -1,13 +1,19 @@
 package com.example.madplayground.ui.container.components
 
-import androidx.compose.runtime.Composable
+import androidx.annotation.StringRes
+import androidx.compose.material.FloatingActionButton
+import androidx.compose.material.Icon
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import com.example.madplayground.R
 import com.example.madplayground.ui.container.models.ContentContainer
 import com.example.madplayground.ui.home.components.HomeScreenFAB
 import com.example.madplayground.ui.screen.HomeScreen
 import com.example.madplayground.ui.screen.MomentFormScreen
 import com.example.madplayground.ui.screen.Screen
 import com.example.madplayground.ui.screen.SettingsScreen
+import com.example.madplayground.ui.theme.models.LocalIconography
 
 @Composable
 fun ContentContainerFloatingActionButton(
@@ -16,9 +22,38 @@ fun ContentContainerFloatingActionButton(
     isVisible: Boolean = true,
 ) {
 
+    val iconography = LocalIconography.current
+
     val screen = contentContainer.currentScreen
 
+    var icon by remember {
+        mutableStateOf(iconography.editIcon)
+    }
+
+    @StringRes
+    var descriptionId by remember {
+        mutableStateOf(R.string.description_add_moment)
+    }
+
     if (isVisible) {
+
+        FloatingActionButton(
+            onClick = {
+                screen.onEvent(
+                    ContentContainer.Event.FABClicked
+                )
+            },
+            modifier = modifier,
+        ) {
+            Icon(
+                imageVector = icon,
+                contentDescription = stringResource(id = descriptionId)
+            )
+        }
+
+    }
+
+    LaunchedEffect(key1 = screen) {
 
         when (screen) {
 
@@ -28,10 +63,8 @@ fun ContentContainerFloatingActionButton(
 
             is HomeScreen       -> {
 
-                HomeScreenFAB(
-                    screen = screen,
-                    modifier = modifier
-                )
+                icon = iconography.editIcon
+                descriptionId = R.string.description_add_moment
 
             }
 

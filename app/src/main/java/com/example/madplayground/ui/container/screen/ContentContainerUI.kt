@@ -13,19 +13,15 @@ import com.example.madplayground.ui.container.components.ContentContainerFloatin
 import com.example.madplayground.ui.container.components.ContentContainerNavigationRail
 import com.example.madplayground.ui.container.components.ContentContainerTopAppBar
 import com.example.madplayground.ui.container.models.ContentContainer
-import com.example.madplayground.ui.container.source.rememberContentContainerState
 
 @Composable
 fun ContentContainer(
-    contentContainer: ContentContainer,
+    contentContainer: ContentContainer.Controller,
     modifier: Modifier = Modifier,
-    state: ContentContainer.State = rememberContentContainerState(),
-    showTopAppBar: Boolean = true,
-    showBottomNavBar: Boolean = true,
-    showNavigationRail: Boolean = false,
-    showBottomFAB: Boolean = true,
     content: @Composable (scaffoldPadding: PaddingValues) -> Unit,
 ) {
+
+    val state = contentContainer.state
 
     val isDrawerUnlocked = false
 
@@ -71,16 +67,14 @@ fun ContentContainer(
             topBar = {
 
                 ContentContainerTopAppBar(
-                    contentContainer = contentContainer,
-                    isVisible = showTopAppBar
+                    contentContainer = contentContainer
                 )
 
             },
             bottomBar = {
 
                 ContentContainerBottomNavBar(
-                    contentContainer = contentContainer,
-                    isVisible = showBottomNavBar
+                    contentContainer = contentContainer
                 )
 
             },
@@ -91,7 +85,7 @@ fun ContentContainer(
 
                 ContentContainerFloatingActionButton(
                     contentContainer = contentContainer,
-                    isVisible = showBottomFAB
+                    isVisible = contentContainer.showBottomFAB
                 )
 
             },
@@ -105,7 +99,6 @@ fun ContentContainer(
 
                 ContentContainerNavigationRail(
                     contentContainer = contentContainer,
-                    isVisible = showNavigationRail,
                     navigationLabelVisibility = state.navigationLabelVisibility
                 )
 

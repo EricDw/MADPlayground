@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -38,27 +37,7 @@ fun ContentContainerController(
 
     val contentContainerState by contentContainerViewModel.stateFlow.collectAsState()
 
-    var showTopAppBar: Boolean by remember {
-        mutableStateOf(false)
-    }
-
-    var showBottomNavBar: Boolean by remember {
-        mutableStateOf(false)
-    }
-
-    var showNavigationRail: Boolean by remember {
-        mutableStateOf(false)
-    }
-
-    var showBottomFAB: Boolean by remember {
-        mutableStateOf(false)
-    }
-
     val navHostController: NavHostController = rememberNavController()
-
-    var currentScreen: Screen by remember {
-        mutableStateOf(Screen.EMPTY)
-    }
 
     val containerInterface = remember {
         object : ContentContainer.Controller {
@@ -66,14 +45,17 @@ fun ContentContainerController(
             override val state: ContentContainer.State
                 get() = contentContainerState
 
-            override val navHostController = navHostController
+            override val navHostController: NavHostController = navHostController
 
-            override val currentScreen: Screen
-                get() = currentScreen
+            override var currentScreen: Screen by mutableStateOf(Screen.EMPTY)
 
-            override fun setScreen(newScreen: Screen) {
-                currentScreen = newScreen
-            }
+            override var showTopAppBar: Boolean by mutableStateOf(false)
+
+            override var showBottomNavBar: Boolean by mutableStateOf(false)
+
+            override var showNavigationRail: Boolean by mutableStateOf(false)
+
+            override var showBottomFAB: Boolean by mutableStateOf(false)
 
         }
     }
@@ -81,11 +63,6 @@ fun ContentContainerController(
     ContentContainer(
         contentContainer = containerInterface,
         modifier = Modifier.fillMaxSize(),
-        state = contentContainerState,
-        showTopAppBar = showTopAppBar,
-        showBottomNavBar = showBottomNavBar,
-        showNavigationRail = showNavigationRail,
-        showBottomFAB = showBottomFAB,
     ) { rootPadding ->
 
         val screenModifier = Modifier
@@ -142,351 +119,368 @@ fun ContentContainerController(
 
     LaunchedEffect(
         key1 = windowConfiguration,
-        key2 = currentScreen,
+        key2 = containerInterface.currentScreen,
     ) {
 
-        when (windowConfiguration.combinedWindowType) {
+        with (containerInterface) {
 
-            COMPACT_WIDTH_COMPACT_HEIGHT   -> {
+            when (windowConfiguration.combinedWindowType) {
 
-                when (currentScreen) {
+                COMPACT_WIDTH_COMPACT_HEIGHT   -> {
 
-                    is Screen.EMPTY     -> {
-                        showTopAppBar = false
-                        showBottomNavBar = false
-                        showNavigationRail = false
-                        showBottomFAB = false
+                    when (currentScreen) {
+
+                        is Screen.EMPTY     -> {
+                            showTopAppBar = false
+                            showBottomNavBar = false
+                            showNavigationRail = false
+                            showBottomFAB = false
+                        }
+
+                        is HomeScreen       -> {
+                            showTopAppBar = false
+                            showBottomNavBar = true
+                            showNavigationRail = false
+                            showBottomFAB = true
+                        }
+
+                        is SettingsScreen   -> {
+                            showTopAppBar = true
+                            showBottomFAB = false
+                        }
+
+                        is MomentFormScreen -> {
+                            showTopAppBar = false
+                            showBottomNavBar = false
+                            showNavigationRail = false
+                            showBottomFAB = false
+                        }
+
                     }
 
-                    is HomeScreen       -> {
-                        showTopAppBar = false
-                        showBottomNavBar = true
-                        showNavigationRail = false
-                        showBottomFAB = true
-                    }
-
-                    is SettingsScreen   -> {
-                        showTopAppBar = true
-                        showBottomFAB = false
-                    }
-
-                    is MomentFormScreen -> {
-                        showTopAppBar = false
-                        showBottomNavBar = false
-                        showNavigationRail = false
-                        showBottomFAB = false
-                    }
+                    logs.logDebug(
+                        tag = tag,
+                        message = "$windowConfiguration handled!"
+                    )
 
                 }
 
-                logs.logDebug(
-                    tag = tag,
-                    message = "$windowConfiguration handled!"
-                )
+                COMPACT_WIDTH_MEDIUM_HEIGHT    -> {
 
-            }
+                    when (currentScreen) {
 
-            COMPACT_WIDTH_MEDIUM_HEIGHT    -> {
+                        is Screen.EMPTY     -> {
+                            showTopAppBar = false
+                            showBottomNavBar = false
+                            showNavigationRail = false
+                            showBottomFAB = false
+                        }
 
-                when (currentScreen) {
+                        is HomeScreen       -> {
+                            showTopAppBar = true
+                            showBottomNavBar = true
+                            showNavigationRail = false
+                            showBottomFAB = true
+                        }
 
-                    is Screen.EMPTY     -> {
+                        is SettingsScreen   -> {
+                            showTopAppBar = true
+                            showBottomNavBar = false
+                            showBottomFAB = false
+                        }
+
+                        is MomentFormScreen -> {
+                            showTopAppBar = false
+                            showBottomNavBar = false
+                            showNavigationRail = false
+                            showBottomFAB = false
+                        }
 
                     }
 
-                    is HomeScreen       -> {
-                        showTopAppBar = true
-                        showBottomNavBar = true
-                        showNavigationRail = false
-                        showBottomFAB = true
-                    }
-
-                    is SettingsScreen   -> {
-                        showTopAppBar = true
-                        showBottomFAB = false
-                    }
-
-                    is MomentFormScreen -> {
-                        showTopAppBar = false
-                        showBottomNavBar = false
-                        showNavigationRail = false
-                        showBottomFAB = false
-                    }
+                    logs.logDebug(
+                        tag = tag,
+                        message = "$windowConfiguration handled!"
+                    )
 
                 }
 
-                logs.logDebug(
-                    tag = tag,
-                    message = "$windowConfiguration handled!"
-                )
+                COMPACT_WIDTH_EXPANDED_HEIGHT  -> {
 
-            }
+                    when (currentScreen) {
 
-            COMPACT_WIDTH_EXPANDED_HEIGHT  -> {
+                        is Screen.EMPTY     -> {
+                            showTopAppBar = false
+                            showBottomNavBar = false
+                            showNavigationRail = false
+                            showBottomFAB = false
+                        }
 
-                when (currentScreen) {
+                        is HomeScreen       -> {
+                            showTopAppBar = true
+                            showBottomNavBar = true
+                            showNavigationRail = false
+                            showBottomFAB = true
+                        }
 
-                    is Screen.EMPTY     -> {
+                        is SettingsScreen   -> {
+                            showTopAppBar = true
+                            showBottomFAB = false
+                        }
+
+                        is MomentFormScreen -> {
+                            showTopAppBar = false
+                            showBottomNavBar = false
+                            showNavigationRail = false
+                            showBottomFAB = false
+                        }
 
                     }
 
-                    is HomeScreen       -> {
-                        showTopAppBar = true
-                        showBottomNavBar = true
-                        showNavigationRail = false
-                        showBottomFAB = true
-                    }
-
-                    is SettingsScreen   -> {
-                        showTopAppBar = true
-                        showBottomFAB = false
-                    }
-
-                    is MomentFormScreen -> {
-                        showTopAppBar = false
-                        showBottomNavBar = false
-                        showNavigationRail = false
-                        showBottomFAB = false
-                    }
+                    logs.logDebug(
+                        tag = tag,
+                        message = "$windowConfiguration not handled!"
+                    )
 
                 }
 
-                logs.logDebug(
-                    tag = tag,
-                    message = "$windowConfiguration not handled!"
-                )
+                MEDIUM_WIDTH_COMPACT_HEIGHT    -> {
 
-            }
+                    when (currentScreen) {
 
-            MEDIUM_WIDTH_COMPACT_HEIGHT    -> {
+                        is Screen.EMPTY     -> {
+                            showTopAppBar = false
+                            showBottomNavBar = false
+                            showNavigationRail = false
+                            showBottomFAB = false
+                        }
 
-                when (currentScreen) {
+                        is HomeScreen       -> {
+                            showBottomNavBar = false
+                            showNavigationRail = true
+                            showBottomFAB = false
+                        }
 
-                    is Screen.EMPTY     -> {
+                        is SettingsScreen   -> {
+                            showBottomNavBar = false
+                            showNavigationRail = true
+                            showBottomFAB = false
+                        }
+
+                        is MomentFormScreen -> {
+                            showTopAppBar = false
+                            showBottomNavBar = false
+                            showNavigationRail = false
+                            showBottomFAB = false
+                        }
 
                     }
 
-                    is HomeScreen       -> {
-                        showBottomNavBar = false
-                        showNavigationRail = true
-                        showBottomFAB = false
-                    }
-
-                    is SettingsScreen   -> {
-                        showBottomNavBar = false
-                        showNavigationRail = true
-                        showBottomFAB = false
-                    }
-
-                    is MomentFormScreen -> {
-                        showTopAppBar = false
-                        showBottomNavBar = false
-                        showNavigationRail = false
-                        showBottomFAB = false
-                    }
+                    logs.logDebug(
+                        tag = tag,
+                        message = "$windowConfiguration handled!"
+                    )
 
                 }
 
-                logs.logDebug(
-                    tag = tag,
-                    message = "$windowConfiguration handled!"
-                )
+                MEDIUM_WIDTH_MEDIUM_HEIGHT     -> {
 
-            }
+                    when (currentScreen) {
 
-            MEDIUM_WIDTH_MEDIUM_HEIGHT     -> {
+                        is Screen.EMPTY     -> {
+                            showTopAppBar = false
+                            showBottomNavBar = false
+                            showNavigationRail = false
+                            showBottomFAB = false
+                        }
 
-                when (currentScreen) {
+                        is HomeScreen       -> {
+                            showTopAppBar = true
+                            showBottomNavBar = false
+                            showNavigationRail = true
+                            showBottomFAB = false
+                        }
 
-                    is Screen.EMPTY     -> {
+                        is SettingsScreen   -> {
+                            showTopAppBar = true
+                            showBottomNavBar = false
+                            showNavigationRail = true
+                            showBottomFAB = false
+                        }
+
+                        is MomentFormScreen -> {
+                            showTopAppBar = false
+                            showBottomNavBar = false
+                            showNavigationRail = false
+                            showBottomFAB = false
+                        }
 
                     }
 
-                    is HomeScreen       -> {
-                        showTopAppBar = true
-                        showBottomNavBar = false
-                        showNavigationRail = true
-                        showBottomFAB = false
-                    }
-
-                    is SettingsScreen   -> {
-                        showTopAppBar = true
-                        showBottomNavBar = false
-                        showNavigationRail = true
-                        showBottomFAB = false
-                    }
-
-                    is MomentFormScreen -> {
-                        showTopAppBar = false
-                        showBottomNavBar = false
-                        showNavigationRail = false
-                        showBottomFAB = false
-                    }
+                    logs.logDebug(
+                        tag = tag,
+                        message = "$windowConfiguration handled!"
+                    )
 
                 }
 
-                logs.logDebug(
-                    tag = tag,
-                    message = "$windowConfiguration handled!"
-                )
+                MEDIUM_WIDTH_EXPANDED_HEIGHT   -> {
 
-            }
+                    when (currentScreen) {
 
-            MEDIUM_WIDTH_EXPANDED_HEIGHT   -> {
+                        is Screen.EMPTY     -> {
+                            showTopAppBar = false
+                            showBottomNavBar = false
+                            showNavigationRail = false
+                            showBottomFAB = false
+                        }
 
-                when (currentScreen) {
+                        is HomeScreen       -> {
+                            showTopAppBar = true
+                            showBottomNavBar = false
+                            showNavigationRail = true
+                            showBottomFAB = false
+                        }
 
-                    is Screen.EMPTY     -> {
-                        showTopAppBar = false
-                        showBottomNavBar = false
-                        showNavigationRail = false
-                        showBottomFAB = false
+                        is SettingsScreen   -> {
+                            showTopAppBar = true
+                            showBottomNavBar = false
+                            showNavigationRail = true
+                            showBottomFAB = false
+                        }
+
+                        is MomentFormScreen -> {
+                            showTopAppBar = false
+                            showBottomNavBar = false
+                            showNavigationRail = false
+                            showBottomFAB = false
+                        }
+
                     }
 
-                    is HomeScreen       -> {
-                        showTopAppBar = true
-                        showBottomNavBar = false
-                        showNavigationRail = true
-                        showBottomFAB = false
-                    }
-
-                    is SettingsScreen   -> {
-                        showTopAppBar = true
-                        showBottomNavBar = false
-                        showNavigationRail = true
-                        showBottomFAB = false
-                    }
-
-                    is MomentFormScreen -> {
-                        showTopAppBar = false
-                        showBottomNavBar = false
-                        showNavigationRail = false
-                        showBottomFAB = false
-                    }
+                    logs.logDebug(
+                        tag = tag,
+                        message = "$windowConfiguration handled!"
+                    )
 
                 }
 
-                logs.logDebug(
-                    tag = tag,
-                    message = "$windowConfiguration handled!"
-                )
+                EXPANDED_WIDTH_COMPACT_HEIGHT  -> {
 
-            }
+                    when (currentScreen) {
 
-            EXPANDED_WIDTH_COMPACT_HEIGHT  -> {
+                        is Screen.EMPTY     -> {
+                            showTopAppBar = false
+                            showBottomNavBar = false
+                            showNavigationRail = false
+                            showBottomFAB = false
+                        }
 
-                when (currentScreen) {
+                        is HomeScreen       -> {
+                            showBottomNavBar = false
+                            showNavigationRail = true
+                            showBottomFAB = false
+                        }
 
-                    is Screen.EMPTY     -> {
-                        showTopAppBar = false
-                        showBottomNavBar = false
-                        showNavigationRail = false
-                        showBottomFAB = false
+                        is SettingsScreen   -> {
+                            showBottomNavBar = false
+                            showNavigationRail = true
+                            showBottomFAB = false
+                        }
+
+                        is MomentFormScreen -> {
+                            showTopAppBar = false
+                            showNavigationRail = false
+                            showBottomNavBar = false
+                            showBottomFAB = false
+                        }
+
                     }
 
-                    is HomeScreen       -> {
-                        showBottomNavBar = false
-                        showNavigationRail = true
-                        showBottomFAB = false
-                    }
-
-                    is SettingsScreen   -> {
-                        showBottomNavBar = false
-                        showNavigationRail = true
-                        showBottomFAB = false
-                    }
-
-                    is MomentFormScreen -> {
-                        showTopAppBar = false
-                        showNavigationRail = false
-                        showBottomNavBar = false
-                        showBottomFAB = false
-                    }
+                    logs.logDebug(
+                        tag = tag,
+                        message = "$windowConfiguration handled!"
+                    )
 
                 }
 
-                logs.logDebug(
-                    tag = tag,
-                    message = "$windowConfiguration handled!"
-                )
+                EXPANDED_WIDTH_MEDIUM_HEIGHT   -> {
 
-            }
+                    when (currentScreen) {
 
-            EXPANDED_WIDTH_MEDIUM_HEIGHT   -> {
+                        is Screen.EMPTY     -> {
+                            showTopAppBar = false
+                            showBottomNavBar = false
+                            showNavigationRail = false
+                            showBottomFAB = false
+                        }
 
-                when (currentScreen) {
+                        is HomeScreen       -> {
+                            showBottomNavBar = false
+                            showNavigationRail = true
+                            showBottomFAB = false
+                        }
 
-                    is Screen.EMPTY     -> {
-                        showTopAppBar = false
-                        showBottomNavBar = false
-                        showNavigationRail = false
-                        showBottomFAB = false
+                        is SettingsScreen   -> {
+                            showBottomNavBar = false
+                            showNavigationRail = true
+                            showBottomFAB = false
+                        }
+
+                        is MomentFormScreen -> {
+                            showTopAppBar = false
+                            showBottomNavBar = false
+                            showNavigationRail = false
+                            showBottomFAB = false
+                        }
+
                     }
 
-                    is HomeScreen       -> {
-                        showBottomNavBar = false
-                        showNavigationRail = true
-                        showBottomFAB = false
-                    }
-
-                    is SettingsScreen   -> {
-                        showBottomNavBar = false
-                        showNavigationRail = true
-                        showBottomFAB = false
-                    }
-
-                    is MomentFormScreen -> {
-                        showTopAppBar = false
-                        showBottomNavBar = false
-                        showNavigationRail = false
-                        showBottomFAB = false
-                    }
+                    logs.logDebug(
+                        tag = tag,
+                        message = "$windowConfiguration handled!"
+                    )
 
                 }
 
-                logs.logDebug(
-                    tag = tag,
-                    message = "$windowConfiguration handled!"
-                )
+                EXPANDED_WIDTH_EXPANDED_HEIGHT -> {
 
-            }
+                    when (currentScreen) {
 
-            EXPANDED_WIDTH_EXPANDED_HEIGHT -> {
+                        is Screen.EMPTY     -> {
+                            showTopAppBar = false
+                            showBottomNavBar = false
+                            showNavigationRail = false
+                            showBottomFAB = false
+                        }
 
-                when (currentScreen) {
+                        is HomeScreen       -> {
+                            showBottomNavBar = false
+                            showNavigationRail = true
+                            showBottomFAB = false
+                        }
 
-                    is Screen.EMPTY     -> {
-                        showTopAppBar = false
-                        showBottomNavBar = false
-                        showNavigationRail = false
-                        showBottomFAB = false
+                        is SettingsScreen   -> {
+                            showBottomNavBar = false
+                            showNavigationRail = true
+                            showBottomFAB = false
+                        }
+
+                        is MomentFormScreen -> {
+                            showTopAppBar = false
+                            showBottomNavBar = false
+                            showNavigationRail = false
+                            showBottomFAB = false
+                        }
+
                     }
 
-                    is HomeScreen       -> {
-                        showBottomNavBar = false
-                        showNavigationRail = true
-                        showBottomFAB = false
-                    }
-
-                    is SettingsScreen   -> {
-                        showBottomNavBar = false
-                        showNavigationRail = true
-                        showBottomFAB = false
-                    }
-
-                    is MomentFormScreen -> {
-                        showTopAppBar = false
-                        showBottomNavBar = false
-                        showNavigationRail = false
-                        showBottomFAB = false
-                    }
+                    logs.logDebug(
+                        tag = tag,
+                        message = "$windowConfiguration handled!"
+                    )
 
                 }
-
-                logs.logDebug(
-                    tag = tag,
-                    message = "$windowConfiguration handled!"
-                )
 
             }
 

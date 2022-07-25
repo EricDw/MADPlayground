@@ -10,13 +10,29 @@ interface ContentContainer {
 
     val state: State
 
+    val showTopAppBar: Boolean
+
+    val showBottomNavBar: Boolean
+
+    val showNavigationRail: Boolean
+
+    val showBottomFAB: Boolean
+
     val currentScreen: Screen
 
     interface Controller : ContentContainer {
 
         val navHostController: NavHostController
 
-        fun setScreen(newScreen: Screen)
+        override var currentScreen: Screen
+
+        override var showTopAppBar: Boolean
+
+        override var showBottomNavBar: Boolean
+
+        override var showNavigationRail: Boolean
+
+        override var showBottomFAB: Boolean
 
     }
 

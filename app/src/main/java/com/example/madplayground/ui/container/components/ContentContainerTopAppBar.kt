@@ -1,26 +1,80 @@
 package com.example.madplayground.ui.container.components
 
-import androidx.compose.runtime.Composable
+import androidx.annotation.StringRes
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInVertically
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
+import androidx.compose.material.Text
+import androidx.compose.material.TopAppBar
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringResource
+import com.example.madplayground.R
 import com.example.madplayground.ui.container.models.ContentContainer
 import com.example.madplayground.ui.home.components.HomeScreenTopAppBar
-import com.example.madplayground.ui.moments.components.MomentFormTopAppBar
 import com.example.madplayground.ui.screen.HomeScreen
 import com.example.madplayground.ui.screen.MomentFormScreen
 import com.example.madplayground.ui.screen.Screen
 import com.example.madplayground.ui.screen.SettingsScreen
 import com.example.madplayground.ui.settings.components.SettingsScreenTopAppBar
+import com.example.madplayground.ui.theme.models.LocalIconography
 
 @Composable
 fun ContentContainerTopAppBar(
     contentContainer: ContentContainer,
     modifier: Modifier = Modifier,
-    isVisible: Boolean = true,
 ) {
+
+    val iconography = LocalIconography.current
 
     val screen = contentContainer.currentScreen
 
-    if (isVisible) {
+    var iconAndDescriptionId: Pair<ImageVector, Int>? by remember {
+        mutableStateOf(null)
+    }
+
+    @StringRes
+    var titleId: Int? by remember {
+        mutableStateOf(null)
+    }
+
+    AnimatedVisibility(
+        contentContainer.showTopAppBar,
+        enter = slideInVertically(initialOffsetY = { -it }),
+        exit = fadeOut()
+    ) {
+
+        TopAppBar(
+            modifier = modifier,
+            navigationIcon = iconAndDescriptionId?.let { (imageVector, descriptionId) ->
+                {
+                    IconButton(
+                        onClick = {
+                            screen.onEvent(
+                                ContentContainer.Event.NavigationButtonClicked
+                            )
+                        }
+                    ) {
+                        Icon(
+                            imageVector = imageVector,
+                            contentDescription = stringResource(id = descriptionId)
+                        )
+                    }
+                }
+            },
+            title = {
+                titleId?.let {
+                    Text(text = stringResource(id = it))
+                }
+            }
+        )
+
+    }
+
+    LaunchedEffect(key1 = screen) {
 
         when (screen) {
 
@@ -29,21 +83,21 @@ fun ContentContainerTopAppBar(
             }
 
             is HomeScreen       -> {
-                HomeScreenTopAppBar(screen = screen)
+                iconAndDescriptionId = null
+                titleId = R.string.title_home
+            }
+
+            is SettingsScreen   -> {
+
+                iconAndDescriptionId = iconography.backIcon to R.string.description_go_back
+
+                titleId = R.string.title_settings
+
             }
 
             is MomentFormScreen -> {
 
                 /* no-op */
-
-            }
-
-            is SettingsScreen   -> {
-
-                SettingsScreenTopAppBar(
-                    screen = screen,
-                    modifier = modifier
-                )
 
             }
 

@@ -159,7 +159,7 @@ fun MomentFormScreenController(
     }
 
     LaunchedEffect(key1 = screen) {
-        container.setScreen(screen)
+        container.currentScreen = screen
     }
 
 }

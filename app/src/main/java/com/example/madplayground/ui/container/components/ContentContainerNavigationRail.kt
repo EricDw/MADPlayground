@@ -1,6 +1,9 @@
 package com.example.madplayground.ui.container.components
 
 import androidx.annotation.StringRes
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
@@ -24,7 +27,6 @@ fun ContentContainerNavigationRail(
     contentContainer: ContentContainer,
     modifier: Modifier = Modifier,
     navigationLabelVisibility: Settings.NavigationLabelVisibility = Settings.NavigationLabelVisibility.WHEN_SELECTED,
-    isVisible: Boolean = true,
 ) {
 
     var header: (@Composable ColumnScope.() -> Unit)? by remember {
@@ -39,7 +41,11 @@ fun ContentContainerNavigationRail(
         mutableStateOf(false)
     }
 
-    if (isVisible) {
+    AnimatedVisibility(
+        contentContainer.showNavigationRail,
+        enter = slideInHorizontally(),
+        exit = slideOutHorizontally()
+    ) {
         NavigationRail(
             modifier = modifier,
             header = header,

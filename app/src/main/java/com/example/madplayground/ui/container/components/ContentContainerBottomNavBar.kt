@@ -1,5 +1,8 @@
 package com.example.madplayground.ui.container.components
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Icon
@@ -11,8 +14,6 @@ import com.example.madplayground.R
 import com.example.madplayground.domain.settings.models.Settings
 import com.example.madplayground.ui.container.models.ContentContainer
 import com.example.madplayground.ui.screen.HomeScreen
-import com.example.madplayground.ui.screen.MomentFormScreen
-import com.example.madplayground.ui.screen.Screen
 import com.example.madplayground.ui.screen.SettingsScreen
 import com.example.madplayground.ui.theme.models.LocalIconography
 
@@ -20,7 +21,6 @@ import com.example.madplayground.ui.theme.models.LocalIconography
 fun ContentContainerBottomNavBar(
     contentContainer: ContentContainer,
     modifier: Modifier = Modifier,
-    isVisible: Boolean = true,
 ) {
 
     val screen = contentContainer.currentScreen
@@ -33,7 +33,11 @@ fun ContentContainerBottomNavBar(
 
     val isSettingsSelected = screen is SettingsScreen
 
-    if (isVisible) {
+    AnimatedVisibility(
+        contentContainer.showBottomNavBar,
+        enter = slideInVertically(initialOffsetY = { it }),
+        exit = slideOutVertically(targetOffsetY = { it })
+    ) {
 
         BottomNavigation(
             modifier = modifier,
