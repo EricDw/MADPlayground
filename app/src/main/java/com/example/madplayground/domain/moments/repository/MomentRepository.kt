@@ -9,12 +9,12 @@ interface MomentRepository {
         moment: Moment,
     )
 
-    suspend fun getMomentById(
+    suspend fun retrieveMomentById(
         id: Moment.Id,
     ): Moment?
 
-    suspend fun getAllMoments(): List<Moment>
+    suspend fun retrieveAllMoments(): List<Moment>
 
-    suspend fun getAllMomentsFlow(): Flow<List<Moment>>
+    suspend fun retrieveAllMomentsFlow(): Flow<List<Moment>>
 
 }

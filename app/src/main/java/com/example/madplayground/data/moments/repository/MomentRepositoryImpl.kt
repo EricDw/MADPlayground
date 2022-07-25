@@ -17,18 +17,18 @@ class MomentRepositoryImpl(
        )
     }
 
-    override suspend fun getMomentById(
+    override suspend fun retrieveMomentById(
         id: Moment.Id
     ): Moment? {
-        return localRepository.getMomentById(id = id)
+        return localRepository.retrieveMomentById(id = id)
     }
 
-    override suspend fun getAllMoments(): List<Moment> {
-        return localRepository.getAllMoments()
+    override suspend fun retrieveAllMoments(): List<Moment> {
+        return localRepository.retrieveAllMoments()
     }
 
-    override suspend fun getAllMomentsFlow(): Flow<List<Moment>> {
-        return localRepository.getAllMomentsFlow()
+    override suspend fun retrieveAllMomentsFlow(): Flow<List<Moment>> {
+        return localRepository.retrieveAllMomentsFlow()
     }
 
 }

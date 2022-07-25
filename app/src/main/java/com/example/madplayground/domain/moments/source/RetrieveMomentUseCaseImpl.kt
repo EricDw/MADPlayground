@@ -18,7 +18,7 @@ class RetrieveMomentUseCaseImpl(
 
             emit(RetrieveMomentUseCase.Result.Running)
 
-            repository.getMomentById(
+            repository.retrieveMomentById(
                 id = id
             ).let {
                 emit(RetrieveMomentUseCase.Result.Complete(it))

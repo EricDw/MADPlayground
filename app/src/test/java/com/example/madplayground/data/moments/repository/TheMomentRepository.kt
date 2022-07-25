@@ -1,5 +1,7 @@
 package com.example.madplayground.data.moments.repository
 
+import com.example.madplayground.cache.moments.fakes.FakeMomentDao
+import com.example.madplayground.cache.moments.source.MomentCacheMapperImpl
 import com.example.madplayground.cache.moments.source.MomentsLocalRepositoryImpl
 import com.example.madplayground.data.moments.fakes.FakeMoment
 import com.example.madplayground.domain.moments.models.Moment
@@ -19,7 +21,12 @@ class TheMomentRepository {
     @Before
     fun setUp() {
 
-        val cache = MomentsLocalRepositoryImpl()
+        val dao = FakeMomentDao()
+
+        val cache = MomentsLocalRepositoryImpl(
+            mapper = MomentCacheMapperImpl(),
+            dao = dao
+        )
 
         repository = MomentRepositoryImpl(
             localRepository = cache
@@ -46,7 +53,7 @@ class TheMomentRepository {
             // Act
             repository.addMoment(FakeMoment.MOMENT_1)
 
-            actual = repository.getAllMoments()
+            actual = repository.retrieveAllMoments()
 
             // Assert
             Assert.assertEquals(
@@ -72,7 +79,7 @@ class TheMomentRepository {
             repository.addMoment(FakeMoment.MOMENT_1)
             repository.addMoment(FakeMoment.MOMENT_1)
 
-            actual = repository.getAllMoments()
+            actual = repository.retrieveAllMoments()
 
             // Assert
             Assert.assertEquals(

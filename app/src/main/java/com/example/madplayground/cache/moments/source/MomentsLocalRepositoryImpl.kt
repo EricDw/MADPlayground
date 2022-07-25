@@ -23,17 +23,17 @@ class MomentsLocalRepositoryImpl(
         dao.insertEntity(entity = entity)
     }
 
-    override suspend fun getMomentById(
+    override suspend fun retrieveMomentById(
         id: Moment.Id,
     ): Moment? {
         return dao.retrieveById(uid = id.value.toString())?.let(mapper::mapToDomain)
     }
 
-    override suspend fun getAllMoments(): List<Moment> {
+    override suspend fun retrieveAllMoments(): List<Moment> {
         return dao.retrieveAll().map(mapper::mapToDomain)
     }
 
-    override suspend fun getAllMomentsFlow(): Flow<List<Moment>> {
+    override suspend fun retrieveAllMomentsFlow(): Flow<List<Moment>> {
         return dao.retrieveAllFlow().map { it.map(mapper::mapToDomain) }
     }
 
