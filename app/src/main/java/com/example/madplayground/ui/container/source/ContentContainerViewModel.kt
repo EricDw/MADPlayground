@@ -2,7 +2,10 @@ package com.example.madplayground.ui.container.source
 
 import com.example.madplayground.domain.logs.models.Logs
 import com.example.madplayground.domain.messages.Message
-import com.example.madplayground.domain.settings.models.Settings
+import com.example.madplayground.domain.settings.usecases.RetrieveIconographyTypeUseCase
+import com.example.madplayground.domain.settings.usecases.RetrieveNavigationLabelVisibilityUseCase
+import com.example.madplayground.domain.settings.usecases.RetrieveShapeTypeUseCase
+import com.example.madplayground.domain.settings.usecases.RetrieveThemeTypeUseCase
 import com.example.madplayground.ui.container.models.ContentContainer
 import com.example.madplayground.ui.container.models.ContentContainer.State
 import com.example.madplayground.ui.container.models.ContentContainer.ViewModel.Action
@@ -13,11 +16,14 @@ import kotlinx.coroutines.flow.*
 
 class ContentContainerViewModel(
     private val logs: Logs,
-    private val settings: Settings,
-    private val scope: CoroutineScope = CoroutineScope(
+    retrieveThemeTypeUseCase: RetrieveThemeTypeUseCase,
+    retrieveIconographyTypeUseCase: RetrieveIconographyTypeUseCase,
+    retrieveShapeTypeUseCase: RetrieveShapeTypeUseCase,
+    retrieveNavigationLabelVisibilityUseCase: RetrieveNavigationLabelVisibilityUseCase,
+    scope: CoroutineScope = CoroutineScope(
         Dispatchers.Main.immediate + SupervisorJob()
     ),
-) : ContentContainer.ViewModel, Logs by logs, Settings by settings {
+) : ContentContainer.ViewModel, Logs by logs {
 
     private val tag = this::class.simpleName
 
@@ -36,7 +42,7 @@ class ContentContainerViewModel(
             message = "Initializing"
         )
 
-        themeType.onEach { themeType ->
+        retrieveThemeTypeUseCase().onEach { themeType ->
 
             logDebug(
                 tag = tag,
@@ -47,7 +53,7 @@ class ContentContainerViewModel(
 
         }.launchIn(scope)
 
-        iconographyType.onEach { iconographyType ->
+        retrieveIconographyTypeUseCase().onEach { iconographyType ->
 
             logDebug(
                 tag = tag,
@@ -58,7 +64,7 @@ class ContentContainerViewModel(
 
         }.launchIn(scope)
 
-        shapeType.onEach { shapeType ->
+        retrieveShapeTypeUseCase().onEach { shapeType ->
 
             logDebug(
                 tag = tag,
@@ -69,7 +75,7 @@ class ContentContainerViewModel(
 
         }.launchIn(scope)
 
-        navigationLabelVisibility.onEach { visibility ->
+        retrieveNavigationLabelVisibilityUseCase().onEach { visibility ->
 
             logDebug(
                 tag = tag,
