@@ -30,6 +30,8 @@ fun ContentContainerTopAppBar(
 
     val screen = contentContainer.currentScreen
 
+    val showNavIcon = !contentContainer.showNavigationRail
+
     var iconAndDescriptionId: Pair<ImageVector, Int>? by remember {
         mutableStateOf(null)
     }
@@ -48,19 +50,24 @@ fun ContentContainerTopAppBar(
         TopAppBar(
             modifier = modifier,
             navigationIcon = iconAndDescriptionId?.let { (imageVector, descriptionId) ->
-                {
-                    IconButton(
-                        onClick = {
-                            screen.onEvent(
-                                ContentContainer.Event.NavigationButtonClicked
+
+                if (showNavIcon) {
+                    {
+                        IconButton(
+                            onClick = {
+                                screen.onEvent(
+                                    ContentContainer.Event.NavigationButtonClicked
+                                )
+                            }
+                        ) {
+                            Icon(
+                                imageVector = imageVector,
+                                contentDescription = stringResource(id = descriptionId)
                             )
                         }
-                    ) {
-                        Icon(
-                            imageVector = imageVector,
-                            contentDescription = stringResource(id = descriptionId)
-                        )
                     }
+                } else {
+                    null
                 }
             },
             title = {
@@ -80,14 +87,14 @@ fun ContentContainerTopAppBar(
                 /* no-op */
             }
 
-            is TimelineScreen -> {
+            is TimelineScreen   -> {
                 iconAndDescriptionId = null
                 titleId = R.string.title_timeline
             }
 
             is SettingsScreen   -> {
 
-                iconAndDescriptionId = null
+                iconAndDescriptionId = iconography.backIcon to R.string.description_go_back
 
                 titleId = R.string.title_settings
 
