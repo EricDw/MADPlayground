@@ -14,16 +14,14 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.madplayground.R
-import com.example.madplayground.domain.messages.Message
 import com.example.madplayground.domain.settings.models.Settings
 import com.example.madplayground.ui.screens.SettingsScreen
-import com.example.madplayground.ui.settings.source.rememberSettingsScreenState
 
 @Composable
 fun SettingsScreen(
     modifier: Modifier = Modifier,
     state: SettingsScreen.State = rememberSettingsScreenState(),
-    eventHandler: Message.Handler<SettingsScreen.Event>? = null,
+    eventHandler: ((SettingsScreen.Event) -> Unit)? = null,
 ) {
 
     val themeType by state.themeType.collectAsState()

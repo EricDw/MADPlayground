@@ -2,7 +2,6 @@ package com.example.madplayground.ui.screens
 
 import androidx.compose.material.BackdropScaffoldState
 import androidx.compose.material.ExperimentalMaterialApi
-import com.example.madplayground.domain.messages.Message
 import com.example.madplayground.ui.moments.models.MomentFormUiState
 import kotlinx.coroutines.CoroutineScope
 
@@ -15,7 +14,7 @@ interface MomentFormScreen : Screen {
 
     fun onEvent(event: Event)
 
-    sealed interface Event : Message {
+    sealed interface Event {
 
         data class ContentChanged(
             val newContent: String
@@ -45,9 +44,9 @@ interface MomentFormScreen : Screen {
 
         val state: MomentFormUiState
 
-        val actionHandler: Message.Handler<Command>
+        val commandHandler: (Command) -> Unit
 
-        sealed interface Command : Message {
+        sealed interface Command {
 
             data class ChangeContent(
                 val newContent: String

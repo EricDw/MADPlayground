@@ -18,7 +18,7 @@ interface TimelineScreen : Screen {
 
         val state: State
 
-        sealed interface Command : Message {
+        sealed interface Command {
 
         }
 

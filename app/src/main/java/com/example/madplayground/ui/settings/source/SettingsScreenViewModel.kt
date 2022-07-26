@@ -1,14 +1,15 @@
 package com.example.madplayground.ui.settings.source
 
 import com.example.madplayground.common.logs.models.Logs
-import com.example.madplayground.domain.messages.Message
 import com.example.madplayground.domain.settings.usecases.*
 import com.example.madplayground.ui.screens.SettingsScreen
 import com.example.madplayground.ui.screens.SettingsScreen.State
 import com.example.madplayground.ui.screens.SettingsScreen.ViewModel.Command
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class SettingsScreenViewModel(
@@ -88,7 +89,7 @@ class SettingsScreenViewModel(
 
     }
 
-    override val commandHandler: Message.Handler<Command> = Message.Handler { theCommand ->
+    override val commandHandler: (Command) -> Unit = { theCommand ->
 
         logDebug(
             tag = tag,

@@ -3,7 +3,6 @@ package com.example.madplayground.ui.moments.source
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.madplayground.common.logs.models.Logs
-import com.example.madplayground.domain.messages.Message
 import com.example.madplayground.domain.moments.usecases.CreateMomentUseCase
 import com.example.madplayground.ui.screens.MomentFormScreen
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -23,7 +22,7 @@ class AndroidMomentFormScreenViewModel @Inject constructor(
 
     override val state = delegate.state
 
-    override val actionHandler: Message.Handler<MomentFormScreen.ViewModel.Command> =
-        delegate.actionHandler
+    override val commandHandler: (MomentFormScreen.ViewModel.Command) -> Unit =
+        delegate.commandHandler
 
 }

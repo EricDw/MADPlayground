@@ -1,7 +1,6 @@
 package com.example.madplayground.ui.moments.source
 
 import com.example.madplayground.common.logs.models.Logs
-import com.example.madplayground.domain.messages.Message
 import com.example.madplayground.domain.moments.source.buildCreateMomentForm
 import com.example.madplayground.domain.moments.usecases.CreateMomentUseCase
 import com.example.madplayground.ui.screens.MomentFormScreen
@@ -40,7 +39,7 @@ class MomentFormScreenViewModelImpl(
 
     }
 
-    override val actionHandler: Message.Handler<Command> = Message.Handler { theCommand ->
+    override val commandHandler: (Command) -> Unit = { theCommand ->
 
         logDebug(
             tag = tag,

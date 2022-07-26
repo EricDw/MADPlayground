@@ -1,7 +1,6 @@
 package com.example.madplayground.ui.container.models
 
 import androidx.navigation.NavHostController
-import com.example.madplayground.domain.messages.Message
 import com.example.madplayground.domain.settings.models.Settings
 import com.example.madplayground.ui.screens.Screen
 import kotlinx.coroutines.flow.StateFlow
@@ -36,7 +35,7 @@ interface ContentContainer {
 
     }
 
-    sealed interface Event : Message {
+    sealed interface Event {
 
         object SettingsTabClicked : Event
 
@@ -64,9 +63,9 @@ interface ContentContainer {
 
         val state: State
 
-        val commandHandler: Message.Handler<Command>
+        val commandHandler: (Command) -> Unit
 
-        sealed interface Command : Message {
+        sealed interface Command {
 
 
         }

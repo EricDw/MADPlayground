@@ -5,7 +5,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.madplayground.domain.messages.Message
 import com.example.madplayground.ui.container.models.ContentContainer
 import com.example.madplayground.ui.container.util.navigateToGraph
 import com.example.madplayground.ui.screens.SettingsScreen
@@ -19,7 +18,7 @@ fun SettingsScreenController(
 
     val state = settingsScreenViewModel.state
 
-    val settingsScreenEventHandler = Message.Handler<SettingsScreen.Event> { theEvent ->
+    val settingsScreenEventHandler: (SettingsScreen.Event) -> Unit = { theEvent ->
 
         when (theEvent) {
 

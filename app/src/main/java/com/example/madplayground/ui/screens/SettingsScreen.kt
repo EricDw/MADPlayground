@@ -1,6 +1,5 @@
 package com.example.madplayground.ui.screens
 
-import com.example.madplayground.domain.messages.Message
 import com.example.madplayground.domain.settings.models.Settings
 import kotlinx.coroutines.flow.StateFlow
 
@@ -8,7 +7,7 @@ interface SettingsScreen: Screen {
 
     fun onEvent(event: Event)
 
-    sealed interface Event : Message {
+    sealed interface Event {
 
         object BackClicked : Event
 
@@ -38,9 +37,9 @@ interface SettingsScreen: Screen {
 
         val state: State
 
-        val commandHandler: Message.Handler<Command>
+        val commandHandler: (Command) -> Unit
 
-        sealed interface Command : Message {
+        sealed interface Command {
 
             object CycleThemeType : Command {
                 override fun toString(): String {

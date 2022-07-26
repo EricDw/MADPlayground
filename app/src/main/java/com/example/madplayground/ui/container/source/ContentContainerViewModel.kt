@@ -1,7 +1,6 @@
 package com.example.madplayground.ui.container.source
 
 import com.example.madplayground.common.logs.models.Logs
-import com.example.madplayground.domain.messages.Message
 import com.example.madplayground.domain.settings.usecases.RetrieveIconographyTypeUseCase
 import com.example.madplayground.domain.settings.usecases.RetrieveNavigationLabelVisibilityUseCase
 import com.example.madplayground.domain.settings.usecases.RetrieveShapeTypeUseCase
@@ -90,7 +89,7 @@ class ContentContainerViewModel(
 
     }
 
-    override val commandHandler = Message.Handler<Command> { action ->
+    override val commandHandler: (Command) -> Unit = { action ->
 
         logError(
             tag = tag,

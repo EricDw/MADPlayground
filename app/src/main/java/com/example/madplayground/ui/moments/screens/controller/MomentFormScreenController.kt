@@ -71,7 +71,7 @@ fun MomentFormScreenController(
         when (event) {
 
             is MomentFormScreen.Event.DateChanged            -> {
-                viewModel.actionHandler(
+                viewModel.commandHandler(
                     MomentFormScreen.ViewModel.Command.ChangeDate(
                         newDate = event.newDate
                     )
@@ -79,7 +79,7 @@ fun MomentFormScreenController(
             }
 
             is MomentFormScreen.Event.TimeChanged            -> {
-                viewModel.actionHandler(
+                viewModel.commandHandler(
                     MomentFormScreen.ViewModel.Command.ChangeTime(
                         newTime = event.newTime
                     )
@@ -87,7 +87,7 @@ fun MomentFormScreenController(
             }
 
             is MomentFormScreen.Event.ContentChanged         -> {
-                viewModel.actionHandler(
+                viewModel.commandHandler(
                     MomentFormScreen.ViewModel.Command.ChangeContent(
                         newContent = event.newContent
                     )
@@ -103,7 +103,7 @@ fun MomentFormScreenController(
             }
 
             is MomentFormScreen.Event.SaveClicked            -> {
-                viewModel.actionHandler(
+                viewModel.commandHandler(
                     MomentFormScreen.ViewModel.Command.SubmitForm
                 )
             }

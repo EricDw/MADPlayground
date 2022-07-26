@@ -3,7 +3,6 @@ package com.example.madplayground.ui.settings.source
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.madplayground.common.logs.models.Logs
-import com.example.madplayground.domain.messages.Message
 import com.example.madplayground.domain.settings.usecases.*
 import com.example.madplayground.ui.screens.SettingsScreen
 import com.example.madplayground.ui.screens.SettingsScreen.State
@@ -39,6 +38,6 @@ class AndroidSettingsScreenViewModel @Inject constructor(
 
     override val state: State = delegate.state
 
-    override val commandHandler: Message.Handler<Command> = delegate.commandHandler
+    override val commandHandler: (Command) -> Unit = delegate.commandHandler
 
 }
