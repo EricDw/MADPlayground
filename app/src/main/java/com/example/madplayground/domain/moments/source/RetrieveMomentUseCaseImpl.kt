@@ -4,9 +4,7 @@ import com.example.madplayground.domain.moments.models.Moment
 import com.example.madplayground.domain.moments.repository.MomentRepository
 import com.example.madplayground.domain.moments.usecases.RetrieveMomentUseCase
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.onEach
 
 class RetrieveMomentUseCaseImpl(
     private val repository: MomentRepository,

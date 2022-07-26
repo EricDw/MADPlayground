@@ -6,10 +6,10 @@ import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.madplayground.ui.screens.TimelineScreen
 import com.example.madplayground.ui.home.source.rememberHomeScreenState
 import com.example.madplayground.ui.moments.components.MomentCardList
 import com.example.madplayground.ui.moments.source.MomentUiStateImpl
+import com.example.madplayground.ui.screens.TimelineScreen
 
 @Composable
 fun TimelineScreen(

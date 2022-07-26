@@ -3,7 +3,7 @@ package com.example.madplayground.domain.moments.models
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.LocalTime
-import java.util.UUID
+import java.util.*
 
 interface Moment {
 

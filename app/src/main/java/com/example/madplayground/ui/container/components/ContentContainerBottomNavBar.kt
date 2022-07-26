@@ -7,14 +7,16 @@ import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.example.madplayground.R
 import com.example.madplayground.domain.settings.models.Settings
 import com.example.madplayground.ui.container.models.ContentContainer
-import com.example.madplayground.ui.screens.TimelineScreen
 import com.example.madplayground.ui.screens.SettingsScreen
+import com.example.madplayground.ui.screens.TimelineScreen
 import com.example.madplayground.ui.theme.models.LocalIconography
 
 @Composable

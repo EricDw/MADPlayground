@@ -1,8 +1,6 @@
 package com.example.madplayground.ui.screens
 
-import com.example.madplayground.domain.messages.Message
 import com.example.madplayground.ui.moments.models.MomentUiState
-import kotlinx.coroutines.flow.StateFlow
 
 interface TimelineScreen : Screen {
 

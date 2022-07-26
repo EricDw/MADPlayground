@@ -2,7 +2,6 @@ package com.example.madplayground.domain.moments.usecases
 
 import com.example.madplayground.domain.moments.models.Moment
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.StateFlow
 
 fun interface RetrieveAllMomentUseCase {
 

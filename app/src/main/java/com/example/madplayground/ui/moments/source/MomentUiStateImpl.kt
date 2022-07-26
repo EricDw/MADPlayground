@@ -3,7 +3,6 @@ package com.example.madplayground.ui.moments.source
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import com.example.madplayground.ui.moments.models.MomentUiState
-import java.util.*
 
 data class MomentUiStateImpl(
     override var id: String = "",

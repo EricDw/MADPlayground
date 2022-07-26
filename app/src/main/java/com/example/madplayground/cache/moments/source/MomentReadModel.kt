@@ -4,7 +4,6 @@ import com.example.madplayground.domain.moments.models.Moment
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.LocalTime
-import java.util.UUID
 
 data class MomentReadModel(
     override val id: Moment.Id,

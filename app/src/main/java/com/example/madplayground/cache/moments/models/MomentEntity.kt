@@ -1,6 +1,5 @@
 package com.example.madplayground.cache.moments.models
 
-import android.webkit.JavascriptInterface
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
