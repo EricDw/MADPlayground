@@ -15,7 +15,7 @@
         android:theme="@style/Theme.MADPlayground"
         tools:targetApi="31">
         <activity
-            android:name=".ui.controller.MainActivityController"
+            android:name=".ui.container.source.MainActivityController"
             android:exported="true"
             android:theme="@style/Theme.MADPlayground">
             <intent-filter>

@@ -2,7 +2,7 @@ package com.example.madplayground.ui.settings.source
 
 import androidx.compose.runtime.*
 import com.example.madplayground.domain.settings.models.Settings
-import com.example.madplayground.ui.screen.SettingsScreen
+import com.example.madplayground.ui.screens.SettingsScreen
 import kotlinx.coroutines.flow.MutableStateFlow
 
 class SettingsScreenState : SettingsScreen.State {

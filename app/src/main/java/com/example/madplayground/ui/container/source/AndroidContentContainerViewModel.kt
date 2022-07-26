@@ -2,7 +2,7 @@ package com.example.madplayground.ui.container.source
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.madplayground.domain.logs.models.Logs
+import com.example.madplayground.common.logs.models.Logs
 import com.example.madplayground.domain.settings.usecases.RetrieveIconographyTypeUseCase
 import com.example.madplayground.domain.settings.usecases.RetrieveNavigationLabelVisibilityUseCase
 import com.example.madplayground.domain.settings.usecases.RetrieveShapeTypeUseCase
@@ -31,9 +31,8 @@ class AndroidContentContainerViewModel @Inject constructor(
         retrieveNavigationLabelVisibilityUseCase = retrieveNavigationLabelVisibilityUseCase,
     )
 
-    override val stateFlow: StateFlow<State> =
-        delegate.stateFlow
+    override val state: State = delegate.state
 
-    override val actionHandler = delegate.actionHandler
+    override val commandHandler = delegate.commandHandler
 
 }

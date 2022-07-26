@@ -1,4 +1,4 @@
-package com.example.madplayground.ui.container.screen.controller
+package com.example.madplayground.ui.container.source
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -13,16 +13,14 @@ import androidx.navigation.navigation
 import com.example.madplayground.ui.config.CombinedWindowType.*
 import com.example.madplayground.ui.config.LocalWindowConfiguration
 import com.example.madplayground.ui.container.models.ContentContainer
-import com.example.madplayground.ui.container.screen.ContentContainer
-import com.example.madplayground.ui.container.source.AndroidContentContainerViewModel
-import com.example.madplayground.ui.home.screens.controller.HomeScreenController
-import com.example.madplayground.ui.logs.LocalLogs
+import com.example.madplayground.ui.home.screens.controller.TimelineScreenController
+import com.example.madplayground.ui.logs.source.LocalLogs
 import com.example.madplayground.ui.moments.screens.controller.MomentFormScreenController
-import com.example.madplayground.ui.screen.HomeScreen
-import com.example.madplayground.ui.screen.MomentFormScreen
-import com.example.madplayground.ui.screen.Screen
-import com.example.madplayground.ui.screen.SettingsScreen
-import com.example.madplayground.ui.settings.screen.controller.SettingsScreenController
+import com.example.madplayground.ui.screens.TimelineScreen
+import com.example.madplayground.ui.screens.MomentFormScreen
+import com.example.madplayground.ui.screens.Screen
+import com.example.madplayground.ui.screens.SettingsScreen
+import com.example.madplayground.ui.settings.source.SettingsScreenController
 
 @Composable
 fun ContentContainerController(
@@ -35,29 +33,13 @@ fun ContentContainerController(
 
     val windowConfiguration = LocalWindowConfiguration.current
 
-    val contentContainerState by contentContainerViewModel.stateFlow.collectAsState()
-
     val navHostController: NavHostController = rememberNavController()
 
     val containerInterface = remember {
-        object : ContentContainer.Controller {
-
-            override val state: ContentContainer.State
-                get() = contentContainerState
-
-            override val navHostController: NavHostController = navHostController
-
-            override var currentScreen: Screen by mutableStateOf(Screen.EMPTY)
-
-            override var showTopAppBar: Boolean by mutableStateOf(false)
-
-            override var showBottomNavBar: Boolean by mutableStateOf(false)
-
-            override var showNavigationRail: Boolean by mutableStateOf(false)
-
-            override var showBottomFAB: Boolean by mutableStateOf(false)
-
-        }
+        ContentContainerControllerImpl(
+            contentContainerState = contentContainerViewModel.state,
+            navHostController = navHostController
+        )
     }
 
     ContentContainer(
@@ -75,13 +57,13 @@ fun ContentContainerController(
         ) {
 
             navigation(
-                startDestination = HomeScreen.ROUTE,
+                startDestination = TimelineScreen.ROUTE,
                 route = ContentContainer.HOME_GRAPH_ROUTE
             ) {
 
-                composable(route = HomeScreen.ROUTE) {
+                composable(route = TimelineScreen.ROUTE) {
 
-                    HomeScreenController(
+                    TimelineScreenController(
                         contentContainer = containerInterface,
                         modifier = screenModifier
                     )
@@ -137,7 +119,7 @@ fun ContentContainerController(
                             showBottomFAB = false
                         }
 
-                        is HomeScreen       -> {
+                        is TimelineScreen -> {
                             showTopAppBar = false
                             showBottomNavBar = true
                             showNavigationRail = false
@@ -176,7 +158,7 @@ fun ContentContainerController(
                             showBottomFAB = false
                         }
 
-                        is HomeScreen       -> {
+                        is TimelineScreen -> {
                             showTopAppBar = true
                             showBottomNavBar = true
                             showNavigationRail = false
@@ -216,7 +198,7 @@ fun ContentContainerController(
                             showBottomFAB = false
                         }
 
-                        is HomeScreen       -> {
+                        is TimelineScreen -> {
                             showTopAppBar = true
                             showBottomNavBar = true
                             showNavigationRail = false
@@ -255,7 +237,7 @@ fun ContentContainerController(
                             showBottomFAB = false
                         }
 
-                        is HomeScreen       -> {
+                        is TimelineScreen -> {
                             showBottomNavBar = false
                             showNavigationRail = true
                             showBottomFAB = false
@@ -294,7 +276,7 @@ fun ContentContainerController(
                             showBottomFAB = false
                         }
 
-                        is HomeScreen       -> {
+                        is TimelineScreen -> {
                             showTopAppBar = true
                             showBottomNavBar = false
                             showNavigationRail = true
@@ -335,7 +317,7 @@ fun ContentContainerController(
                             showBottomFAB = false
                         }
 
-                        is HomeScreen       -> {
+                        is TimelineScreen -> {
                             showTopAppBar = true
                             showBottomNavBar = false
                             showNavigationRail = true
@@ -376,7 +358,7 @@ fun ContentContainerController(
                             showBottomFAB = false
                         }
 
-                        is HomeScreen       -> {
+                        is TimelineScreen -> {
                             showBottomNavBar = false
                             showNavigationRail = true
                             showBottomFAB = false
@@ -415,7 +397,7 @@ fun ContentContainerController(
                             showBottomFAB = false
                         }
 
-                        is HomeScreen       -> {
+                        is TimelineScreen -> {
                             showBottomNavBar = false
                             showNavigationRail = true
                             showBottomFAB = false
@@ -454,7 +436,7 @@ fun ContentContainerController(
                             showBottomFAB = false
                         }
 
-                        is HomeScreen       -> {
+                        is TimelineScreen -> {
                             showBottomNavBar = false
                             showNavigationRail = true
                             showBottomFAB = false
@@ -487,5 +469,24 @@ fun ContentContainerController(
         }
 
     }
+
+}
+
+private class ContentContainerControllerImpl(
+    private val contentContainerState: ContentContainer.State,
+    override val navHostController: NavHostController,
+) : ContentContainer.Controller {
+
+    override val state: ContentContainer.State = contentContainerState
+
+    override var currentScreen: Screen by mutableStateOf(Screen.EMPTY)
+
+    override var showTopAppBar: Boolean by mutableStateOf(false)
+
+    override var showBottomNavBar: Boolean by mutableStateOf(false)
+
+    override var showNavigationRail: Boolean by mutableStateOf(false)
+
+    override var showBottomFAB: Boolean by mutableStateOf(false)
 
 }

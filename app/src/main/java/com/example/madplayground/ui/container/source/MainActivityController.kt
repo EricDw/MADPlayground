@@ -1,4 +1,4 @@
-package com.example.madplayground.ui.controller
+package com.example.madplayground.ui.container.source
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -9,13 +9,12 @@ import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
-import com.example.madplayground.domain.logs.models.Logs
+import com.example.madplayground.common.logs.models.Logs
 import com.example.madplayground.ui.config.LocalWindowConfiguration
 import com.example.madplayground.ui.config.WindowConfiguration
 import com.example.madplayground.ui.config.WindowHeightType
 import com.example.madplayground.ui.config.WindowWidthType
-import com.example.madplayground.ui.container.screen.controller.ContentContainerController
-import com.example.madplayground.ui.logs.LocalLogs
+import com.example.madplayground.ui.logs.source.LocalLogs
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 

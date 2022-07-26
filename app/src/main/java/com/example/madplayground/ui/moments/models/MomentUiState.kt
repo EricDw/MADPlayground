@@ -6,7 +6,7 @@ interface MomentUiState {
 
     val description: String
 
-    val date: String
+    val date: String?
 
     val time: String?
 

@@ -1,21 +1,20 @@
 package com.example.madplayground.ui.home.source
 
-import com.example.madplayground.domain.logs.models.Logs
-import com.example.madplayground.domain.moments.models.Moment
+import com.example.madplayground.common.logs.models.Logs
 import com.example.madplayground.domain.moments.usecases.RetrieveAllMomentUseCase
-import com.example.madplayground.ui.screen.HomeScreen
-import com.example.madplayground.ui.moments.models.MomentUiState
-import com.example.madplayground.ui.moments.source.MomentUiStateImpl
+import com.example.madplayground.ui.moments.mapper.MomentUIMapper
+import com.example.madplayground.ui.screens.TimelineScreen
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.*
 
-class HomeScreenViewModel(
+class TimelineScreenViewModel(
     private val logs: Logs,
+    private val momentUIMapper: MomentUIMapper,
     retrieveAllMomentUseCase: RetrieveAllMomentUseCase,
     scope: CoroutineScope? = null,
-) : HomeScreen.ViewModel, Logs by logs {
+) : TimelineScreen.ViewModel, Logs by logs {
 
     private val scope: CoroutineScope =
         scope ?: CoroutineScope(
@@ -24,12 +23,9 @@ class HomeScreenViewModel(
 
     private val tag = this::class.simpleName
 
-    private val screenState = HomeScreenState()
+    private val _state = HomeScreenState()
 
-    private val _state = MutableStateFlow(screenState)
-
-    override val state: StateFlow<HomeScreen.State> =
-        _state.asStateFlow()
+    override val state: TimelineScreen.State = _state
 
     init {
 
@@ -51,12 +47,14 @@ class HomeScreenViewModel(
 
                     result.moments.map { moments ->
 
-                        moments.map(::toUiState)
+                        moments.sortedBy {
+                            it.createdDateTime
+                        }.map(momentUIMapper::mapToUIState)
 
                     }.onEach { uiStates ->
 
-                        screenState.moments.clear()
-                        screenState.moments.addAll(uiStates)
+                        _state.moments.clear()
+                        _state.moments.addAll(uiStates)
 
                     }.launchIn(this.scope)
 
@@ -84,15 +82,6 @@ class HomeScreenViewModel(
             message = "Initialized"
         )
 
-    }
-
-    private fun toUiState(moment: Moment): MomentUiState {
-        return with(moment) {
-            MomentUiStateImpl(
-                id = id.value.toString(),
-                description = description
-            )
-        }
     }
 
 }

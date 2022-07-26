@@ -2,26 +2,29 @@ package com.example.madplayground.ui.home.source
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.madplayground.domain.logs.models.Logs
+import com.example.madplayground.common.logs.models.Logs
 import com.example.madplayground.domain.moments.usecases.RetrieveAllMomentUseCase
-import com.example.madplayground.ui.screen.HomeScreen
+import com.example.madplayground.ui.moments.mapper.MomentUIMapper
+import com.example.madplayground.ui.screens.TimelineScreen
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
 @HiltViewModel
-class AndroidHomeScreenViewModel @Inject constructor(
+class AndroidTimelineScreenViewModel @Inject constructor(
     logs: Logs,
+    momentUIMapper: MomentUIMapper,
     retrieveAllMomentUseCase: RetrieveAllMomentUseCase,
-) : ViewModel(), HomeScreen.ViewModel {
+) : ViewModel(), TimelineScreen.ViewModel {
 
-    private val delegate = HomeScreenViewModel(
+    private val delegate = TimelineScreenViewModel(
         logs = logs,
+        momentUIMapper = momentUIMapper,
         retrieveAllMomentUseCase = retrieveAllMomentUseCase,
         scope = viewModelScope
     )
 
-    override val state: StateFlow<HomeScreen.State> =
+    override val state: TimelineScreen.State =
         delegate.state
 
 }

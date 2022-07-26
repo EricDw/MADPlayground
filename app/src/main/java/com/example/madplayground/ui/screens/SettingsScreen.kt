@@ -1,8 +1,7 @@
-package com.example.madplayground.ui.screen
+package com.example.madplayground.ui.screens
 
 import com.example.madplayground.domain.messages.Message
 import com.example.madplayground.domain.settings.models.Settings
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.StateFlow
 
 interface SettingsScreen: Screen {
@@ -37,31 +36,31 @@ interface SettingsScreen: Screen {
 
     interface ViewModel {
 
-        val stateFlow: StateFlow<State>
+        val state: State
 
-        val actionHandler: Message.Handler<Action>
+        val commandHandler: Message.Handler<Command>
 
-        sealed interface Action : Message {
+        sealed interface Command : Message {
 
-            object CycleThemeType : Action {
+            object CycleThemeType : Command {
                 override fun toString(): String {
                     return this::class.simpleName ?: super.toString()
                 }
             }
 
-            object CycleIconographyType : Action {
+            object CycleIconographyType : Command {
                 override fun toString(): String {
                     return this::class.simpleName ?: super.toString()
                 }
             }
 
-            object CycleShapeType : Action {
+            object CycleShapeType : Command {
                 override fun toString(): String {
                     return this::class.simpleName ?: super.toString()
                 }
             }
 
-            object CycleLabelVisibility : Action {
+            object CycleLabelVisibility : Command {
                 override fun toString(): String {
                     return this::class.simpleName ?: super.toString()
                 }

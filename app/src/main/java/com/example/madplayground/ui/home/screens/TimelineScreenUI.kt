@@ -6,15 +6,15 @@ import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.madplayground.ui.screen.HomeScreen
+import com.example.madplayground.ui.screens.TimelineScreen
 import com.example.madplayground.ui.home.source.rememberHomeScreenState
 import com.example.madplayground.ui.moments.components.MomentCardList
 import com.example.madplayground.ui.moments.source.MomentUiStateImpl
 
 @Composable
-fun HomeScreen(
+fun TimelineScreen(
     modifier: Modifier = Modifier,
-    state: HomeScreen.State = rememberHomeScreenState(),
+    state: TimelineScreen.State = rememberHomeScreenState(),
 ) {
 
     MomentCardList(
@@ -45,7 +45,7 @@ fun HomeScreenPreview() {
         modifier = Modifier.fillMaxSize(),
     ) { scaffoldPadding ->
 
-        HomeScreen(
+        TimelineScreen(
             modifier = Modifier.padding(scaffoldPadding),
             state = state,
         )

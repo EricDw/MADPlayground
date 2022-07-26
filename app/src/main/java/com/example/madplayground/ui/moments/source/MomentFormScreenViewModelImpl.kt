@@ -1,37 +1,30 @@
 package com.example.madplayground.ui.moments.source
 
-import com.example.madplayground.domain.logs.models.Logs
+import com.example.madplayground.common.logs.models.Logs
 import com.example.madplayground.domain.messages.Message
 import com.example.madplayground.domain.moments.source.buildCreateMomentForm
 import com.example.madplayground.domain.moments.usecases.CreateMomentUseCase
-import com.example.madplayground.ui.moments.models.MomentFormUiState
-import com.example.madplayground.ui.moments.models.MomentFormViewModel
-import com.example.madplayground.ui.moments.models.MomentFormViewModel.Action
+import com.example.madplayground.ui.screens.MomentFormScreen
+import com.example.madplayground.ui.screens.MomentFormScreen.ViewModel.Command
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class MomentFormViewModelImpl(
+class MomentFormScreenViewModelImpl(
     private val logs: Logs,
     private val createMomentUseCase: CreateMomentUseCase,
     private val scope: CoroutineScope = CoroutineScope(
         Dispatchers.Main.immediate + SupervisorJob()
     ),
-) : MomentFormViewModel, Logs by logs {
+) : MomentFormScreen.ViewModel, Logs by logs {
 
     private val tag = this::class.simpleName
 
-    private val screenState = MomentFormUiStateImpl()
+    private val _state = MomentFormUiStateImpl()
 
-    private val _state = MutableStateFlow(screenState)
-
-    override val state: StateFlow<MomentFormUiState> =
-        _state.asStateFlow()
+    override val state = _state
 
     init {
 
@@ -47,47 +40,47 @@ class MomentFormViewModelImpl(
 
     }
 
-    override val actionHandler: Message.Handler<Action> = Message.Handler { theAction ->
+    override val actionHandler: Message.Handler<Command> = Message.Handler { theCommand ->
 
         logDebug(
             tag = tag,
-            message = "Received: $theAction"
+            message = "Received: $theCommand"
         )
 
-        when (theAction) {
+        when (theCommand) {
 
-            is Action.ChangeContent -> {
+            is Command.ChangeContent -> {
 
-                screenState.description.update {
-                    theAction.newContent
+                _state.description.update {
+                    theCommand.newContent
                 }
 
             }
 
-            is Action.ChangeDate    -> {
+            is Command.ChangeDate    -> {
 
-                screenState.date.update {
-                    theAction.newDate
+                _state.date.update {
+                    theCommand.newDate
                 }
 
             }
 
-            is Action.ChangeTime    -> {
+            is Command.ChangeTime    -> {
 
-                screenState.time.update {
-                    theAction.newTime
+                _state.time.update {
+                    theCommand.newTime
                 }
 
             }
 
-            Action.SubmitForm       -> {
+            Command.SubmitForm       -> {
 
                 scope.launch {
 
                     val form = buildCreateMomentForm {
-                        description = screenState.description.value
-                        date = screenState.date.value.takeUnless { it.isBlank() }
-                        time = screenState.time.value.takeUnless { it.isBlank() }
+                        description = _state.description.value
+                        date = _state.date.value.takeUnless { it.isBlank() }
+                        time = _state.time.value.takeUnless { it.isBlank() }
                     }
 
                     createMomentUseCase
@@ -98,7 +91,7 @@ class MomentFormViewModelImpl(
 
                                 is CreateMomentUseCase.Result.Running  -> {
 
-                                    screenState.submitting.update {
+                                    _state.submitting.update {
                                         true
                                     }
 
@@ -116,7 +109,7 @@ class MomentFormViewModelImpl(
 
                                 is CreateMomentUseCase.Result.Complete -> {
 
-                                    screenState.submitted.update {
+                                    _state.submitted.update {
                                         true
                                     }
 

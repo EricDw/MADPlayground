@@ -1,18 +1,19 @@
 package com.example.madplayground.ui.container.source
 
-import com.example.madplayground.domain.logs.models.Logs
+import com.example.madplayground.common.logs.models.Logs
 import com.example.madplayground.domain.messages.Message
 import com.example.madplayground.domain.settings.usecases.RetrieveIconographyTypeUseCase
 import com.example.madplayground.domain.settings.usecases.RetrieveNavigationLabelVisibilityUseCase
 import com.example.madplayground.domain.settings.usecases.RetrieveShapeTypeUseCase
 import com.example.madplayground.domain.settings.usecases.RetrieveThemeTypeUseCase
 import com.example.madplayground.ui.container.models.ContentContainer
-import com.example.madplayground.ui.container.models.ContentContainer.State
-import com.example.madplayground.ui.container.models.ContentContainer.ViewModel.Action
+import com.example.madplayground.ui.container.models.ContentContainer.ViewModel.Command
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.update
 
 class ContentContainerViewModel(
     private val logs: Logs,
@@ -27,13 +28,9 @@ class ContentContainerViewModel(
 
     private val tag = this::class.simpleName
 
-    private var state = ContentContainerState()
+    private val _state = ContentContainerState()
 
-    private val _stateFlow: MutableStateFlow<State> =
-        MutableStateFlow(state)
-
-    override val stateFlow: StateFlow<State> =
-        _stateFlow.asStateFlow()
+    override var state = _state
 
     init {
 
@@ -49,7 +46,7 @@ class ContentContainerViewModel(
                 message = "ThemeType changed to: $themeType"
             )
 
-            state.themeType = themeType
+            _state.themeType.update { themeType }
 
         }.launchIn(scope)
 
@@ -60,7 +57,7 @@ class ContentContainerViewModel(
                 message = "Iconography Type changed to: $iconographyType"
             )
 
-            state.iconographyType = iconographyType
+            _state.iconographyType.update { iconographyType }
 
         }.launchIn(scope)
 
@@ -71,7 +68,7 @@ class ContentContainerViewModel(
                 message = "ShapeType changed to: $shapeType"
             )
 
-            state.shapeType = shapeType
+            _state.shapeType.update { shapeType }
 
         }.launchIn(scope)
 
@@ -82,7 +79,7 @@ class ContentContainerViewModel(
                 message = "NavigationLabelVisibility changed to: $visibility"
             )
 
-            state.navigationLabelVisibility = visibility
+            _state.navigationLabelVisibility.update { visibility }
 
         }.launchIn(scope)
 
@@ -93,7 +90,7 @@ class ContentContainerViewModel(
 
     }
 
-    override val actionHandler = Message.Handler<Action> { action ->
+    override val commandHandler = Message.Handler<Command> { action ->
 
         logError(
             tag = tag,

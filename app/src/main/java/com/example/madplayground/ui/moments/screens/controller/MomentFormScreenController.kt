@@ -7,12 +7,10 @@ import androidx.compose.material.rememberBackdropScaffoldState
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavHostController
 import com.example.madplayground.ui.container.models.ContentContainer
-import com.example.madplayground.ui.moments.models.MomentFormViewModel
 import com.example.madplayground.ui.moments.screens.MomentFormScreen
-import com.example.madplayground.ui.moments.source.AndroidMomentFormScreenMomentFormViewModel
-import com.example.madplayground.ui.screen.MomentFormScreen
+import com.example.madplayground.ui.moments.source.AndroidMomentFormScreenViewModel
+import com.example.madplayground.ui.screens.MomentFormScreen
 import kotlinx.coroutines.CoroutineScope
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -20,136 +18,135 @@ import kotlinx.coroutines.CoroutineScope
 fun MomentFormScreenController(
     container: ContentContainer.Controller,
     modifier: Modifier = Modifier,
-    viewModel: MomentFormViewModel = hiltViewModel<AndroidMomentFormScreenMomentFormViewModel>(),
+    viewModel: MomentFormScreen.ViewModel = hiltViewModel<AndroidMomentFormScreenViewModel>(),
 ) {
-
-    val state by viewModel.state.collectAsState()
-
-    val submitted by state.submitted.collectAsState()
-
-    var showDiscardChangesDialog by remember {
-        mutableStateOf(false)
-    }
-
-    val scaffoldState = rememberBackdropScaffoldState(
-        initialValue = BackdropValue.Concealed
-    )
 
     val scope = rememberCoroutineScope()
 
     val navController = container.navHostController
 
-    val screen: MomentFormScreen = remember {
+    val state = viewModel.state
 
-        object : MomentFormScreen {
+    val scaffoldState = rememberBackdropScaffoldState(
+        initialValue = BackdropValue.Concealed
+    )
 
-            override val scope: CoroutineScope = scope
+    var showDiscardChangesDialog by remember {
+        mutableStateOf(false)
+    }
 
-            override val scaffoldState: BackdropScaffoldState = scaffoldState
+    val submitted by state.submitted.collectAsState()
 
-            override fun onEvent(event: ContentContainer.Event) {
+    val containerEventHandler: (ContentContainer.Event) -> Unit = { event: ContentContainer.Event ->
 
-                when (event) {
+        when (event) {
 
-                    ContentContainer.Event.FABClicked              -> {
-                        TODO()
-                    }
-
-                    ContentContainer.Event.HomeTabClicked          -> {
-                        TODO()
-                    }
-
-                    ContentContainer.Event.NavigationButtonClicked -> {
-                        if (state.isEmpty) {
-                            showDiscardChangesDialog = false
-                            navController.popBackStack()
-                        } else {
-                            showDiscardChangesDialog = true
-                        }
-                    }
-
-                    ContentContainer.Event.SettingsTabClicked      -> {
-                        TODO()
-                    }
-
-                }
-
+            ContentContainer.Event.FABClicked              -> {
+                TODO()
             }
 
-            override fun onEvent(
-                event: MomentFormScreen.Event,
-            ) {
-                when (event) {
+            ContentContainer.Event.TimelineTabClicked -> {
+                TODO()
+            }
 
-                    is MomentFormScreen.Event.DateChanged            -> {
-                        viewModel.actionHandler(
-                            MomentFormViewModel.Action.ChangeDate(
-                                newDate = event.newDate
-                            )
-                        )
-                    }
-
-                    is MomentFormScreen.Event.TimeChanged            -> {
-                        viewModel.actionHandler(
-                            MomentFormViewModel.Action.ChangeTime(
-                                newTime = event.newTime
-                            )
-                        )
-                    }
-
-                    is MomentFormScreen.Event.ContentChanged         -> {
-                        viewModel.actionHandler(
-                            MomentFormViewModel.Action.ChangeContent(
-                                newContent = event.newContent
-                            )
-                        )
-                    }
-
-                    is MomentFormScreen.Event.CancelClicked          -> {
-                        if (state.isEmpty) {
-                            navController.popBackStack()
-                        } else {
-                            showDiscardChangesDialog = true
-                        }
-                    }
-
-                    is MomentFormScreen.Event.SaveClicked            -> {
-                        viewModel.actionHandler(
-                            MomentFormViewModel.Action.SubmitForm
-                        )
-                    }
-
-                    is MomentFormScreen.Event.BackClicked            -> {
-                        if (state.isEmpty) {
-                            showDiscardChangesDialog = false
-                            navController.popBackStack()
-                        } else {
-                            showDiscardChangesDialog = true
-                        }
-                    }
-
-                    is MomentFormScreen.Event.DiscardChangesClicked  -> {
-                        showDiscardChangesDialog = false
-                        navController.popBackStack()
-                    }
-
-                    is MomentFormScreen.Event.DismissDialogRequested -> {
-                        showDiscardChangesDialog = false
-                    }
-
+            ContentContainer.Event.NavigationButtonClicked -> {
+                if (state.isEmpty) {
+                    showDiscardChangesDialog = false
+                    navController.popBackStack()
+                } else {
+                    showDiscardChangesDialog = true
                 }
+            }
+
+            ContentContainer.Event.SettingsTabClicked      -> {
+                TODO()
             }
 
         }
 
     }
 
+    val screenEventHandler: (MomentFormScreen.Event) -> Unit = { event: MomentFormScreen.Event ->
+
+        when (event) {
+
+            is MomentFormScreen.Event.DateChanged            -> {
+                viewModel.actionHandler(
+                    MomentFormScreen.ViewModel.Command.ChangeDate(
+                        newDate = event.newDate
+                    )
+                )
+            }
+
+            is MomentFormScreen.Event.TimeChanged            -> {
+                viewModel.actionHandler(
+                    MomentFormScreen.ViewModel.Command.ChangeTime(
+                        newTime = event.newTime
+                    )
+                )
+            }
+
+            is MomentFormScreen.Event.ContentChanged         -> {
+                viewModel.actionHandler(
+                    MomentFormScreen.ViewModel.Command.ChangeContent(
+                        newContent = event.newContent
+                    )
+                )
+            }
+
+            is MomentFormScreen.Event.CancelClicked          -> {
+                if (state.isEmpty) {
+                    navController.popBackStack()
+                } else {
+                    showDiscardChangesDialog = true
+                }
+            }
+
+            is MomentFormScreen.Event.SaveClicked            -> {
+                viewModel.actionHandler(
+                    MomentFormScreen.ViewModel.Command.SubmitForm
+                )
+            }
+
+            is MomentFormScreen.Event.BackClicked            -> {
+                if (state.isEmpty) {
+                    showDiscardChangesDialog = false
+                    navController.popBackStack()
+                } else {
+                    showDiscardChangesDialog = true
+                }
+            }
+
+            is MomentFormScreen.Event.DiscardChangesClicked  -> {
+                showDiscardChangesDialog = false
+                navController.popBackStack()
+            }
+
+            is MomentFormScreen.Event.DismissDialogRequested -> {
+                showDiscardChangesDialog = false
+            }
+
+        }
+
+    }
+
+    LaunchedEffect(key1 = Unit) {
+
+        container.currentScreen = MomentFormScreenImpl(
+            scope = scope,
+            scaffoldState = scaffoldState,
+            containerEventHandler = containerEventHandler,
+            screenEventHandler = screenEventHandler,
+        )
+
+    }
+
     MomentFormScreen(
         modifier = modifier,
         state = state,
-        eventHandler = screen::onEvent,
+        eventHandler = screenEventHandler,
         showDialog = showDiscardChangesDialog,
-        scaffoldState = screen.scaffoldState
+        scaffoldState = scaffoldState
     )
 
     LaunchedEffect(key1 = submitted) {
@@ -158,8 +155,20 @@ fun MomentFormScreenController(
         }
     }
 
-    LaunchedEffect(key1 = screen) {
-        container.currentScreen = screen
-    }
+}
+
+@OptIn(ExperimentalMaterialApi::class)
+private class MomentFormScreenImpl(
+    override val scope: CoroutineScope,
+    override val scaffoldState: BackdropScaffoldState,
+    private val containerEventHandler: (ContentContainer.Event) -> Unit,
+    private val screenEventHandler: (MomentFormScreen.Event) -> Unit,
+) : MomentFormScreen {
+
+    override fun onEvent(event: ContentContainer.Event) =
+        containerEventHandler(event)
+
+    override fun onEvent(event: MomentFormScreen.Event) =
+        screenEventHandler(event)
 
 }

@@ -14,12 +14,10 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import com.example.madplayground.R
 import com.example.madplayground.ui.container.models.ContentContainer
-import com.example.madplayground.ui.home.components.HomeScreenTopAppBar
-import com.example.madplayground.ui.screen.HomeScreen
-import com.example.madplayground.ui.screen.MomentFormScreen
-import com.example.madplayground.ui.screen.Screen
-import com.example.madplayground.ui.screen.SettingsScreen
-import com.example.madplayground.ui.settings.components.SettingsScreenTopAppBar
+import com.example.madplayground.ui.screens.TimelineScreen
+import com.example.madplayground.ui.screens.MomentFormScreen
+import com.example.madplayground.ui.screens.Screen
+import com.example.madplayground.ui.screens.SettingsScreen
 import com.example.madplayground.ui.theme.models.LocalIconography
 
 @Composable
@@ -82,9 +80,9 @@ fun ContentContainerTopAppBar(
                 /* no-op */
             }
 
-            is HomeScreen       -> {
+            is TimelineScreen -> {
                 iconAndDescriptionId = null
-                titleId = R.string.title_home
+                titleId = R.string.title_timeline
             }
 
             is SettingsScreen   -> {

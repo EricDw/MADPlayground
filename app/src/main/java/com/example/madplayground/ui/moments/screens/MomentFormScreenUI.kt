@@ -18,7 +18,7 @@ import androidx.compose.ui.unit.dp
 import com.example.madplayground.R
 import com.example.madplayground.ui.moments.models.MomentFormUiState
 import com.example.madplayground.ui.moments.source.rememberMomentFromScreenState
-import com.example.madplayground.ui.screen.MomentFormScreen.Event
+import com.example.madplayground.ui.screens.MomentFormScreen.Event
 import com.example.madplayground.ui.theme.models.LocalIconography
 import kotlinx.coroutines.launch
 

@@ -2,7 +2,7 @@ package com.example.madplayground.ui.container.source
 
 import com.example.madplayground.cache.settings.fakes.FakeSettingsCache
 import com.example.madplayground.cache.settings.models.SettingsCache
-import com.example.madplayground.domain.logs.models.Logs
+import com.example.madplayground.common.logs.models.Logs
 import com.example.madplayground.domain.settings.models.Settings
 import com.example.madplayground.domain.settings.source.RetrieveIconographyTypeUseCaseImpl
 import com.example.madplayground.domain.settings.source.RetrieveNavigationLabelVisibilityUseCaseImpl
@@ -134,7 +134,7 @@ class TheContentContainerViewModel {
     }
 
     @Test
-    fun `Reflects changes to the ThemeType`() = runTest(dispatcher) {
+    fun `Reflects updates to the ThemeType`() = runTest(dispatcher) {
         // Arrange
         val expected = Settings.ThemeType.DARK
 
@@ -146,7 +146,61 @@ class TheContentContainerViewModel {
 
         // Assert
         Assert.assertEquals(
-            /* message = */ "ThemeType not syncronized",
+            /* message = */ "ThemeType not synchronized",
+            /* expected = */ expected,
+            /* actual = */ actual
+        )
+    }
+
+    @Test
+    fun `Reflects updates to the IconographyType`() = runTest(dispatcher) {
+        // Arrange
+        val expected = Settings.IconographyType.ROUNDED
+
+        // Act
+        cache.setIconographyType(expected)
+
+        val actual = viewModel.stateFlow.value.iconographyType
+
+        // Assert
+        Assert.assertEquals(
+            /* message = */ "IconographyType not synchronized",
+            /* expected = */ expected,
+            /* actual = */ actual
+        )
+    }
+
+    @Test
+    fun `Reflects updates to the ShapeType`() = runTest(dispatcher) {
+        // Arrange
+        val expected = Settings.ShapeType.CUT
+
+        // Act
+        cache.setShapeType(expected)
+
+        val actual = viewModel.stateFlow.value.shapeType
+
+        // Assert
+        Assert.assertEquals(
+            /* message = */ "ShapeType not synchronized",
+            /* expected = */ expected,
+            /* actual = */ actual
+        )
+    }
+
+    @Test
+    fun `Reflects updates to the NavigationLabelVisibility`() = runTest(dispatcher) {
+        // Arrange
+        val expected = Settings.NavigationLabelVisibility.ALWAYS
+
+        // Act
+        cache.setNavigationLabelVisibility(expected)
+
+        val actual = viewModel.stateFlow.value.navigationLabelVisibility
+
+        // Assert
+        Assert.assertEquals(
+            /* message = */ "NavigationLabelVisibility not synchronized",
             /* expected = */ expected,
             /* actual = */ actual
         )

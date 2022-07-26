@@ -13,8 +13,8 @@ import androidx.compose.ui.res.stringResource
 import com.example.madplayground.R
 import com.example.madplayground.domain.settings.models.Settings
 import com.example.madplayground.ui.container.models.ContentContainer
-import com.example.madplayground.ui.screen.HomeScreen
-import com.example.madplayground.ui.screen.SettingsScreen
+import com.example.madplayground.ui.screens.TimelineScreen
+import com.example.madplayground.ui.screens.SettingsScreen
 import com.example.madplayground.ui.theme.models.LocalIconography
 
 @Composable
@@ -25,11 +25,11 @@ fun ContentContainerBottomNavBar(
 
     val screen = contentContainer.currentScreen
 
-    val navigationLabelVisibility = contentContainer.state.navigationLabelVisibility
+    val navigationLabelVisibility by contentContainer.state.navigationLabelVisibility.collectAsState()
 
     val alwaysShowLabel = navigationLabelVisibility == Settings.NavigationLabelVisibility.ALWAYS
 
-    val isHomeSelected = screen is HomeScreen
+    val isTimelineSelected = screen is TimelineScreen
 
     val isSettingsSelected = screen is SettingsScreen
 
@@ -44,16 +44,16 @@ fun ContentContainerBottomNavBar(
         ) {
 
             BottomNavigationItem(
-                selected = isHomeSelected,
+                selected = isTimelineSelected,
                 onClick = {
                     screen.onEvent(
-                        ContentContainer.Event.HomeTabClicked
+                        ContentContainer.Event.TimelineTabClicked
                     )
                 },
                 icon = {
                     Icon(
-                        imageVector = LocalIconography.current.homeIcon,
-                        contentDescription = "Home Tab"
+                        imageVector = LocalIconography.current.timelineIcon,
+                        contentDescription = stringResource(id = R.string.description_timeline_tab)
                     )
                 },
                 label = if (navigationLabelVisibility == Settings.NavigationLabelVisibility.NEVER) {
@@ -61,7 +61,7 @@ fun ContentContainerBottomNavBar(
                 } else {
                     {
                         Text(
-                            text = stringResource(id = R.string.title_home)
+                            text = stringResource(id = R.string.title_timeline)
                         )
                     }
                 },
@@ -78,7 +78,7 @@ fun ContentContainerBottomNavBar(
                 icon = {
                     Icon(
                         imageVector = LocalIconography.current.settingsIcon,
-                        contentDescription = "Settings Tab"
+                        contentDescription = stringResource(id = R.string.description_settings_tab)
                     )
                 },
                 label = if (navigationLabelVisibility == Settings.NavigationLabelVisibility.NEVER) {

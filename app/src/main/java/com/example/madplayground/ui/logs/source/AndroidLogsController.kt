@@ -1,7 +1,7 @@
-package com.example.madplayground.domain.logs.source
+package com.example.madplayground.ui.logs.source
 
 import android.util.Log
-import com.example.madplayground.domain.logs.models.Logs
+import com.example.madplayground.common.logs.models.Logs
 
 class AndroidLogsController : Logs {
 

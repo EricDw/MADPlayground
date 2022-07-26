@@ -1,10 +1,12 @@
-package com.example.madplayground.ui.container.screen
+package com.example.madplayground.ui.container.source
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import com.example.madplayground.features.theme.ThemeController
@@ -22,6 +24,14 @@ fun ContentContainer(
 ) {
 
     val state = contentContainer.state
+
+    val themeType by state.themeType.collectAsState()
+
+    val iconographyType by state.iconographyType.collectAsState()
+
+    val shapeType by state.shapeType.collectAsState()
+
+    val navigationLabelVisibility by state.navigationLabelVisibility.collectAsState()
 
     val isDrawerUnlocked = false
 
@@ -56,9 +66,9 @@ fun ContentContainer(
         )
 
     ThemeController(
-        themeType = state.themeType,
-        iconographyType = state.iconographyType,
-        shapeType = state.shapeType,
+        themeType = themeType,
+        iconographyType = iconographyType,
+        shapeType = shapeType,
     ) {
 
         Scaffold(
@@ -99,7 +109,7 @@ fun ContentContainer(
 
                 ContentContainerNavigationRail(
                     contentContainer = contentContainer,
-                    navigationLabelVisibility = state.navigationLabelVisibility
+                    navigationLabelVisibility = navigationLabelVisibility
                 )
 
                 content(

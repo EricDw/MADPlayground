@@ -3,22 +3,24 @@ package com.example.madplayground.ui.container.source
 import androidx.compose.runtime.*
 import com.example.madplayground.domain.settings.models.Settings
 import com.example.madplayground.ui.container.models.ContentContainer
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 
 class ContentContainerState : ContentContainer.State {
 
-    override var themeType: Settings.ThemeType by mutableStateOf(
+    override val themeType = MutableStateFlow(
         Settings.ThemeType.SYSTEM
     )
 
-    override var iconographyType: Settings.IconographyType by mutableStateOf(
+    override val iconographyType = MutableStateFlow(
         Settings.IconographyType.DEFAULT
     )
 
-    override var shapeType: Settings.ShapeType by mutableStateOf(
+    override val shapeType = MutableStateFlow(
         Settings.ShapeType.ROUNDED
     )
 
-    override var navigationLabelVisibility: Settings.NavigationLabelVisibility by mutableStateOf(
+    override val navigationLabelVisibility = MutableStateFlow(
         Settings.NavigationLabelVisibility.WHEN_SELECTED
     )
 

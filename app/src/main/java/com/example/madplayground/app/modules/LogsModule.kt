@@ -1,7 +1,7 @@
 package com.example.madplayground.app.modules
 
-import com.example.madplayground.domain.logs.source.AndroidLogsController
-import com.example.madplayground.domain.logs.models.Logs
+import com.example.madplayground.ui.logs.source.AndroidLogsController
+import com.example.madplayground.common.logs.models.Logs
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

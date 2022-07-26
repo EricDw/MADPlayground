@@ -1,7 +1,7 @@
 package com.example.madplayground.app.controller
 
 import android.app.Application
-import com.example.madplayground.domain.logs.models.Logs
+import com.example.madplayground.common.logs.models.Logs
 import dagger.hilt.android.HiltAndroidApp
 import javax.inject.Inject
 

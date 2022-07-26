@@ -1,4 +1,4 @@
-package com.example.madplayground.domain.logs.models
+package com.example.madplayground.common.logs.models
 
 /**
  * Handles the communication of log messages.

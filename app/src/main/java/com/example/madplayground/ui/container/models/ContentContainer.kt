@@ -3,7 +3,7 @@ package com.example.madplayground.ui.container.models
 import androidx.navigation.NavHostController
 import com.example.madplayground.domain.messages.Message
 import com.example.madplayground.domain.settings.models.Settings
-import com.example.madplayground.ui.screen.Screen
+import com.example.madplayground.ui.screens.Screen
 import kotlinx.coroutines.flow.StateFlow
 
 interface ContentContainer {
@@ -42,7 +42,7 @@ interface ContentContainer {
 
         object NavigationButtonClicked : Event
 
-        object HomeTabClicked : Event
+        object TimelineTabClicked : Event
 
         object FABClicked : Event
 
@@ -50,23 +50,23 @@ interface ContentContainer {
 
     interface State {
 
-        val themeType: Settings.ThemeType
+        val themeType: StateFlow<Settings.ThemeType>
 
-        val iconographyType: Settings.IconographyType
+        val iconographyType: StateFlow<Settings.IconographyType>
 
-        val shapeType: Settings.ShapeType
+        val shapeType: StateFlow<Settings.ShapeType>
 
-        val navigationLabelVisibility: Settings.NavigationLabelVisibility
+        val navigationLabelVisibility: StateFlow<Settings.NavigationLabelVisibility>
 
     }
 
     interface ViewModel {
 
-        val stateFlow: StateFlow<State>
+        val state: State
 
-        val actionHandler: Message.Handler<Action>
+        val commandHandler: Message.Handler<Command>
 
-        sealed interface Action : Message {
+        sealed interface Command : Message {
 
 
         }

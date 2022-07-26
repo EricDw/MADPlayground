@@ -16,10 +16,10 @@ import androidx.compose.ui.res.stringResource
 import com.example.madplayground.R
 import com.example.madplayground.domain.settings.models.Settings
 import com.example.madplayground.ui.container.models.ContentContainer
-import com.example.madplayground.ui.screen.HomeScreen
-import com.example.madplayground.ui.screen.MomentFormScreen
-import com.example.madplayground.ui.screen.Screen
-import com.example.madplayground.ui.screen.SettingsScreen
+import com.example.madplayground.ui.screens.TimelineScreen
+import com.example.madplayground.ui.screens.MomentFormScreen
+import com.example.madplayground.ui.screens.Screen
+import com.example.madplayground.ui.screens.SettingsScreen
 import com.example.madplayground.ui.theme.models.LocalIconography
 
 @Composable
@@ -33,7 +33,7 @@ fun ContentContainerNavigationRail(
         mutableStateOf(null)
     }
 
-    var isHomeSelected by remember {
+    var isTimelineSelected by remember {
         mutableStateOf(true)
     }
 
@@ -57,14 +57,14 @@ fun ContentContainerNavigationRail(
             ) {
 
                 RailItem(
-                    isSelected = isHomeSelected,
-                    imageVector = LocalIconography.current.homeIcon,
-                    descriptionId = R.string.description_home_tab,
+                    isSelected = isTimelineSelected,
+                    imageVector = LocalIconography.current.timelineIcon,
+                    descriptionId = R.string.description_timeline_tab,
                     navigationLabelVisibility = navigationLabelVisibility,
-                    textId = R.string.title_home
+                    textId = R.string.title_timeline
                 ) {
                     contentContainer.currentScreen.onEvent(
-                        ContentContainer.Event.HomeTabClicked
+                        ContentContainer.Event.TimelineTabClicked
                     )
                 }
 
@@ -95,7 +95,7 @@ fun ContentContainerNavigationRail(
                 /* no-op */
             }
 
-            is HomeScreen       -> {
+            is TimelineScreen -> {
 
                 header = {
                     ContentContainerFloatingActionButton(
@@ -103,7 +103,7 @@ fun ContentContainerNavigationRail(
                     )
                 }
 
-                isHomeSelected = true
+                isTimelineSelected = true
                 isSettingsSelected = false
 
             }
@@ -118,7 +118,7 @@ fun ContentContainerNavigationRail(
                     )
                 }
 
-                isHomeSelected = false
+                isTimelineSelected = false
                 isSettingsSelected = true
 
             }
@@ -133,7 +133,7 @@ fun ContentContainerNavigationRail(
                     )
                 }
 
-                isHomeSelected = false
+                isTimelineSelected = false
                 isSettingsSelected = false
 
             }

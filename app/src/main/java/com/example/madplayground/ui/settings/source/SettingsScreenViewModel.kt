@@ -1,11 +1,11 @@
 package com.example.madplayground.ui.settings.source
 
-import com.example.madplayground.domain.logs.models.Logs
+import com.example.madplayground.common.logs.models.Logs
 import com.example.madplayground.domain.messages.Message
 import com.example.madplayground.domain.settings.usecases.*
-import com.example.madplayground.ui.screen.SettingsScreen
-import com.example.madplayground.ui.screen.SettingsScreen.State
-import com.example.madplayground.ui.screen.SettingsScreen.ViewModel.Action
+import com.example.madplayground.ui.screens.SettingsScreen
+import com.example.madplayground.ui.screens.SettingsScreen.State
+import com.example.madplayground.ui.screens.SettingsScreen.ViewModel.Command
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
@@ -26,12 +26,9 @@ class SettingsScreenViewModel(
 
     private val tag = this::class.simpleName
 
-    private val settingsScreenState = SettingsScreenState()
+    private val _state = SettingsScreenState()
 
-    private val _stateFlow = MutableStateFlow(settingsScreenState)
-
-    override val stateFlow: StateFlow<State> =
-        _stateFlow.asStateFlow()
+    override val state: State = _state
 
     init {
 
@@ -47,7 +44,7 @@ class SettingsScreenViewModel(
                 message = "ThemeType Changed too: $themeType"
             )
 
-            settingsScreenState.themeType.update { themeType }
+            _state.themeType.update { themeType }
 
         }.launchIn(scope)
 
@@ -58,7 +55,7 @@ class SettingsScreenViewModel(
                 message = "IconographyType Changed too: $iconographyType"
             )
 
-            settingsScreenState.iconType.update { iconographyType }
+            _state.iconType.update { iconographyType }
 
         }.launchIn(scope)
 
@@ -69,7 +66,7 @@ class SettingsScreenViewModel(
                 message = "ShapeType Changed too: $shapeType"
             )
 
-            settingsScreenState.shapeType.update { shapeType }
+            _state.shapeType.update { shapeType }
 
         }.launchIn(scope)
 
@@ -80,7 +77,7 @@ class SettingsScreenViewModel(
                 message = "NavigationLabelVisibility Changed too: $visibility"
             )
 
-            settingsScreenState.navigationLabelVisibility.update { visibility }
+            _state.navigationLabelVisibility.update { visibility }
 
         }.launchIn(scope)
 
@@ -91,16 +88,16 @@ class SettingsScreenViewModel(
 
     }
 
-    override val actionHandler: Message.Handler<Action> = Message.Handler { theAction ->
+    override val commandHandler: Message.Handler<Command> = Message.Handler { theCommand ->
 
         logDebug(
             tag = tag,
-            message = "Received: $theAction"
+            message = "Received: $theCommand"
         )
 
-        when (theAction) {
+        when (theCommand) {
 
-            Action.CycleThemeType       -> {
+            Command.CycleThemeType       -> {
 
                 scope.launch {
 
@@ -110,7 +107,7 @@ class SettingsScreenViewModel(
 
             }
 
-            Action.CycleIconographyType -> {
+            Command.CycleIconographyType -> {
 
                 scope.launch {
 
@@ -120,7 +117,7 @@ class SettingsScreenViewModel(
 
             }
 
-            Action.CycleShapeType       -> {
+            Command.CycleShapeType       -> {
 
                 scope.launch {
 
@@ -130,7 +127,7 @@ class SettingsScreenViewModel(
 
             }
 
-            Action.CycleLabelVisibility -> {
+            Command.CycleLabelVisibility -> {
 
                 scope.launch {
 

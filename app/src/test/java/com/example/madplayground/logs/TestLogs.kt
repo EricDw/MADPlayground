@@ -1,6 +1,6 @@
 package com.example.madplayground.logs
 
-import com.example.madplayground.domain.logs.models.Logs
+import com.example.madplayground.common.logs.models.Logs
 
 class TestLogs : Logs {
 

@@ -1,4 +1,4 @@
-package com.example.madplayground.common
+package com.example.madplayground.common.results
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch

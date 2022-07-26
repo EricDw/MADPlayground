@@ -8,10 +8,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.example.madplayground.R
 import com.example.madplayground.ui.container.models.ContentContainer
-import com.example.madplayground.ui.screen.HomeScreen
-import com.example.madplayground.ui.screen.MomentFormScreen
-import com.example.madplayground.ui.screen.Screen
-import com.example.madplayground.ui.screen.SettingsScreen
+import com.example.madplayground.ui.screens.TimelineScreen
+import com.example.madplayground.ui.screens.MomentFormScreen
+import com.example.madplayground.ui.screens.Screen
+import com.example.madplayground.ui.screens.SettingsScreen
 import com.example.madplayground.ui.theme.models.LocalIconography
 
 @Composable
@@ -60,7 +60,7 @@ fun ContentContainerFloatingActionButton(
                 /* no-op */
             }
 
-            is HomeScreen       -> {
+            is TimelineScreen -> {
 
                 icon = iconography.editIcon
                 descriptionId = R.string.description_add_moment

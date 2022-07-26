@@ -2,14 +2,13 @@ package com.example.madplayground.ui.settings.source
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.madplayground.domain.logs.models.Logs
+import com.example.madplayground.common.logs.models.Logs
 import com.example.madplayground.domain.messages.Message
 import com.example.madplayground.domain.settings.usecases.*
-import com.example.madplayground.ui.screen.SettingsScreen
-import com.example.madplayground.ui.screen.SettingsScreen.State
-import com.example.madplayground.ui.screen.SettingsScreen.ViewModel.Action
+import com.example.madplayground.ui.screens.SettingsScreen
+import com.example.madplayground.ui.screens.SettingsScreen.State
+import com.example.madplayground.ui.screens.SettingsScreen.ViewModel.Command
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
 
 @HiltViewModel
@@ -38,8 +37,8 @@ class AndroidSettingsScreenViewModel @Inject constructor(
         scope = viewModelScope
     )
 
-    override val stateFlow: StateFlow<State> = delegate.stateFlow
+    override val state: State = delegate.state
 
-    override val actionHandler: Message.Handler<Action> = delegate.actionHandler
+    override val commandHandler: Message.Handler<Command> = delegate.commandHandler
 
 }

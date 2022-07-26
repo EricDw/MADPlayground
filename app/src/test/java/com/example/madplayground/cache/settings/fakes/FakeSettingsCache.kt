@@ -1,7 +1,7 @@
 package com.example.madplayground.cache.settings.fakes
 
 import com.example.madplayground.cache.settings.models.SettingsCache
-import com.example.madplayground.domain.logs.models.Logs
+import com.example.madplayground.common.logs.models.Logs
 import com.example.madplayground.domain.settings.models.Settings
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -16,13 +16,13 @@ class FakeSettingsCache(
     override val themeType =
         MutableStateFlow(Settings.ThemeType.SYSTEM)
 
-    override val iconographyType: StateFlow<Settings.IconographyType> =
+    override val iconographyType =
         MutableStateFlow(Settings.IconographyType.TWO_TONE)
 
-    override val shapeType: StateFlow<Settings.ShapeType> =
+    override val shapeType =
         MutableStateFlow(Settings.ShapeType.CUT)
 
-    override val navigationLabelVisibility: StateFlow<Settings.NavigationLabelVisibility> =
+    override val navigationLabelVisibility =
         MutableStateFlow(Settings.NavigationLabelVisibility.NEVER)
 
     override suspend fun setThemeType(newThemeType: Settings.ThemeType) {
@@ -34,14 +34,26 @@ class FakeSettingsCache(
     }
 
     override suspend fun setIconographyType(newIconographyType: Settings.IconographyType) {
-        TODO("Not yet implemented")
+        logDebug(
+            tag = tag,
+            message = "Changing IconographyType to $newIconographyType"
+        )
+        iconographyType.update { newIconographyType }
     }
 
     override suspend fun setShapeType(newShapeType: Settings.ShapeType) {
-        TODO("Not yet implemented")
+        logDebug(
+            tag = tag,
+            message = "Changing ShapeType to $newShapeType"
+        )
+        shapeType.update { newShapeType }
     }
 
     override suspend fun setNavigationLabelVisibility(newVisibility: Settings.NavigationLabelVisibility) {
-        TODO("Not yet implemented")
+        logDebug(
+            tag = tag,
+            message = "Changing NavigationLabelVisibility to $newVisibility"
+        )
+        navigationLabelVisibility.update { newVisibility }
     }
 }

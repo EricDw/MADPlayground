@@ -1,14 +1,14 @@
-package com.example.madplayground.ui.settings.screen.controller
+package com.example.madplayground.ui.settings.source
 
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.madplayground.domain.messages.Message
 import com.example.madplayground.ui.container.models.ContentContainer
 import com.example.madplayground.ui.container.util.navigateToGraph
-import com.example.madplayground.ui.screen.SettingsScreen
-import com.example.madplayground.ui.settings.screen.SettingsScreen
-import com.example.madplayground.ui.settings.source.AndroidSettingsScreenViewModel
+import com.example.madplayground.ui.screens.SettingsScreen
 
 @Composable
 fun SettingsScreenController(
@@ -17,7 +17,7 @@ fun SettingsScreenController(
     settingsScreenViewModel: SettingsScreen.ViewModel = hiltViewModel<AndroidSettingsScreenViewModel>(),
 ) {
 
-    val state by settingsScreenViewModel.stateFlow.collectAsState()
+    val state = settingsScreenViewModel.state
 
     val settingsScreenEventHandler = Message.Handler<SettingsScreen.Event> { theEvent ->
 
@@ -25,32 +25,32 @@ fun SettingsScreenController(
 
             SettingsScreen.Event.ThemeTypeClicked       -> {
 
-                settingsScreenViewModel.actionHandler(
-                    SettingsScreen.ViewModel.Action.CycleThemeType
+                settingsScreenViewModel.commandHandler(
+                    SettingsScreen.ViewModel.Command.CycleThemeType
                 )
 
             }
 
             SettingsScreen.Event.IconTypeClicked        -> {
 
-                settingsScreenViewModel.actionHandler(
-                    SettingsScreen.ViewModel.Action.CycleIconographyType
+                settingsScreenViewModel.commandHandler(
+                    SettingsScreen.ViewModel.Command.CycleIconographyType
                 )
 
             }
 
             SettingsScreen.Event.ShapeTypeClicked       -> {
 
-                settingsScreenViewModel.actionHandler(
-                    SettingsScreen.ViewModel.Action.CycleShapeType
+                settingsScreenViewModel.commandHandler(
+                    SettingsScreen.ViewModel.Command.CycleShapeType
                 )
 
             }
 
             SettingsScreen.Event.LabelVisibilityClicked -> {
 
-                settingsScreenViewModel.actionHandler(
-                    SettingsScreen.ViewModel.Action.CycleLabelVisibility
+                settingsScreenViewModel.commandHandler(
+                    SettingsScreen.ViewModel.Command.CycleLabelVisibility
                 )
 
             }
@@ -75,7 +75,7 @@ fun SettingsScreenController(
                         TODO()
                     }
 
-                    ContentContainer.Event.HomeTabClicked          -> {
+                    ContentContainer.Event.TimelineTabClicked      -> {
                         contentContainer.navHostController.navigateToGraph(
                             ContentContainer.HOME_GRAPH_ROUTE
                         )

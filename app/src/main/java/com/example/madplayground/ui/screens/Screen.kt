@@ -1,4 +1,4 @@
-package com.example.madplayground.ui.screen
+package com.example.madplayground.ui.screens
 
 import com.example.madplayground.ui.container.models.ContentContainer
 
