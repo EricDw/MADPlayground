@@ -7,7 +7,9 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.example.madplayground.R
 import com.example.madplayground.ui.moments.models.MomentUiState
 
 @Composable
@@ -23,20 +25,6 @@ fun MomentCardList(
             end = 8.dp
         )
     ) {
-
-        if (moments.isEmpty()) {
-            item {
-                Box(
-                    modifier = Modifier.fillMaxSize(),
-                    contentAlignment = Alignment.Center
-                ) {
-
-                    Text(
-                        text = "Home Screen",
-                    )
-                }
-            }
-        }
 
         itemsIndexed(
             items = moments,

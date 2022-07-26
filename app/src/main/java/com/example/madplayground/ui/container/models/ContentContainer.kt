@@ -9,6 +9,8 @@ interface ContentContainer {
 
     val state: State
 
+    val currentScreen: Screen
+
     val showTopAppBar: Boolean
 
     val showBottomNavBar: Boolean
@@ -16,8 +18,6 @@ interface ContentContainer {
     val showNavigationRail: Boolean
 
     val showBottomFAB: Boolean
-
-    val currentScreen: Screen
 
     interface Controller : ContentContainer {
 

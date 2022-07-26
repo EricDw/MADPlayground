@@ -25,7 +25,7 @@ class TimelineScreenViewModel(
 
     private val tag = this::class.simpleName
 
-    private val _state = HomeScreenState()
+    private val _state = TimelineScreenState()
 
     override val state: TimelineScreen.State = _state
 

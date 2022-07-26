@@ -4,7 +4,7 @@ import androidx.compose.runtime.*
 import com.example.madplayground.ui.moments.models.MomentUiState
 import com.example.madplayground.ui.screens.TimelineScreen
 
-class HomeScreenState : TimelineScreen.State {
+class TimelineScreenState : TimelineScreen.State {
 
     override val moments: MutableList<MomentUiState> = mutableStateListOf()
 
@@ -13,8 +13,8 @@ class HomeScreenState : TimelineScreen.State {
 }
 
 @Composable
-fun rememberHomeScreenState(
-    initializer: HomeScreenState.() -> Unit = {},
-): HomeScreenState = remember {
-    HomeScreenState().apply(initializer)
+fun rememberTimelineScreenState(
+    initializer: TimelineScreenState.() -> Unit = {},
+): TimelineScreenState = remember {
+    TimelineScreenState().apply(initializer)
 }

@@ -87,7 +87,7 @@ fun ContentContainerTopAppBar(
 
             is SettingsScreen   -> {
 
-                iconAndDescriptionId = iconography.backIcon to R.string.description_go_back
+                iconAndDescriptionId = null
 
                 titleId = R.string.title_settings
 

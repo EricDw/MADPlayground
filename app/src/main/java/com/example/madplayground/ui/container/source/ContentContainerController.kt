@@ -359,12 +359,14 @@ fun ContentContainerController(
                         }
 
                         is TimelineScreen -> {
+                            showTopAppBar = true
                             showBottomNavBar = false
                             showNavigationRail = true
                             showBottomFAB = false
                         }
 
                         is SettingsScreen   -> {
+                            showTopAppBar = true
                             showBottomNavBar = false
                             showNavigationRail = true
                             showBottomFAB = false
@@ -473,7 +475,7 @@ fun ContentContainerController(
 }
 
 private class ContentContainerControllerImpl(
-    private val contentContainerState: ContentContainer.State,
+    contentContainerState: ContentContainer.State,
     override val navHostController: NavHostController,
 ) : ContentContainer.Controller {
 

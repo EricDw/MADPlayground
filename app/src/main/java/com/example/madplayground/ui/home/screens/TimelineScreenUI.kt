@@ -6,7 +6,7 @@ import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.madplayground.ui.home.source.rememberHomeScreenState
+import com.example.madplayground.ui.home.source.rememberTimelineScreenState
 import com.example.madplayground.ui.moments.components.MomentCardList
 import com.example.madplayground.ui.moments.source.MomentUiStateImpl
 import com.example.madplayground.ui.screens.TimelineScreen
@@ -14,7 +14,7 @@ import com.example.madplayground.ui.screens.TimelineScreen
 @Composable
 fun TimelineScreen(
     modifier: Modifier = Modifier,
-    state: TimelineScreen.State = rememberHomeScreenState(),
+    state: TimelineScreen.State = rememberTimelineScreenState(),
 ) {
 
     MomentCardList(
@@ -29,9 +29,9 @@ fun TimelineScreen(
     showSystemUi = true,
 )
 @Composable
-fun HomeScreenPreview() {
+fun TimelineScreenPreview() {
 
-    val state = rememberHomeScreenState {
+    val state = rememberTimelineScreenState {
 
         (0..5).map {
             MomentUiStateImpl(id = "$it", description = "Post $it")
