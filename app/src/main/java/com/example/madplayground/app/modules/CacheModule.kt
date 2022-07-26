@@ -9,19 +9,18 @@ import androidx.room.Room
 import com.example.madplayground.cache.database.MomentsRoomDataBase
 import com.example.madplayground.cache.moments.mapper.MomentCacheMapper
 import com.example.madplayground.cache.moments.models.MomentDao
+import com.example.madplayground.cache.moments.source.LocalMomentDataSourceImpl
 import com.example.madplayground.cache.moments.source.MomentCacheMapperImpl
-import com.example.madplayground.cache.moments.source.MomentsLocalRepositoryImpl
 import com.example.madplayground.cache.settings.models.SettingsCache
 import com.example.madplayground.cache.settings.source.SettingsCacheImpl
-import com.example.madplayground.data.moments.models.MomentsLocalRepository
+import com.example.madplayground.data.moments.models.LocalMomentDataSource
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
 import javax.inject.Singleton
 
 @Module
@@ -58,14 +57,17 @@ object CacheModule {
     @Singleton
     fun provideSettingsCache(
         dataStore: DataStore<Preferences>,
+        @IODispatcher
+        ioDispatcher: CoroutineDispatcher,
     ): SettingsCache {
 
-        val ioScope = CoroutineScope(Dispatchers.IO + SupervisorJob())
+        val ioScope = CoroutineScope(ioDispatcher)
 
         return SettingsCacheImpl(
             scope = ioScope,
             dataStore = dataStore,
         )
+
     }
 
     @Provides
@@ -86,9 +88,9 @@ object CacheModule {
     fun provideLocalMomentsCache(
         dao: MomentDao,
         mapper: MomentCacheMapper,
-    ): MomentsLocalRepository {
+    ): LocalMomentDataSource {
 
-        return MomentsLocalRepositoryImpl(
+        return LocalMomentDataSourceImpl(
             dao = dao,
             mapper = mapper
         )

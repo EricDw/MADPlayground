@@ -2,40 +2,37 @@ package com.example.madplayground.cache.moments.source
 
 import com.example.madplayground.cache.moments.mapper.MomentCacheMapper
 import com.example.madplayground.cache.moments.models.MomentEntity
-import com.example.madplayground.domain.moments.models.Moment
-import kotlinx.datetime.LocalDate
-import kotlinx.datetime.LocalDateTime
-import kotlinx.datetime.LocalTime
-import java.util.*
+import com.example.madplayground.data.moments.models.MomentData
+import com.example.madplayground.data.moments.source.MomentDataImpl
 
 class MomentCacheMapperImpl : MomentCacheMapper {
 
     override fun mapToEntity(
-        moment: Moment,
+        moment: MomentData,
     ): MomentEntity {
 
         return with(moment) {
             MomentEntity(
-                uid = id.value.toString(),
-                created_date_time = createdDateTime.toString(),
+                uid = id,
+                created_date_time = createdDateTime,
                 description = description,
-                date = date?.toString(),
-                time = time?.toString(),
+                date = date,
+                time = time,
             )
         }
 
     }
 
-    override fun mapToDomain(
+    override fun mapToData(
         entity: MomentEntity,
-    ): Moment {
+    ): MomentData {
         return with(entity) {
-            MomentReadModel(
-                id = Moment.Id(value = UUID.fromString(uid)),
-                createdDateTime = LocalDateTime.parse(created_date_time),
+            MomentDataImpl(
+                id = uid,
+                createdDateTime = created_date_time,
                 description = description,
-                date = date?.let(LocalDate::parse),
-                time = time?.let(LocalTime::parse),
+                date = date,
+                time = time,
             )
         }
     }

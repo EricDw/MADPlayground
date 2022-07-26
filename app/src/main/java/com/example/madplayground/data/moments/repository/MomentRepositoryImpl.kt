@@ -1,34 +1,41 @@
 package com.example.madplayground.data.moments.repository
 
-import com.example.madplayground.data.moments.models.MomentsLocalRepository
+import com.example.madplayground.data.moments.mapper.MomentDataMapper
+import com.example.madplayground.data.moments.models.LocalMomentDataSource
 import com.example.madplayground.domain.moments.models.Moment
 import com.example.madplayground.domain.moments.repository.MomentRepository
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 
 class MomentRepositoryImpl(
-    private val localRepository: MomentsLocalRepository
+    private val localMomentDataSource: LocalMomentDataSource,
+    private val mapper: MomentDataMapper,
 ) : MomentRepository {
 
     override suspend fun addMoment(
-        moment: Moment
+        moment: Moment,
     ) {
-       localRepository.addMoment(
-           moment
-       )
+        localMomentDataSource.addMomentData(
+            mapper.mapToData(moment = moment)
+        )
     }
 
     override suspend fun retrieveMomentById(
-        id: Moment.Id
+        id: Moment.Id,
     ): Moment? {
-        return localRepository.retrieveMomentById(id = id)
+        return localMomentDataSource.retrieveMomentDataById(
+            id = id.value.toString()
+        )?.let(mapper::mapToDomain)
     }
 
     override suspend fun retrieveAllMoments(): List<Moment> {
-        return localRepository.retrieveAllMoments()
+        return localMomentDataSource.retrieveAllMomentData().map(mapper::mapToDomain)
     }
 
     override suspend fun retrieveAllMomentsFlow(): Flow<List<Moment>> {
-        return localRepository.retrieveAllMomentsFlow()
+        return localMomentDataSource.retrieveAllMomentDataFlow().map {
+            it.map(mapper::mapToDomain)
+        }
     }
 
 }

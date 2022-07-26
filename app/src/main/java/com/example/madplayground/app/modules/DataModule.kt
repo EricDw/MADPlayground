@@ -1,6 +1,8 @@
 package com.example.madplayground.app.modules
 
-import com.example.madplayground.data.moments.models.MomentsLocalRepository
+import com.example.madplayground.data.moments.mapper.MomentDataMapper
+import com.example.madplayground.data.moments.mapper.MomentDataMapperImpl
+import com.example.madplayground.data.moments.models.LocalMomentDataSource
 import com.example.madplayground.data.moments.repository.MomentRepositoryImpl
 import com.example.madplayground.domain.moments.repository.MomentRepository
 import dagger.Module
@@ -14,12 +16,19 @@ import javax.inject.Singleton
 object DataModule {
 
     @Provides
+    fun provideMomentsDataMapper(): MomentDataMapper {
+        return MomentDataMapperImpl()
+    }
+
+    @Provides
     @Singleton
     fun provideMomentsRepository(
-        localRepository: MomentsLocalRepository
+        localMomentDataSource: LocalMomentDataSource,
+        mapper: MomentDataMapper,
     ): MomentRepository {
         return MomentRepositoryImpl(
-            localRepository = localRepository
+            localMomentDataSource = localMomentDataSource,
+            mapper = mapper
         )
     }
 

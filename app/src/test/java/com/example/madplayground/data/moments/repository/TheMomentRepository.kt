@@ -2,7 +2,7 @@ package com.example.madplayground.data.moments.repository
 
 import com.example.madplayground.cache.moments.fakes.FakeMomentDao
 import com.example.madplayground.cache.moments.source.MomentCacheMapperImpl
-import com.example.madplayground.cache.moments.source.MomentsLocalRepositoryImpl
+import com.example.madplayground.cache.moments.source.LocalMomentDataSourceImpl
 import com.example.madplayground.data.moments.fakes.FakeMoment
 import com.example.madplayground.domain.moments.models.Moment
 import com.example.madplayground.domain.moments.repository.MomentRepository
@@ -23,7 +23,7 @@ class TheMomentRepository {
 
         val dao = FakeMomentDao()
 
-        val cache = MomentsLocalRepositoryImpl(
+        val cache = LocalMomentDataSourceImpl(
             mapper = MomentCacheMapperImpl(),
             dao = dao
         )

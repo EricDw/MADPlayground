@@ -1,4 +1,4 @@
-package com.example.madplayground.cache.moments.source
+package com.example.madplayground.domain.moments.source
 
 import com.example.madplayground.domain.moments.models.Moment
 import kotlinx.datetime.LocalDate
