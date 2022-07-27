@@ -6,7 +6,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.madplayground.R
-import com.example.madplayground.ui.screens.MomentFormScreen
+import com.example.madplayground.ui.moments.models.MomentFormScreen
 import com.example.madplayground.ui.theme.models.LocalIconography
 import kotlinx.coroutines.launch
 

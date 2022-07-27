@@ -1,22 +1,31 @@
 package com.example.madplayground.ui.settings.source
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.madplayground.R
+import com.example.madplayground.ui.config.LocalWindowConfiguration
+import com.example.madplayground.ui.config.WindowWidthType
 import com.example.madplayground.ui.container.models.ContentContainer
-import com.example.madplayground.ui.container.util.navigateToGraph
-import com.example.madplayground.ui.screens.SettingsScreen
+import com.example.madplayground.ui.settings.models.SettingsScreen
+import com.example.madplayground.ui.theme.models.LocalIconography
 
 @Composable
-fun SettingsScreenController(
-    contentContainer: ContentContainer.Controller,
+fun ContentContainer.Controller.SettingsScreenController(
     modifier: Modifier = Modifier,
     settingsScreenViewModel: SettingsScreen.ViewModel = hiltViewModel<AndroidSettingsScreenViewModel>(),
 ) {
 
     val state = settingsScreenViewModel.state
+
+    val windowConfiguration = LocalWindowConfiguration.current
 
     val settingsScreenEventHandler: (SettingsScreen.Event) -> Unit = { theEvent ->
 
@@ -55,45 +64,7 @@ fun SettingsScreenController(
             }
 
             SettingsScreen.Event.BackClicked            -> {
-                contentContainer.navHostController.popBackStack()
-            }
-
-        }
-
-    }
-
-    val screenInterface = remember {
-
-        object : SettingsScreen {
-
-            override fun onEvent(event: ContentContainer.Event) {
-
-                when (event) {
-
-                    ContentContainer.Event.FABClicked              -> {
-                        TODO()
-                    }
-
-                    ContentContainer.Event.TimelineTabClicked      -> {
-                        contentContainer.navHostController.navigateToGraph(
-                            ContentContainer.HOME_GRAPH_ROUTE
-                        )
-                    }
-
-                    ContentContainer.Event.NavigationButtonClicked -> {
-                        contentContainer.navHostController.popBackStack()
-                    }
-
-                    ContentContainer.Event.SettingsTabClicked      -> {
-                        /* no-op */
-                    }
-
-                }
-
-            }
-
-            override fun onEvent(event: SettingsScreen.Event) {
-                settingsScreenEventHandler(event)
+                navHostController.popBackStack()
             }
 
         }
@@ -106,8 +77,52 @@ fun SettingsScreenController(
         eventHandler = settingsScreenEventHandler,
     )
 
-    LaunchedEffect(key1 = screenInterface) {
-        contentContainer.currentScreen = screenInterface
+    LaunchedEffect(key1 = windowConfiguration) {
+
+        titleId = R.string.title_settings
+
+        topAppBarIcon = {
+            AnimatedVisibility(
+                visible = true,
+                enter = slideInHorizontally(),
+                exit = slideOutHorizontally()
+            ) {
+                IconButton(onClick = { navHostController.popBackStack() }) {
+                    Icon(
+                        imageVector = LocalIconography.current.backIcon,
+                        contentDescription = stringResource(id = R.string.description_go_back)
+                    )
+                }
+            }
+        }
+
+        showTopAppBar = windowConfiguration.windowWidthType != WindowWidthType.COMPACT
+
+        showNavigationRail = windowConfiguration.windowWidthType != WindowWidthType.COMPACT
+
+        showBottomNavBar = windowConfiguration.windowWidthType == WindowWidthType.COMPACT
+
+        showBottomFAB = false
+
+        isTimelineSelected = false
+
+        isSettingsSelected = true
+
+        railHeader = {
+
+            IconButton(
+                onClick = { navHostController.popBackStack() }
+            ) {
+                Icon(
+                    imageVector = LocalIconography.current.backIcon,
+                    contentDescription = stringResource(
+                        id = R.string.description_go_back
+                    )
+                )
+            }
+
+        }
+
     }
 
 }

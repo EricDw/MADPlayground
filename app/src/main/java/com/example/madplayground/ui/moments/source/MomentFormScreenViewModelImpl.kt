@@ -3,8 +3,8 @@ package com.example.madplayground.ui.moments.source
 import com.example.madplayground.common.logs.models.Logs
 import com.example.madplayground.domain.moments.source.buildCreateMomentForm
 import com.example.madplayground.domain.moments.usecases.CreateMomentUseCase
-import com.example.madplayground.ui.screens.MomentFormScreen
-import com.example.madplayground.ui.screens.MomentFormScreen.ViewModel.Command
+import com.example.madplayground.ui.moments.models.MomentFormScreen
+import com.example.madplayground.ui.moments.models.MomentFormScreen.ViewModel.Command
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob

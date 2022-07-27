@@ -1,18 +1,15 @@
-package com.example.madplayground.ui.screens
+package com.example.madplayground.ui.moments.models
 
 import androidx.compose.material.BackdropScaffoldState
 import androidx.compose.material.ExperimentalMaterialApi
-import com.example.madplayground.ui.moments.models.MomentFormUiState
 import kotlinx.coroutines.CoroutineScope
 
 @OptIn(ExperimentalMaterialApi::class)
-interface MomentFormScreen : Screen {
+interface MomentFormScreen {
 
     val scope: CoroutineScope
 
     val scaffoldState: BackdropScaffoldState
-
-    fun onEvent(event: Event)
 
     sealed interface Event {
 

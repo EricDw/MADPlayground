@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.madplayground.common.logs.models.Logs
 import com.example.madplayground.domain.moments.usecases.CreateMomentUseCase
-import com.example.madplayground.ui.screens.MomentFormScreen
+import com.example.madplayground.ui.moments.models.MomentFormScreen
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

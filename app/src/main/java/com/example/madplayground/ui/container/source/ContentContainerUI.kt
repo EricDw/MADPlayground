@@ -17,13 +17,12 @@ import com.example.madplayground.ui.container.components.ContentContainerTopAppB
 import com.example.madplayground.ui.container.models.ContentContainer
 
 @Composable
-fun ContentContainer(
-    contentContainer: ContentContainer.Controller,
+fun ContentContainer.Controller.ContentContainer(
     modifier: Modifier = Modifier,
     content: @Composable (scaffoldPadding: PaddingValues) -> Unit,
 ) {
 
-    val state = contentContainer.state
+    val state = state
 
     val themeType by state.themeType.collectAsState()
 
@@ -76,16 +75,12 @@ fun ContentContainer(
             modifier = modifier,
             topBar = {
 
-                ContentContainerTopAppBar(
-                    contentContainer = contentContainer
-                )
+                ContentContainerTopAppBar()
 
             },
             bottomBar = {
 
-                ContentContainerBottomNavBar(
-                    contentContainer = contentContainer
-                )
+                ContentContainerBottomNavBar()
 
             },
             snackbarHost = { _ ->
@@ -93,10 +88,7 @@ fun ContentContainer(
             },
             floatingActionButton = {
 
-                ContentContainerFloatingActionButton(
-                    contentContainer = contentContainer,
-                    isVisible = contentContainer.showBottomFAB
-                )
+                ContentContainerFloatingActionButton()
 
             },
             drawerContent = null,
@@ -108,7 +100,6 @@ fun ContentContainer(
             ) {
 
                 ContentContainerNavigationRail(
-                    contentContainer = contentContainer,
                     navigationLabelVisibility = navigationLabelVisibility
                 )
 

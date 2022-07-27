@@ -4,9 +4,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.madplayground.common.logs.models.Logs
 import com.example.madplayground.domain.settings.usecases.*
-import com.example.madplayground.ui.screens.SettingsScreen
-import com.example.madplayground.ui.screens.SettingsScreen.State
-import com.example.madplayground.ui.screens.SettingsScreen.ViewModel.Command
+import com.example.madplayground.ui.settings.models.SettingsScreen
+import com.example.madplayground.ui.settings.models.SettingsScreen.State
+import com.example.madplayground.ui.settings.models.SettingsScreen.ViewModel.Command
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

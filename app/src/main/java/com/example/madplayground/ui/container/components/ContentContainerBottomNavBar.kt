@@ -15,28 +15,19 @@ import androidx.compose.ui.res.stringResource
 import com.example.madplayground.R
 import com.example.madplayground.domain.settings.models.Settings
 import com.example.madplayground.ui.container.models.ContentContainer
-import com.example.madplayground.ui.screens.SettingsScreen
-import com.example.madplayground.ui.screens.TimelineScreen
 import com.example.madplayground.ui.theme.models.LocalIconography
 
 @Composable
-fun ContentContainerBottomNavBar(
-    contentContainer: ContentContainer,
+fun ContentContainer.ContentContainerBottomNavBar(
     modifier: Modifier = Modifier,
 ) {
 
-    val screen = contentContainer.currentScreen
-
-    val navigationLabelVisibility by contentContainer.state.navigationLabelVisibility.collectAsState()
+    val navigationLabelVisibility by state.navigationLabelVisibility.collectAsState()
 
     val alwaysShowLabel = navigationLabelVisibility == Settings.NavigationLabelVisibility.ALWAYS
 
-    val isTimelineSelected = screen is TimelineScreen
-
-    val isSettingsSelected = screen is SettingsScreen
-
     AnimatedVisibility(
-        contentContainer.showBottomNavBar,
+        showBottomNavBar,
         enter = slideInVertically(initialOffsetY = { it }),
         exit = slideOutVertically(targetOffsetY = { it })
     ) {
@@ -47,11 +38,7 @@ fun ContentContainerBottomNavBar(
 
             BottomNavigationItem(
                 selected = isTimelineSelected,
-                onClick = {
-                    screen.onEvent(
-                        ContentContainer.Event.TimelineTabClicked
-                    )
-                },
+                onClick = onTimelineClick,
                 icon = {
                     Icon(
                         imageVector = LocalIconography.current.timelineIcon,
@@ -72,11 +59,7 @@ fun ContentContainerBottomNavBar(
 
             BottomNavigationItem(
                 selected = isSettingsSelected,
-                onClick = {
-                    screen.onEvent(
-                        ContentContainer.Event.SettingsTabClicked
-                    )
-                },
+                onClick = onSettingClick,
                 icon = {
                     Icon(
                         imageVector = LocalIconography.current.settingsIcon,

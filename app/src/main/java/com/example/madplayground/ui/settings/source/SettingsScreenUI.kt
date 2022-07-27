@@ -15,7 +15,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.madplayground.R
 import com.example.madplayground.domain.settings.models.Settings
-import com.example.madplayground.ui.screens.SettingsScreen
+import com.example.madplayground.ui.settings.models.SettingsScreen
 
 @Composable
 fun SettingsScreen(

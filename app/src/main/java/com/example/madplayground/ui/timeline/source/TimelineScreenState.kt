@@ -1,8 +1,8 @@
-package com.example.madplayground.ui.home.source
+package com.example.madplayground.ui.timeline.source
 
 import androidx.compose.runtime.*
 import com.example.madplayground.ui.moments.models.MomentUiState
-import com.example.madplayground.ui.screens.TimelineScreen
+import com.example.madplayground.ui.timeline.models.TimelineScreen
 
 class TimelineScreenState : TimelineScreen.State {
 

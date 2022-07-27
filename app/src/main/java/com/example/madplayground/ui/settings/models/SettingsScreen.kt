@@ -1,11 +1,9 @@
-package com.example.madplayground.ui.screens
+package com.example.madplayground.ui.settings.models
 
 import com.example.madplayground.domain.settings.models.Settings
 import kotlinx.coroutines.flow.StateFlow
 
-interface SettingsScreen: Screen {
-
-    fun onEvent(event: Event)
+interface SettingsScreen {
 
     sealed interface Event {
 

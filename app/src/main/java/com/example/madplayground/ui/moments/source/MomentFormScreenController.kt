@@ -1,29 +1,29 @@
 package com.example.madplayground.ui.moments.screens.controller
 
-import androidx.compose.material.BackdropScaffoldState
 import androidx.compose.material.BackdropValue
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.rememberBackdropScaffoldState
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.madplayground.ui.config.LocalWindowConfiguration
 import com.example.madplayground.ui.container.models.ContentContainer
 import com.example.madplayground.ui.moments.screens.MomentFormScreen
 import com.example.madplayground.ui.moments.source.AndroidMomentFormScreenViewModel
-import com.example.madplayground.ui.screens.MomentFormScreen
-import kotlinx.coroutines.CoroutineScope
+import com.example.madplayground.ui.moments.models.MomentFormScreen
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun MomentFormScreenController(
-    container: ContentContainer.Controller,
+fun ContentContainer.Controller.MomentFormScreenController(
     modifier: Modifier = Modifier,
     viewModel: MomentFormScreen.ViewModel = hiltViewModel<AndroidMomentFormScreenViewModel>(),
 ) {
 
+    val windowConfiguration = LocalWindowConfiguration.current
+
     val scope = rememberCoroutineScope()
 
-    val navController = container.navHostController
+    val navController = navHostController
 
     val state = viewModel.state
 
@@ -36,35 +36,6 @@ fun MomentFormScreenController(
     }
 
     val submitted by state.submitted.collectAsState()
-
-    val containerEventHandler: (ContentContainer.Event) -> Unit = { event: ContentContainer.Event ->
-
-        when (event) {
-
-            ContentContainer.Event.FABClicked              -> {
-                TODO()
-            }
-
-            ContentContainer.Event.TimelineTabClicked -> {
-                TODO()
-            }
-
-            ContentContainer.Event.NavigationButtonClicked -> {
-                if (state.isEmpty) {
-                    showDiscardChangesDialog = false
-                    navController.popBackStack()
-                } else {
-                    showDiscardChangesDialog = true
-                }
-            }
-
-            ContentContainer.Event.SettingsTabClicked      -> {
-                TODO()
-            }
-
-        }
-
-    }
 
     val screenEventHandler: (MomentFormScreen.Event) -> Unit = { event: MomentFormScreen.Event ->
 
@@ -130,14 +101,15 @@ fun MomentFormScreenController(
 
     }
 
-    LaunchedEffect(key1 = Unit) {
+    LaunchedEffect(key1 = windowConfiguration) {
 
-        container.currentScreen = MomentFormScreenImpl(
-            scope = scope,
-            scaffoldState = scaffoldState,
-            containerEventHandler = containerEventHandler,
-            screenEventHandler = screenEventHandler,
-        )
+        showTopAppBar = false
+
+        showBottomFAB = false
+
+        showBottomNavBar = false
+
+        showNavigationRail = false
 
     }
 
@@ -154,21 +126,5 @@ fun MomentFormScreenController(
             navController.popBackStack()
         }
     }
-
-}
-
-@OptIn(ExperimentalMaterialApi::class)
-private class MomentFormScreenImpl(
-    override val scope: CoroutineScope,
-    override val scaffoldState: BackdropScaffoldState,
-    private val containerEventHandler: (ContentContainer.Event) -> Unit,
-    private val screenEventHandler: (MomentFormScreen.Event) -> Unit,
-) : MomentFormScreen {
-
-    override fun onEvent(event: ContentContainer.Event) =
-        containerEventHandler(event)
-
-    override fun onEvent(event: MomentFormScreen.Event) =
-        screenEventHandler(event)
 
 }

@@ -1,8 +1,8 @@
-package com.example.madplayground.ui.screens
+package com.example.madplayground.ui.timeline.models
 
 import com.example.madplayground.ui.moments.models.MomentUiState
 
-interface TimelineScreen : Screen {
+interface TimelineScreen {
 
     interface State {
 

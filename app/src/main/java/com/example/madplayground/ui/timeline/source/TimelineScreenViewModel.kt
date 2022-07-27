@@ -1,9 +1,9 @@
-package com.example.madplayground.ui.home.source
+package com.example.madplayground.ui.timeline.source
 
 import com.example.madplayground.common.logs.models.Logs
 import com.example.madplayground.domain.moments.usecases.RetrieveAllMomentUseCase
 import com.example.madplayground.ui.moments.mapper.MomentUIMapper
-import com.example.madplayground.ui.screens.TimelineScreen
+import com.example.madplayground.ui.timeline.models.TimelineScreen
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
