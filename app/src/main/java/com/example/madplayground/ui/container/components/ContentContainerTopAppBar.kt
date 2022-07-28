@@ -3,8 +3,9 @@ package com.example.madplayground.ui.container.components
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInVertically
-import androidx.compose.material.Text
-import androidx.compose.material.TopAppBar
+import androidx.compose.material3.Text
+import androidx.compose.material3.MediumTopAppBar
+import androidx.compose.material3.SmallTopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -25,9 +26,9 @@ fun ContentContainer.ContentContainerTopAppBar(
         exit = fadeOut()
     ) {
 
-        TopAppBar(
+        SmallTopAppBar(
             modifier = modifier,
-            navigationIcon = navIcon,
+            navigationIcon = { navIcon?.invoke() },
             title = {
                 titleId?.let { titleId ->
                     Text(text = stringResource(id = titleId))

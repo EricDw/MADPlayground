@@ -1,18 +1,12 @@
 package com.example.madplayground.ui.moments.source
 
-import androidx.compose.material.BackdropValue
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.rememberBackdropScaffoldState
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.madplayground.ui.config.LocalWindowConfiguration
 import com.example.madplayground.ui.container.models.ContentContainer
-import com.example.madplayground.ui.moments.source.MomentFormScreen
-import com.example.madplayground.ui.moments.source.AndroidMomentFormScreenViewModel
 import com.example.madplayground.ui.moments.models.MomentFormScreen
 
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun ContentContainer.Controller.MomentFormScreenController(
     modifier: Modifier = Modifier,

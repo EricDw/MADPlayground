@@ -2,17 +2,21 @@ package com.example.madplayground.ui.theme.models
 
 import androidx.compose.foundation.shape.CutCornerShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Shapes
+import androidx.compose.material3.Shapes
 import androidx.compose.ui.unit.dp
 
 val RoundedShapes = Shapes(
-    small = RoundedCornerShape(4.dp),
-    medium = RoundedCornerShape(4.dp),
-    large = RoundedCornerShape(0.dp)
+    extraSmall = RoundedCornerShape(4.dp),
+    small = RoundedCornerShape(8.dp),
+    medium = RoundedCornerShape(12.dp),
+    large = RoundedCornerShape(16.dp),
+    extraLarge = RoundedCornerShape(28.dp)
 )
 
 val CutShapes = Shapes(
-    small = CutCornerShape(4.dp),
-    medium = CutCornerShape(4.dp),
-    large = CutCornerShape(0.dp)
+    extraSmall = CutCornerShape(4.dp),
+    small = CutCornerShape(8.dp),
+    medium = CutCornerShape(12.dp),
+    large = CutCornerShape(16.dp),
+    extraLarge = CutCornerShape(28.dp)
 )

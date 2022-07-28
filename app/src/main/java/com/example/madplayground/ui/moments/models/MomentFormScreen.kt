@@ -1,39 +1,30 @@
 package com.example.madplayground.ui.moments.models
 
-import androidx.compose.material.BackdropScaffoldState
-import androidx.compose.material.ExperimentalMaterialApi
-import kotlinx.coroutines.CoroutineScope
-
-@OptIn(ExperimentalMaterialApi::class)
 interface MomentFormScreen {
-
-    val scope: CoroutineScope
-
-    val scaffoldState: BackdropScaffoldState
 
     sealed interface Event {
 
         data class ContentChanged(
-            val newContent: String
-        ): Event
+            val newContent: String,
+        ) : Event
 
         data class DateChanged(
-            val newDate: String
-        ): Event
+            val newDate: String,
+        ) : Event
 
         data class TimeChanged(
-            val newTime: String
-        ): Event
+            val newTime: String,
+        ) : Event
 
-        object CancelClicked: Event
+        object CancelClicked : Event
 
-        object SaveClicked: Event
+        object SaveClicked : Event
 
-        object DismissDialogRequested: Event
+        object DismissDialogRequested : Event
 
-        object DiscardChangesClicked: Event
+        object DiscardChangesClicked : Event
 
-        object BackClicked: Event
+        object BackClicked : Event
 
     }
 
@@ -46,18 +37,18 @@ interface MomentFormScreen {
         sealed interface Command {
 
             data class ChangeContent(
-                val newContent: String
-            ): Command
+                val newContent: String,
+            ) : Command
 
             data class ChangeDate(
-                val newDate: String
-            ): Command
+                val newDate: String,
+            ) : Command
 
             data class ChangeTime(
-                val newTime: String
-            ): Command
+                val newTime: String,
+            ) : Command
 
-            object SubmitForm: Command
+            object SubmitForm : Command
 
         }
 

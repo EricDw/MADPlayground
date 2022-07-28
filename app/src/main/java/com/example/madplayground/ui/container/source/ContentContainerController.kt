@@ -4,7 +4,7 @@ import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.*
+import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -22,6 +22,7 @@ import com.example.madplayground.ui.settings.source.SettingsScreenController
 import com.example.madplayground.ui.timeline.models.TimelineScreen
 import com.example.madplayground.ui.timeline.source.TimelineScreenController
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ContentContainerController(
     contentContainerViewModel: ContentContainer.ViewModel = hiltViewModel<AndroidContentContainerViewModel>(),
@@ -29,19 +30,19 @@ fun ContentContainerController(
 
     val navHostController: NavHostController = rememberNavController()
 
-    val scaffoldState = rememberScaffoldState()
+    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
 
     val controllerScope = remember {
         ContentContainerControllerImpl(
             state = contentContainerViewModel.state,
+            drawerState = drawerState,
             navHostController = navHostController,
-            containerScaffoldState = scaffoldState
         )
     }
 
     controllerScope.ContentContainer(
         modifier = Modifier.fillMaxSize(),
-        scaffoldState = scaffoldState
+        drawerState = drawerState,
     ) { rootPadding ->
 
         val screenModifier = Modifier
@@ -95,10 +96,11 @@ fun ContentContainerController(
 
 }
 
+@ExperimentalMaterial3Api
 private class ContentContainerControllerImpl(
     override val state: ContentContainer.State,
+    override val drawerState: DrawerState,
     override val navHostController: NavHostController,
-    override val containerScaffoldState: ScaffoldState,
 ) : ContentContainer.Controller {
 
     override var showTopAppBar: Boolean by mutableStateOf(false)
@@ -111,7 +113,7 @@ private class ContentContainerControllerImpl(
 
     override var drawerGesturesEnabled: Boolean = false
 
-    override var drawerContent: (@Composable ColumnScope.() -> Unit)? by mutableStateOf(null)
+    override var drawerContent: @Composable ColumnScope.() -> Unit by mutableStateOf({})
 
     override var showBottomNavBar: Boolean by mutableStateOf(false)
 
@@ -144,14 +146,6 @@ private class ContentContainerControllerImpl(
 
     override var fabPosition: FabPosition by mutableStateOf(FabPosition.End)
 
-    override var dockFab: Boolean by mutableStateOf(false)
-
-    override var snackbarHost: @Composable (SnackbarHostState) -> Unit by mutableStateOf(
-        { hostState ->
-            SnackbarHost(
-                hostState = hostState
-            )
-        }
-    )
+    override var snackbarHost: @Composable () -> Unit by mutableStateOf({})
 
 }

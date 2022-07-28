@@ -3,10 +3,10 @@ package com.example.madplayground.ui.container.components
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
-import androidx.compose.material.BottomNavigation
-import androidx.compose.material.BottomNavigationItem
-import androidx.compose.material.Icon
-import androidx.compose.material.Text
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.Icon
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -32,11 +32,11 @@ fun ContentContainer.ContentContainerBottomNavBar(
         exit = slideOutVertically(targetOffsetY = { it })
     ) {
 
-        BottomNavigation(
+        NavigationBar(
             modifier = modifier,
         ) {
 
-            BottomNavigationItem(
+            NavigationBarItem(
                 selected = isTimelineSelected,
                 onClick = onTimelineClick,
                 icon = {
@@ -57,7 +57,7 @@ fun ContentContainer.ContentContainerBottomNavBar(
                 alwaysShowLabel = alwaysShowLabel
             )
 
-            BottomNavigationItem(
+            NavigationBarItem(
                 selected = isSettingsSelected,
                 onClick = onSettingClick,
                 icon = {

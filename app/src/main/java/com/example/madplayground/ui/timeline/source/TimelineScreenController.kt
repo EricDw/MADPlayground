@@ -1,11 +1,13 @@
 package com.example.madplayground.ui.timeline.source
 
-import androidx.compose.material.*
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.madplayground.R
 import com.example.madplayground.ui.config.CombinedWindowType
@@ -17,6 +19,7 @@ import com.example.madplayground.ui.theme.models.LocalIconography
 import com.example.madplayground.ui.timeline.models.TimelineScreen
 import kotlinx.coroutines.launch
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ContentContainer.Controller.TimelineScreenController(
     modifier: Modifier = Modifier,
@@ -30,7 +33,7 @@ fun ContentContainer.Controller.TimelineScreenController(
     val windowConfiguration = LocalWindowConfiguration.current
 
     TimelineScreen(
-        modifier = modifier,
+        modifier = modifier.padding(top = 64.dp),
         state = state
     )
 
@@ -39,8 +42,6 @@ fun ContentContainer.Controller.TimelineScreenController(
         titleId = R.string.title_timeline
 
         fabPosition = FabPosition.Center
-
-        dockFab = true
 
         floatingActionButton = {
 
@@ -60,15 +61,9 @@ fun ContentContainer.Controller.TimelineScreenController(
 
         }
 
-        showFab = windowConfiguration.windowWidthType == WindowWidthType.COMPACT
-
-        showNavigationRail = windowConfiguration.windowWidthType != WindowWidthType.COMPACT
-
-        showBottomNavBar = windowConfiguration.windowWidthType == WindowWidthType.COMPACT
-
         railHeader = {
 
-            FloatingActionButton(
+            SmallFloatingActionButton(
                 onClick = { navHostController.navigate(MomentFormScreen.ROUTE) }
             ) {
                 Icon(
@@ -80,6 +75,12 @@ fun ContentContainer.Controller.TimelineScreenController(
 
         }
 
+        showNavigationRail = windowConfiguration.windowWidthType != WindowWidthType.COMPACT
+
+        showBottomNavBar = !showNavigationRail
+
+        showFab = !showNavigationRail
+
         if (windowConfiguration.combinedWindowType == CombinedWindowType.COMPACT_WIDTH_COMPACT_HEIGHT) {
 
             showTopAppBar = true
@@ -89,8 +90,8 @@ fun ContentContainer.Controller.TimelineScreenController(
             navigationIcon = {
                 IconButton(onClick = {
                     scope.launch {
-                        if (containerScaffoldState.drawerState.isClosed) {
-                            containerScaffoldState.drawerState.open()
+                        if (drawerState.isClosed) {
+                            drawerState.open()
                         }
                     }
                 }) {

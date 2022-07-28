@@ -2,14 +2,15 @@ package com.example.madplayground.ui.container.models
 
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.RowScope
-import androidx.compose.material.FabPosition
-import androidx.compose.material.ScaffoldState
-import androidx.compose.material.SnackbarHostState
+import androidx.compose.material3.DrawerState
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FabPosition
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import com.example.madplayground.domain.settings.models.Settings
 import kotlinx.coroutines.flow.StateFlow
 
+@OptIn(ExperimentalMaterial3Api::class)
 interface ContentContainer {
 
     val state: State
@@ -24,7 +25,7 @@ interface ContentContainer {
 
     val drawerGesturesEnabled: Boolean
 
-    val drawerContent: (@Composable ColumnScope.() -> Unit)?
+    val drawerContent: @Composable ColumnScope.() -> Unit
 
     val showBottomNavBar: Boolean
 
@@ -38,7 +39,7 @@ interface ContentContainer {
 
     val showNavigationRail: Boolean
 
-    val railHeader: (@Composable ColumnScope.() -> Unit)?
+    val railHeader: @Composable (ColumnScope.() -> Unit)?
 
     val showFab: Boolean
 
@@ -46,15 +47,13 @@ interface ContentContainer {
 
     val fabPosition: FabPosition
 
-    val dockFab: Boolean
-
-    val snackbarHost: @Composable (SnackbarHostState) -> Unit
+    val snackbarHost: @Composable () -> Unit
 
     interface Controller : ContentContainer {
 
-        val containerScaffoldState: ScaffoldState
-
         val navHostController: NavHostController
+
+        val drawerState: DrawerState
 
         override var showTopAppBar: Boolean
 
@@ -64,7 +63,7 @@ interface ContentContainer {
 
         override var drawerGesturesEnabled: Boolean
 
-        override var drawerContent: (@Composable ColumnScope.() -> Unit)?
+        override var drawerContent: @Composable ColumnScope.() -> Unit
 
         override var titleId: Int?
 
@@ -86,11 +85,9 @@ interface ContentContainer {
 
         override var fabPosition: FabPosition
 
-        override var dockFab: Boolean
-
         override var floatingActionButton: @Composable () -> Unit
 
-        override var snackbarHost: @Composable (SnackbarHostState) -> Unit
+        override var snackbarHost: @Composable () -> Unit
 
     }
 

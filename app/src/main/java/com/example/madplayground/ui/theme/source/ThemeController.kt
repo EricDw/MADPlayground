@@ -1,34 +1,17 @@
-package com.example.madplayground.features.theme
+package com.example.madplayground.ui.theme.source
 
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.darkColors
-import androidx.compose.material.lightColors
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.darkColorScheme
+import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import com.example.madplayground.domain.settings.models.Settings
 import com.example.madplayground.ui.theme.models.*
 
-private val DarkColorPalette = darkColors(
-    primary = Purple200,
-    primaryVariant = Purple700,
-    secondary = Teal200
-)
+private val DarkColorScheme = darkColorScheme()
 
-private val LightColorPalette = lightColors(
-    primary = Purple500,
-    primaryVariant = Purple700,
-    secondary = Teal200
-
-    /* Other default colors to override
-    background = Color.White,
-    surface = Color.White,
-    onPrimary = Color.White,
-    onSecondary = Color.Black,
-    onBackground = Color.Black,
-    onSurface = Color.Black,
-    */
-)
+private val LightColorScheme = lightColorScheme()
 
 @Composable
 fun ThemeController(
@@ -38,18 +21,18 @@ fun ThemeController(
     content: @Composable () -> Unit,
 ) {
 
-    val colors = when (themeType) {
+    val colorScheme = when (themeType) {
         Settings.ThemeType.LIGHT  -> {
-            LightColorPalette
+            LightColorScheme
         }
         Settings.ThemeType.DARK   -> {
-            DarkColorPalette
+            DarkColorScheme
         }
         Settings.ThemeType.SYSTEM -> {
             if (isSystemInDarkTheme()) {
-                DarkColorPalette
+                DarkColorScheme
             } else {
-                LightColorPalette
+                LightColorScheme
             }
         }
     }
@@ -91,8 +74,8 @@ fun ThemeController(
         LocalIconography provides iconography
     ) {
         MaterialTheme(
-            colors = colors,
-            typography = com.example.madplayground.ui.theme.models.Typography,
+            colorScheme = colorScheme,
+            typography = Typography,
             shapes = shapes,
             content = content
         )
