@@ -31,11 +31,13 @@
         <entry key="app/src/main/java/com/example/madplayground/ui/moments/components/MomentCardUI.kt" value="0.27870370370370373" />
         <entry key="app/src/main/java/com/example/madplayground/ui/moments/screens/MomentFormScreenUI.kt" value="0.1883445945945946" />
         <entry key="app/src/main/java/com/example/madplayground/ui/moments/screens/QuoteFormScreenUI.kt" value="0.22685185185185186" />
+        <entry key="app/src/main/java/com/example/madplayground/ui/moments/source/MomentFormScreenUI.kt" value="0.262037037037037" />
         <entry key="app/src/main/java/com/example/madplayground/ui/quotes/components/QuoteCardUI.kt" value="0.1883445945945946" />
         <entry key="app/src/main/java/com/example/madplayground/ui/screens/home/HomeScreenUI.kt" value="0.17685185185185184" />
         <entry key="app/src/main/java/com/example/madplayground/ui/screens/posts/PostCardUI.kt" value="0.1" />
         <entry key="app/src/main/java/com/example/madplayground/ui/screens/settings/SettingsScreenUI.kt" value="0.30925925925925923" />
         <entry key="app/src/main/java/com/example/madplayground/ui/settings/source/SettingsScreenUI.kt" value="0.262037037037037" />
+        <entry key="app/src/main/java/com/example/madplayground/ui/timeline/source/TimelineScreenUI.kt" value="0.3135021097046414" />
       </map>
     </option>
   </component>

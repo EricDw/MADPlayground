@@ -1,27 +1,29 @@
-package com.example.madplayground.ui.timeline.screens.controller
+package com.example.madplayground.ui.timeline.source
 
-import androidx.compose.material.FloatingActionButton
-import androidx.compose.material.Icon
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.madplayground.R
+import com.example.madplayground.ui.config.CombinedWindowType
 import com.example.madplayground.ui.config.LocalWindowConfiguration
 import com.example.madplayground.ui.config.WindowWidthType
 import com.example.madplayground.ui.container.models.ContentContainer
-import com.example.madplayground.ui.timeline.screens.TimelineScreen
-import com.example.madplayground.ui.timeline.source.AndroidTimelineScreenViewModel
 import com.example.madplayground.ui.moments.models.MomentFormScreen
-import com.example.madplayground.ui.timeline.models.TimelineScreen
 import com.example.madplayground.ui.theme.models.LocalIconography
+import com.example.madplayground.ui.timeline.models.TimelineScreen
+import kotlinx.coroutines.launch
 
 @Composable
 fun ContentContainer.Controller.TimelineScreenController(
     modifier: Modifier = Modifier,
     timelineScreenViewModel: TimelineScreen.ViewModel = hiltViewModel<AndroidTimelineScreenViewModel>(),
 ) {
+
+    val scope = rememberCoroutineScope()
 
     val state = timelineScreenViewModel.state
 
@@ -36,15 +38,11 @@ fun ContentContainer.Controller.TimelineScreenController(
 
         titleId = R.string.title_timeline
 
-        topAppBarIcon = null
+        fabPosition = FabPosition.Center
 
-        showTopAppBar = true
+        dockFab = true
 
-        isTimelineSelected = true
-
-        isSettingsSelected = false
-
-        bottomFAB = {
+        floatingActionButton = {
 
             FloatingActionButton(
                 onClick = {
@@ -62,7 +60,7 @@ fun ContentContainer.Controller.TimelineScreenController(
 
         }
 
-        showBottomFAB = windowConfiguration.windowWidthType == WindowWidthType.COMPACT
+        showFab = windowConfiguration.windowWidthType == WindowWidthType.COMPACT
 
         showNavigationRail = windowConfiguration.windowWidthType != WindowWidthType.COMPACT
 
@@ -79,6 +77,40 @@ fun ContentContainer.Controller.TimelineScreenController(
                         id = R.string.description_add_moment)
                 )
             }
+
+        }
+
+        if (windowConfiguration.combinedWindowType == CombinedWindowType.COMPACT_WIDTH_COMPACT_HEIGHT) {
+
+            showTopAppBar = true
+
+            drawerGesturesEnabled = true
+
+            navigationIcon = {
+                IconButton(onClick = {
+                    scope.launch {
+                        if (containerScaffoldState.drawerState.isClosed) {
+                            containerScaffoldState.drawerState.open()
+                        }
+                    }
+                }) {
+                    Icon(
+                        imageVector = LocalIconography.current.menuIcon,
+                        contentDescription = stringResource(
+                            id = R.string.description_open_menu)
+                    )
+                }
+            }
+
+        } else {
+
+            navigationIcon = null
+
+            showTopAppBar = true
+
+            isTimelineSelected = true
+
+            isSettingsSelected = false
 
         }
 

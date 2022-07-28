@@ -7,7 +7,6 @@ import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import com.example.madplayground.features.theme.ThemeController
 import com.example.madplayground.ui.container.components.ContentContainerBottomNavBar
@@ -19,6 +18,7 @@ import com.example.madplayground.ui.container.models.ContentContainer
 @Composable
 fun ContentContainer.Controller.ContentContainer(
     modifier: Modifier = Modifier,
+    scaffoldState: ScaffoldState = rememberScaffoldState(),
     content: @Composable (scaffoldPadding: PaddingValues) -> Unit,
 ) {
 
@@ -31,38 +31,6 @@ fun ContentContainer.Controller.ContentContainer(
     val shapeType by state.shapeType.collectAsState()
 
     val navigationLabelVisibility by state.navigationLabelVisibility.collectAsState()
-
-    val isDrawerUnlocked = false
-
-    val drawerState = rememberDrawerState(
-        initialValue = DrawerValue.Closed
-    ) { drawerValue ->
-
-        when (drawerValue) {
-
-            DrawerValue.Closed -> {
-                true
-            }
-
-            DrawerValue.Open   -> {
-
-                isDrawerUnlocked
-
-            }
-
-        }
-
-    }
-
-    val snackbarHostState = remember {
-        SnackbarHostState()
-    }
-
-    val scaffoldState: ScaffoldState =
-        rememberScaffoldState(
-            drawerState = drawerState,
-            snackbarHostState = snackbarHostState
-        )
 
     ThemeController(
         themeType = themeType,
@@ -83,16 +51,16 @@ fun ContentContainer.Controller.ContentContainer(
                 ContentContainerBottomNavBar()
 
             },
-            snackbarHost = { _ ->
-                /* no-op */
-            },
+            snackbarHost = snackbarHost,
             floatingActionButton = {
 
                 ContentContainerFloatingActionButton()
 
             },
-            drawerContent = null,
-            drawerGesturesEnabled = isDrawerUnlocked,
+            drawerContent = drawerContent,
+            drawerGesturesEnabled = drawerGesturesEnabled,
+            floatingActionButtonPosition = fabPosition,
+            isFloatingActionButtonDocked = dockFab
         ) { scaffoldPadding ->
 
             Row(

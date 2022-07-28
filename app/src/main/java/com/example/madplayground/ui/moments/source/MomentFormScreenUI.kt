@@ -1,4 +1,4 @@
-package com.example.madplayground.ui.moments.screens
+package com.example.madplayground.ui.moments.source
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedContent
@@ -16,9 +16,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.madplayground.R
-import com.example.madplayground.ui.moments.models.MomentFormUiState
-import com.example.madplayground.ui.moments.source.rememberMomentFromScreenState
 import com.example.madplayground.ui.moments.models.MomentFormScreen.Event
+import com.example.madplayground.ui.moments.models.MomentFormUiState
 import com.example.madplayground.ui.theme.models.LocalIconography
 import kotlinx.coroutines.launch
 
@@ -29,9 +28,6 @@ fun MomentFormScreen(
     state: MomentFormUiState = rememberMomentFromScreenState(),
     eventHandler: (Event) -> Unit = { /* no-op */ },
     showDialog: Boolean = false,
-    scaffoldState: BackdropScaffoldState = rememberBackdropScaffoldState(
-        initialValue = BackdropValue.Concealed
-    ),
 ) {
 
     val iconography = LocalIconography.current
@@ -45,6 +41,10 @@ fun MomentFormScreen(
     val submitting by state.submitting.collectAsState()
 
     val scope = rememberCoroutineScope()
+
+    val scaffoldState: BackdropScaffoldState = rememberBackdropScaffoldState(
+        initialValue = BackdropValue.Concealed
+    )
 
     BackdropScaffold(
         appBar = {
@@ -334,7 +334,6 @@ fun MomentFormScreen(
 
 }
 
-@OptIn(ExperimentalMaterialApi::class)
 @Preview(
     showBackground = true,
     showSystemUi = true,

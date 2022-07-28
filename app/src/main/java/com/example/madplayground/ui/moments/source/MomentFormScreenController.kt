@@ -1,4 +1,4 @@
-package com.example.madplayground.ui.moments.screens.controller
+package com.example.madplayground.ui.moments.source
 
 import androidx.compose.material.BackdropValue
 import androidx.compose.material.ExperimentalMaterialApi
@@ -8,7 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.madplayground.ui.config.LocalWindowConfiguration
 import com.example.madplayground.ui.container.models.ContentContainer
-import com.example.madplayground.ui.moments.screens.MomentFormScreen
+import com.example.madplayground.ui.moments.source.MomentFormScreen
 import com.example.madplayground.ui.moments.source.AndroidMomentFormScreenViewModel
 import com.example.madplayground.ui.moments.models.MomentFormScreen
 
@@ -21,15 +21,9 @@ fun ContentContainer.Controller.MomentFormScreenController(
 
     val windowConfiguration = LocalWindowConfiguration.current
 
-    val scope = rememberCoroutineScope()
-
     val navController = navHostController
 
     val state = viewModel.state
-
-    val scaffoldState = rememberBackdropScaffoldState(
-        initialValue = BackdropValue.Concealed
-    )
 
     var showDiscardChangesDialog by remember {
         mutableStateOf(false)
@@ -105,7 +99,7 @@ fun ContentContainer.Controller.MomentFormScreenController(
 
         showTopAppBar = false
 
-        showBottomFAB = false
+        showFab = false
 
         showBottomNavBar = false
 
@@ -118,7 +112,6 @@ fun ContentContainer.Controller.MomentFormScreenController(
         state = state,
         eventHandler = screenEventHandler,
         showDialog = showDiscardChangesDialog,
-        scaffoldState = scaffoldState
     )
 
     LaunchedEffect(key1 = submitted) {

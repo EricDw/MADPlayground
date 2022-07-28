@@ -17,7 +17,7 @@ fun ContentContainer.ContentContainerTopAppBar(
 
     val showNavIcon = !showNavigationRail
 
-    val navIcon = if (showNavIcon) topAppBarIcon else null
+    val navIcon = if (showNavIcon) navigationIcon else null
 
     AnimatedVisibility(
         showTopAppBar,

@@ -2,6 +2,9 @@ package com.example.madplayground.ui.container.models
 
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.RowScope
+import androidx.compose.material.FabPosition
+import androidx.compose.material.ScaffoldState
+import androidx.compose.material.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import com.example.madplayground.domain.settings.models.Settings
@@ -15,9 +18,13 @@ interface ContentContainer {
 
     val titleId: Int?
 
-    val topAppBarIcon: (@Composable () -> Unit)?
+    val navigationIcon: (@Composable () -> Unit)?
 
     val topAppBarActions: @Composable RowScope.() -> Unit
+
+    val drawerGesturesEnabled: Boolean
+
+    val drawerContent: (@Composable ColumnScope.() -> Unit)?
 
     val showBottomNavBar: Boolean
 
@@ -33,19 +40,31 @@ interface ContentContainer {
 
     val railHeader: (@Composable ColumnScope.() -> Unit)?
 
-    val showBottomFAB: Boolean
+    val showFab: Boolean
 
-    val bottomFAB: @Composable () -> Unit
+    val floatingActionButton: @Composable () -> Unit
+
+    val fabPosition: FabPosition
+
+    val dockFab: Boolean
+
+    val snackbarHost: @Composable (SnackbarHostState) -> Unit
 
     interface Controller : ContentContainer {
+
+        val containerScaffoldState: ScaffoldState
 
         val navHostController: NavHostController
 
         override var showTopAppBar: Boolean
 
-        override var topAppBarIcon: (@Composable () -> Unit)?
+        override var navigationIcon: (@Composable () -> Unit)?
 
         override var topAppBarActions: @Composable RowScope.() -> Unit
+
+        override var drawerGesturesEnabled: Boolean
+
+        override var drawerContent: (@Composable ColumnScope.() -> Unit)?
 
         override var titleId: Int?
 
@@ -63,21 +82,15 @@ interface ContentContainer {
 
         override var railHeader: (@Composable ColumnScope.() -> Unit)?
 
-        override var showBottomFAB: Boolean
+        override var showFab: Boolean
 
-        override var bottomFAB: @Composable () -> Unit
+        override var fabPosition: FabPosition
 
-    }
+        override var dockFab: Boolean
 
-    sealed interface Event {
+        override var floatingActionButton: @Composable () -> Unit
 
-        object SettingsTabClicked : Event
-
-        object NavigationButtonClicked : Event
-
-        object TimelineTabClicked : Event
-
-        object FABClicked : Event
+        override var snackbarHost: @Composable (SnackbarHostState) -> Unit
 
     }
 
@@ -107,7 +120,7 @@ interface ContentContainer {
     }
 
     companion object {
-        const val HOME_GRAPH_ROUTE: String = "home_graph"
+        const val TIMELINE_GRAPH_ROUTE: String = "timeline_graph"
         const val SETTINGS_GRAPH_ROUTE: String = "settings_graph"
     }
 

@@ -81,7 +81,7 @@ fun ContentContainer.Controller.SettingsScreenController(
 
         titleId = R.string.title_settings
 
-        topAppBarIcon = {
+        navigationIcon = {
             AnimatedVisibility(
                 visible = true,
                 enter = slideInHorizontally(),
@@ -102,7 +102,7 @@ fun ContentContainer.Controller.SettingsScreenController(
 
         showBottomNavBar = windowConfiguration.windowWidthType == WindowWidthType.COMPACT
 
-        showBottomFAB = false
+        showFab = false
 
         isTimelineSelected = false
 
