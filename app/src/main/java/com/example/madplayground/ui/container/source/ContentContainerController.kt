@@ -138,7 +138,7 @@ private class ContentContainerControllerImpl(
 
     override var showNavigationRail: Boolean by mutableStateOf(false)
 
-    override var railHeader: (@Composable ColumnScope.() -> Unit)? by mutableStateOf(null)
+    override var railHeader: @Composable (ColumnScope.() -> Unit)? by mutableStateOf(null)
 
     override var showFab: Boolean by mutableStateOf(false)
 

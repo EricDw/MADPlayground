@@ -3,14 +3,17 @@ package com.example.madplayground.ui.settings.source
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.madplayground.R
+import com.example.madplayground.ui.config.CombinedWindowType
 import com.example.madplayground.ui.config.LocalWindowConfiguration
 import com.example.madplayground.ui.config.WindowWidthType
 import com.example.madplayground.ui.container.models.ContentContainer
@@ -96,7 +99,7 @@ fun ContentContainer.Controller.SettingsScreenController(
             }
         }
 
-        showTopAppBar = windowConfiguration.windowWidthType != WindowWidthType.COMPACT
+        showTopAppBar = windowConfiguration.combinedWindowType != CombinedWindowType.COMPACT_WIDTH_COMPACT_HEIGHT
 
         showNavigationRail = windowConfiguration.windowWidthType != WindowWidthType.COMPACT
 
@@ -111,6 +114,7 @@ fun ContentContainer.Controller.SettingsScreenController(
         railHeader = {
 
             IconButton(
+                modifier = Modifier.padding(top = 64.dp),
                 onClick = { navHostController.popBackStack() }
             ) {
                 Icon(

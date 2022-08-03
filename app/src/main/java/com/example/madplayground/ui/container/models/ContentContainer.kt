@@ -79,7 +79,7 @@ interface ContentContainer {
 
         override var showNavigationRail: Boolean
 
-        override var railHeader: (@Composable ColumnScope.() -> Unit)?
+        override var railHeader: @Composable (ColumnScope.() -> Unit)?
 
         override var showFab: Boolean
 

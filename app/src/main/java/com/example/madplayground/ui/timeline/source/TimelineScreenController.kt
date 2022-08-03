@@ -61,9 +61,16 @@ fun ContentContainer.Controller.TimelineScreenController(
 
         }
 
+        showNavigationRail = windowConfiguration.windowWidthType != WindowWidthType.COMPACT
+
+        showBottomNavBar = !showNavigationRail
+
+        showFab = !showNavigationRail
+
         railHeader = {
 
-            SmallFloatingActionButton(
+            FloatingActionButton(
+                modifier = Modifier.padding(top = 64.dp),
                 onClick = { navHostController.navigate(MomentFormScreen.ROUTE) }
             ) {
                 Icon(
@@ -74,12 +81,6 @@ fun ContentContainer.Controller.TimelineScreenController(
             }
 
         }
-
-        showNavigationRail = windowConfiguration.windowWidthType != WindowWidthType.COMPACT
-
-        showBottomNavBar = !showNavigationRail
-
-        showFab = !showNavigationRail
 
         if (windowConfiguration.combinedWindowType == CombinedWindowType.COMPACT_WIDTH_COMPACT_HEIGHT) {
 
