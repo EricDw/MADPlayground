@@ -164,17 +164,6 @@ fun MomentFormScreen(
                         horizontalArrangement = Arrangement.SpaceEvenly,
                     ) {
 
-                        TextButton(
-                            onClick = {
-                                eventHandler(
-                                    Event.CancelClicked
-                                )
-                            },
-                            modifier = Modifier.padding(16.dp)
-                        ) {
-                            Text(text = stringResource(id = R.string.label_cancel))
-                        }
-
                         Button(
                             onClick = {
                                 eventHandler(
@@ -182,7 +171,8 @@ fun MomentFormScreen(
                                 )
                             },
                             modifier = Modifier.padding(16.dp),
-                            enabled = description.isNotBlank()
+                            enabled = description.isNotBlank(),
+                            shape = MaterialTheme.shapes.small,
                         ) {
                             Text(text = stringResource(id = R.string.label_save))
                         }

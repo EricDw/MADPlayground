@@ -1,11 +1,18 @@
 package com.example.madplayground.ui.moments.source
 
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.madplayground.R
 import com.example.madplayground.ui.config.LocalWindowConfiguration
 import com.example.madplayground.ui.container.models.ContentContainer
 import com.example.madplayground.ui.moments.models.MomentFormScreen
+import com.example.madplayground.ui.theme.models.LocalIconography
 
 @Composable
 fun ContentContainer.Controller.MomentFormScreenController(
@@ -53,14 +60,6 @@ fun ContentContainer.Controller.MomentFormScreenController(
                 )
             }
 
-            is MomentFormScreen.Event.CancelClicked          -> {
-                if (state.isEmpty) {
-                    navController.popBackStack()
-                } else {
-                    showDiscardChangesDialog = true
-                }
-            }
-
             is MomentFormScreen.Event.SaveClicked            -> {
                 viewModel.commandHandler(
                     MomentFormScreen.ViewModel.Command.SubmitForm
@@ -91,7 +90,25 @@ fun ContentContainer.Controller.MomentFormScreenController(
 
     LaunchedEffect(key1 = windowConfiguration) {
 
-        showTopAppBar = false
+        titleId = R.string.title_compose_moment
+
+        navigationIcon = {
+            IconButton(
+                onClick = {
+                    screenEventHandler(
+                        MomentFormScreen.Event.BackClicked
+                    )
+                }
+            ) {
+                Icon(
+                    imageVector = LocalIconography.current.backIcon,
+                    contentDescription = stringResource(
+                        id = R.string.description_go_back)
+                )
+            }
+        }
+
+        showTopAppBar = true
 
         showFab = false
 
@@ -102,7 +119,7 @@ fun ContentContainer.Controller.MomentFormScreenController(
     }
 
     MomentFormScreen(
-        modifier = modifier,
+        modifier = modifier.padding(top = 64.dp),
         state = state,
         eventHandler = screenEventHandler,
         showDialog = showDiscardChangesDialog,

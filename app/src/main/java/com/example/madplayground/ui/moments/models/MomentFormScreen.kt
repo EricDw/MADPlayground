@@ -16,7 +16,6 @@ interface MomentFormScreen {
             val newTime: String,
         ) : Event
 
-        object CancelClicked : Event
 
         object SaveClicked : Event
 
