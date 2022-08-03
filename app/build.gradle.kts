@@ -24,7 +24,7 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled = false
+            isMinifyEnabled = false
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
@@ -67,55 +67,55 @@ dependencies {
 
     // region Compose
 
-    def compose_ui_version = "1.3.0-alpha02"
-    def material_3_version = "1.0.0-alpha15"
+    val composeUiVersion = "1.3.0-alpha02"
+    val material3Version = "1.0.0-alpha15"
 
     // Compose Activity
     implementation("androidx.activity:activity-compose:1.5.1")
 
     // Compose UI
-    implementation("androidx.compose.ui:ui:$compose_ui_version")
+    implementation("androidx.compose.ui:ui:$composeUiVersion")
 
     // Compose Preview Tooling
-    implementation("androidx.compose.ui:ui-tooling-preview:$compose_ui_version")
+    implementation("androidx.compose.ui:ui-tooling-preview:$composeUiVersion")
 
     // Material 2 for Compose
-    implementation("androidx.compose.material:material:$compose_ui_version")
+    implementation("androidx.compose.material:material:$composeUiVersion")
 
     // Material Icons Extended
-    implementation("androidx.compose.material:material-icons-extended:$compose_ui_version")
+    implementation("androidx.compose.material:material-icons-extended:$composeUiVersion")
 
     // Material 3 for Compose
-    implementation("androidx.compose.material3:material3:$material_3_version")
+    implementation("androidx.compose.material3:material3:$material3Version")
 
     // endregion Compose
 
     // region Lifecycle
 
-    def lifecycle_version = "2.6.0-alpha01"
+    val lifecycleVersion = "2.6.0-alpha01"
 
     // Lifecycle Runtime
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.5.1")
 
     // ViewModel Kotlin Extensions
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion")
 
     // ViewModel Utilities for Compose
-    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:$lifecycle_version")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:$lifecycleVersion")
 
     // Java8 Lifecycle Compiler - faster incremental builds
-    implementation("androidx.lifecycle:lifecycle-common-java8:$lifecycle_version")
+    implementation("androidx.lifecycle:lifecycle-common-java8:$lifecycleVersion")
 
     // endregion Lifecycle
 
     // region Database
 
-    def room_version = '2.4.3'
+    val roomVersion = "2.4.3"
 
-    implementation("androidx.room:room-runtime:$room_version")
-    implementation("androidx.room:room-ktx:$room_version")
-    kapt("androidx.room:room-compiler:$room_version")
-    testImplementation("androidx.room:room-testing:$room_version")
+    implementation("androidx.room:room-runtime:$roomVersion")
+    implementation("androidx.room:room-ktx:$roomVersion")
+    kapt("androidx.room:room-compiler:$roomVersion")
+    testImplementation("androidx.room:room-testing:$roomVersion")
 
     // endregion Database
 
@@ -124,13 +124,13 @@ dependencies {
 
     // region Hilt
 
-    def hilt_version = "2.43.1"
+    val hiltVersion = "2.43.1"
 
     // Hilt for Android
-    implementation("com.google.dagger:hilt-android:$hilt_version")
+    implementation("com.google.dagger:hilt-android:$hiltVersion")
 
     // Hilt Compiler
-    kapt("com.google.dagger:hilt-compiler:$hilt_version")
+    kapt("com.google.dagger:hilt-compiler:$hiltVersion")
 
     // Hilt Compose Navigation Integration
     implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
@@ -151,9 +151,9 @@ dependencies {
 
     // Compose Testing
 
-    androidTestImplementation("androidx.compose.ui:ui-test-junit4:$compose_ui_version")
-    debugImplementation("androidx.compose.ui:ui-tooling:$compose_ui_version")
-    debugImplementation("androidx.compose.ui:ui-test-manifest:$compose_ui_version")
+    androidTestImplementation("androidx.compose.ui:ui-test-junit4:$composeUiVersion")
+    debugImplementation("androidx.compose.ui:ui-tooling:$composeUiVersion")
+    debugImplementation("androidx.compose.ui:ui-test-manifest:$composeUiVersion")
 
     // endregion Testing
 }
