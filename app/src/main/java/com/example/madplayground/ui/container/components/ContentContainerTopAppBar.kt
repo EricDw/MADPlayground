@@ -3,6 +3,7 @@ package com.example.madplayground.ui.container.components
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInVertically
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.material3.MediumTopAppBar
 import androidx.compose.material3.SmallTopAppBar
@@ -11,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.example.madplayground.ui.container.models.ContentContainer
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ContentContainer.ContentContainerTopAppBar(
     modifier: Modifier = Modifier,

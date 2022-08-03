@@ -19,7 +19,7 @@ import com.example.madplayground.ui.moments.models.MomentFormScreen.Event
 import com.example.madplayground.ui.moments.models.MomentFormUiState
 import com.example.madplayground.ui.theme.models.LocalIconography
 
-@OptIn(ExperimentalAnimationApi::class)
+@OptIn(ExperimentalAnimationApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun MomentFormScreen(
     modifier: Modifier = Modifier,
@@ -68,7 +68,7 @@ fun MomentFormScreen(
                         ),
                     leadingIcon = {
                         Icon(
-                            imageVector = LocalIconography.current.dateIcon,
+                            imageVector = iconography.dateIcon,
                             contentDescription = stringResource(id = R.string.description_date),
                         )
                     },
@@ -102,7 +102,7 @@ fun MomentFormScreen(
                         ),
                     leadingIcon = {
                         Icon(
-                            imageVector = LocalIconography.current.timeIcon,
+                            imageVector = iconography.timeIcon,
                             contentDescription = stringResource(id = R.string.description_time),
                         )
                     },
@@ -229,7 +229,7 @@ fun MomentFormScreen(
                                 )
                             )
                         }
-                        
+
                     },
                     confirmButton =  {
                         Button(
