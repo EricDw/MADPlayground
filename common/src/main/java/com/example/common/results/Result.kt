@@ -1,4 +1,4 @@
-package com.example.madplayground.common.results
+package com.example.common.results
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
@@ -14,8 +14,8 @@ sealed interface Result<out T> {
 fun <T> Flow<T>.asResult(): Flow<Result<T>> {
     return this
         .map<T, Result<T>> {
-            Result.Success(it)
+            com.example.common.results.Result.Success(it)
         }
-        .onStart { emit(Result.Loading) }
-        .catch { emit(Result.Error(it)) }
+        .onStart { emit(com.example.common.results.Result.Loading) }
+        .catch { emit(com.example.common.results.Result.Error(it)) }
 }

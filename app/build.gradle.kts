@@ -50,6 +50,7 @@ android {
 
 dependencies {
 
+    implementation(project(mapOf("path" to ":common")))
     kapt("org.jetbrains.kotlinx:kotlinx-metadata-jvm:0.5.0")
 
     // Core Extensions

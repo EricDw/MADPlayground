@@ -1,6 +1,6 @@
 package com.example.madplayground.ui.moments.source
 
-import com.example.madplayground.common.logs.models.Logs
+import com.example.common.logs.models.Logs
 import com.example.madplayground.domain.moments.source.buildCreateMomentForm
 import com.example.madplayground.domain.moments.usecases.CreateMomentUseCase
 import com.example.madplayground.ui.moments.models.MomentFormScreen
@@ -12,12 +12,12 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class MomentFormScreenViewModelImpl(
-    private val logs: Logs,
+    private val logs: com.example.common.logs.models.Logs,
     private val createMomentUseCase: CreateMomentUseCase,
     private val scope: CoroutineScope = CoroutineScope(
         Dispatchers.Main.immediate + SupervisorJob()
     ),
-) : MomentFormScreen.ViewModel, Logs by logs {
+) : MomentFormScreen.ViewModel, com.example.common.logs.models.Logs by logs {
 
     private val tag = this::class.simpleName
 

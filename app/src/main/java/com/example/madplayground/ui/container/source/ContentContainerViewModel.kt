@@ -1,6 +1,6 @@
 package com.example.madplayground.ui.container.source
 
-import com.example.madplayground.common.logs.models.Logs
+import com.example.common.logs.models.Logs
 import com.example.madplayground.domain.settings.usecases.RetrieveIconographyTypeUseCase
 import com.example.madplayground.domain.settings.usecases.RetrieveNavigationLabelVisibilityUseCase
 import com.example.madplayground.domain.settings.usecases.RetrieveShapeTypeUseCase
@@ -15,7 +15,7 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 
 class ContentContainerViewModel(
-    private val logs: Logs,
+    private val logs: com.example.common.logs.models.Logs,
     retrieveThemeTypeUseCase: RetrieveThemeTypeUseCase,
     retrieveIconographyTypeUseCase: RetrieveIconographyTypeUseCase,
     retrieveShapeTypeUseCase: RetrieveShapeTypeUseCase,
@@ -23,7 +23,7 @@ class ContentContainerViewModel(
     scope: CoroutineScope = CoroutineScope(
         Dispatchers.Main.immediate + SupervisorJob()
     ),
-) : ContentContainer.ViewModel, Logs by logs {
+) : ContentContainer.ViewModel, com.example.common.logs.models.Logs by logs {
 
     private val tag = this::class.simpleName
 

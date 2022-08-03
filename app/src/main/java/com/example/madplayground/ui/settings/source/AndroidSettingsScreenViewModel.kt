@@ -2,7 +2,7 @@ package com.example.madplayground.ui.settings.source
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.madplayground.common.logs.models.Logs
+import com.example.common.logs.models.Logs
 import com.example.madplayground.domain.settings.usecases.*
 import com.example.madplayground.ui.settings.models.SettingsScreen
 import com.example.madplayground.ui.settings.models.SettingsScreen.State
@@ -12,7 +12,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AndroidSettingsScreenViewModel @Inject constructor(
-    logs: Logs,
+    logs: com.example.common.logs.models.Logs,
     retrieveThemeTypeUseCase: RetrieveThemeTypeUseCase,
     retrieveIconographyTypeUseCase: RetrieveIconographyTypeUseCase,
     retrieveShapeTypeUseCase: RetrieveShapeTypeUseCase,

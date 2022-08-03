@@ -2,7 +2,7 @@ package com.example.madplayground.ui.container.source
 
 import com.example.madplayground.cache.settings.fakes.FakeSettingsCache
 import com.example.madplayground.cache.settings.models.SettingsCache
-import com.example.madplayground.common.logs.models.Logs
+import com.example.common.logs.models.Logs
 import com.example.madplayground.domain.settings.models.Settings
 import com.example.madplayground.domain.settings.source.RetrieveIconographyTypeUseCaseImpl
 import com.example.madplayground.domain.settings.source.RetrieveNavigationLabelVisibilityUseCaseImpl
@@ -26,7 +26,7 @@ class TheContentContainerViewModel {
 
     private lateinit var viewModel: ContentContainer.ViewModel
 
-    private lateinit var logs: Logs
+    private lateinit var logs: com.example.common.logs.models.Logs
 
     private lateinit var dispatcher: TestDispatcher
 

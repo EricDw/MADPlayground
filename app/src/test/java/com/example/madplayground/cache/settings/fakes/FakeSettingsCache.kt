@@ -1,15 +1,15 @@
 package com.example.madplayground.cache.settings.fakes
 
 import com.example.madplayground.cache.settings.models.SettingsCache
-import com.example.madplayground.common.logs.models.Logs
+import com.example.common.logs.models.Logs
 import com.example.madplayground.domain.settings.models.Settings
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 
 class FakeSettingsCache(
-    logs: Logs
-) : SettingsCache, Logs by logs {
+    logs: com.example.common.logs.models.Logs
+) : SettingsCache, com.example.common.logs.models.Logs by logs {
 
     private val tag = this::class.simpleName
 

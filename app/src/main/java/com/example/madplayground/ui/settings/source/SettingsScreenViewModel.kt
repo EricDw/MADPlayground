@@ -1,6 +1,6 @@
 package com.example.madplayground.ui.settings.source
 
-import com.example.madplayground.common.logs.models.Logs
+import com.example.common.logs.models.Logs
 import com.example.madplayground.domain.settings.usecases.*
 import com.example.madplayground.ui.settings.models.SettingsScreen
 import com.example.madplayground.ui.settings.models.SettingsScreen.State
@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class SettingsScreenViewModel(
-    private val logs: Logs,
+    private val logs: com.example.common.logs.models.Logs,
     retrieveThemeTypeUseCase: RetrieveThemeTypeUseCase,
     retrieveIconographyTypeUseCase: RetrieveIconographyTypeUseCase,
     retrieveShapeTypeUseCase: RetrieveShapeTypeUseCase,
@@ -23,7 +23,7 @@ class SettingsScreenViewModel(
     cycleShapeTypeUseCase: CycleShapeTypeUseCase,
     cycleNavigationLabelVisibilityUseCase: CycleNavigationLabelVisibilityUseCase,
     private val scope: CoroutineScope = CoroutineScope(Dispatchers.Main.immediate),
-) : SettingsScreen.ViewModel, Logs by logs {
+) : SettingsScreen.ViewModel, com.example.common.logs.models.Logs by logs {
 
     private val tag = this::class.simpleName
 

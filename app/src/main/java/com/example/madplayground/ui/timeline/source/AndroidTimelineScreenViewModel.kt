@@ -2,7 +2,7 @@ package com.example.madplayground.ui.timeline.source
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.madplayground.common.logs.models.Logs
+import com.example.common.logs.models.Logs
 import com.example.madplayground.domain.moments.usecases.RetrieveAllMomentUseCase
 import com.example.madplayground.ui.moments.mapper.MomentUIMapper
 import com.example.madplayground.ui.timeline.models.TimelineScreen
@@ -11,7 +11,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AndroidTimelineScreenViewModel @Inject constructor(
-    logs: Logs,
+    logs: com.example.common.logs.models.Logs,
     momentUIMapper: MomentUIMapper,
     retrieveAllMomentUseCase: RetrieveAllMomentUseCase,
 ) : ViewModel(), TimelineScreen.ViewModel {

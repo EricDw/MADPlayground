@@ -1,9 +1,9 @@
 package com.example.madplayground.ui.logs.source
 
 import android.util.Log
-import com.example.madplayground.common.logs.models.Logs
+import com.example.common.logs.models.Logs
 
-class AndroidLogsController : Logs {
+class AndroidLogsController : com.example.common.logs.models.Logs {
 
     override fun logDebug(
         message: String,
