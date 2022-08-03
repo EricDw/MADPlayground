@@ -1,11 +1,10 @@
 package com.example.madplayground.data.moments.repository
 
+import com.example.cache.moments.source.LocalMomentDataSourceImpl
+import com.example.cache.moments.source.MomentCacheMapperImpl
+import com.example.core.moments.repository.MomentRepository
 import com.example.madplayground.cache.moments.fakes.FakeMomentDao
-import com.example.madplayground.cache.moments.source.MomentCacheMapperImpl
-import com.example.madplayground.cache.moments.source.LocalMomentDataSourceImpl
 import com.example.madplayground.data.moments.fakes.FakeMoment
-import com.example.madplayground.domain.moments.models.Moment
-import com.example.madplayground.domain.moments.repository.MomentRepository
 import com.example.madplayground.helpers.runUnconfinedTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.junit.After
@@ -28,7 +27,7 @@ class TheMomentRepository {
             dao = dao
         )
 
-        repository = MomentRepositoryImpl(
+        repository = com.example.data.moments.repository.MomentRepositoryImpl(
             localRepository = cache
         )
 
@@ -44,11 +43,11 @@ class TheMomentRepository {
         runUnconfinedTest {
 
             // Arrange
-            val expected = listOf<Moment>(
+            val expected = listOf<com.example.core.moments.models.Moment>(
                 FakeMoment.MOMENT_1
             )
 
-            val actual: List<Moment>?
+            val actual: List<com.example.core.moments.models.Moment>?
 
             // Act
             repository.addMoment(FakeMoment.MOMENT_1)
@@ -69,11 +68,11 @@ class TheMomentRepository {
         runUnconfinedTest {
 
             // Arrange
-            val expected = listOf<Moment>(
+            val expected = listOf<com.example.core.moments.models.Moment>(
                 FakeMoment.MOMENT_1
             )
 
-            val actual: List<Moment>?
+            val actual: List<com.example.core.moments.models.Moment>?
 
             // Act
             repository.addMoment(FakeMoment.MOMENT_1)

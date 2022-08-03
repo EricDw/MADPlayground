@@ -1,8 +1,8 @@
 package com.example.madplayground.app.modules
 
-import com.example.madplayground.domain.moments.repository.MomentRepository
-import com.example.madplayground.domain.moments.source.*
-import com.example.madplayground.domain.moments.usecases.*
+import com.example.core.moments.repository.MomentRepository
+import com.example.core.moments.source.*
+import com.example.core.moments.usecases.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

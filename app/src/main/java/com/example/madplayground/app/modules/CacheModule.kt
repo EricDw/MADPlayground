@@ -6,14 +6,17 @@ import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStoreFile
 import androidx.room.Room
-import com.example.madplayground.cache.database.MomentsRoomDataBase
-import com.example.madplayground.cache.moments.mapper.MomentCacheMapper
-import com.example.madplayground.cache.moments.models.MomentDao
-import com.example.madplayground.cache.moments.source.LocalMomentDataSourceImpl
-import com.example.madplayground.cache.moments.source.MomentCacheMapperImpl
-import com.example.madplayground.cache.settings.models.SettingsCache
-import com.example.madplayground.cache.settings.source.SettingsCacheImpl
-import com.example.madplayground.data.moments.models.LocalMomentDataSource
+import com.example.cache.database.MomentsRoomDataBase
+import com.example.cache.moments.mapper.MomentCacheMapper
+import com.example.cache.moments.models.MomentDao
+import com.example.cache.moments.source.LocalMomentDataSourceImpl
+import com.example.cache.moments.source.MomentCacheMapperImpl
+import com.example.cache.settings.source.LocalSettingsDataSourceImpl
+import com.example.core.settings.repository.SettingsCache
+import com.example.data.settings.mapper.SettingsDataMapper
+import com.example.data.settings.repository.LocalSettingsDataSource
+import com.example.data.settings.source.SettingsCacheImpl
+import com.example.data.settings.source.SettingsDataMapperImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -55,8 +58,33 @@ object CacheModule {
 
     @Provides
     @Singleton
-    fun provideSettingsCache(
+    fun provideLocalSettingsDataSource(
         dataStore: DataStore<Preferences>,
+        @IODispatcher
+        ioDispatcher: CoroutineDispatcher,
+    ): LocalSettingsDataSource {
+
+        val ioScope = CoroutineScope(ioDispatcher)
+
+        return LocalSettingsDataSourceImpl(
+            scope = ioScope,
+            dataStore = dataStore,
+        )
+
+    }
+
+
+    @Provides
+    fun provideSettingsDataMapper(): SettingsDataMapper {
+        return SettingsDataMapperImpl()
+    }
+
+
+    @Provides
+    @Singleton
+    fun provideSettingsCache(
+        dataSource: LocalSettingsDataSource,
+        mapper: SettingsDataMapper,
         @IODispatcher
         ioDispatcher: CoroutineDispatcher,
     ): SettingsCache {
@@ -64,8 +92,9 @@ object CacheModule {
         val ioScope = CoroutineScope(ioDispatcher)
 
         return SettingsCacheImpl(
-            scope = ioScope,
-            dataStore = dataStore,
+            localSettingsDataSource = dataSource,
+            mapper = mapper,
+            scope = ioScope
         )
 
     }
@@ -88,7 +117,7 @@ object CacheModule {
     fun provideLocalMomentsCache(
         dao: MomentDao,
         mapper: MomentCacheMapper,
-    ): LocalMomentDataSource {
+    ): com.example.data.moments.models.LocalMomentDataSource {
 
         return LocalMomentDataSourceImpl(
             dao = dao,

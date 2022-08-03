@@ -1,7 +1,6 @@
 package com.example.madplayground.ui.settings.source
 
-import com.example.common.logs.models.Logs
-import com.example.madplayground.domain.settings.usecases.*
+import com.example.core.settings.usecases.*
 import com.example.madplayground.ui.settings.models.SettingsScreen
 import com.example.madplayground.ui.settings.models.SettingsScreen.State
 import com.example.madplayground.ui.settings.models.SettingsScreen.ViewModel.Command

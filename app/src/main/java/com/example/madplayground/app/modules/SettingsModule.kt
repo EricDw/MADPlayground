@@ -1,8 +1,8 @@
 package com.example.madplayground.app.modules
 
-import com.example.madplayground.cache.settings.models.SettingsCache
-import com.example.madplayground.domain.settings.source.*
-import com.example.madplayground.domain.settings.usecases.*
+import com.example.core.settings.repository.SettingsCache
+import com.example.core.settings.source.*
+import com.example.core.settings.usecases.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

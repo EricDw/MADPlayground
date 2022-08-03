@@ -51,13 +51,13 @@ android {
 dependencies {
 
     implementation(project(mapOf("path" to ":common")))
+    implementation(project(mapOf("path" to ":core")))
+    implementation(project(mapOf("path" to ":data")))
+    implementation(project(mapOf("path" to ":cache")))
     kapt("org.jetbrains.kotlinx:kotlinx-metadata-jvm:0.5.0")
 
     // Core Extensions
     implementation("androidx.core:core-ktx:1.8.0")
-
-    // DataStore
-    implementation("androidx.datastore:datastore-preferences:1.0.0")
 
     // region Window Manager
 
@@ -109,17 +109,6 @@ dependencies {
 
     // endregion Lifecycle
 
-    // region Database
-
-    val roomVersion = "2.4.3"
-
-    implementation("androidx.room:room-runtime:$roomVersion")
-    implementation("androidx.room:room-ktx:$roomVersion")
-    kapt("androidx.room:room-compiler:$roomVersion")
-    testImplementation("androidx.room:room-testing:$roomVersion")
-
-    // endregion Database
-
     // Navigation
     implementation("androidx.navigation:navigation-compose:2.5.1")
 
@@ -137,9 +126,6 @@ dependencies {
     implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
 
     // endregion Hilt
-
-    // Date Time
-    implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.4.0")
 
     // region Testing
 

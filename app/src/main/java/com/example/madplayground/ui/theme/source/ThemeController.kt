@@ -6,7 +6,7 @@ import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
-import com.example.madplayground.domain.settings.models.Settings
+import com.example.core.settings.models.Settings
 import com.example.madplayground.ui.theme.models.*
 
 private val DarkColorScheme = darkColorScheme()

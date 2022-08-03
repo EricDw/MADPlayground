@@ -1,6 +1,6 @@
 package com.example.madplayground.ui.settings.models
 
-import com.example.madplayground.domain.settings.models.Settings
+import com.example.core.settings.models.Settings
 import kotlinx.coroutines.flow.StateFlow
 
 interface SettingsScreen {

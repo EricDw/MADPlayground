@@ -1,13 +1,12 @@
 package com.example.madplayground.ui.moments.source
 
-import com.example.madplayground.domain.moments.models.Moment
 import com.example.madplayground.ui.moments.mapper.MomentUIMapper
 import com.example.madplayground.ui.moments.models.MomentUiState
 
 class MomentUIMapperImpl : MomentUIMapper {
 
     override fun mapToUIState(
-        moment: Moment
+        moment: com.example.core.moments.models.Moment
     ): MomentUiState {
 
         return with(moment) {

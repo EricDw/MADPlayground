@@ -1,7 +1,7 @@
 package com.example.madplayground.cache.moments.fakes
 
-import com.example.madplayground.cache.moments.models.MomentDao
-import com.example.madplayground.cache.moments.models.MomentEntity
+import com.example.cache.moments.models.MomentDao
+import com.example.cache.moments.models.MomentEntity
 import kotlinx.coroutines.flow.Flow
 
 class FakeMomentDao : MomentDao {

@@ -1,8 +1,7 @@
 package com.example.madplayground.ui.moments.source
 
-import com.example.common.logs.models.Logs
-import com.example.madplayground.domain.moments.source.buildCreateMomentForm
-import com.example.madplayground.domain.moments.usecases.CreateMomentUseCase
+import com.example.core.moments.source.buildCreateMomentForm
+import com.example.core.moments.usecases.CreateMomentUseCase
 import com.example.madplayground.ui.moments.models.MomentFormScreen
 import com.example.madplayground.ui.moments.models.MomentFormScreen.ViewModel.Command
 import kotlinx.coroutines.CoroutineScope

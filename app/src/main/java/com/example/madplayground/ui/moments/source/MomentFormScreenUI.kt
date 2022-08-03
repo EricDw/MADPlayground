@@ -225,7 +225,8 @@ fun MomentFormScreen(
                         Button(
                             onClick = {
                                 eventHandler(Event.DiscardChangesClicked)
-                            }
+                            },
+                            shape = MaterialTheme.shapes.small
                         ) {
                             Text(
                                 text = stringResource(

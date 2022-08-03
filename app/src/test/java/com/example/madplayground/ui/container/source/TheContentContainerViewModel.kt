@@ -1,13 +1,12 @@
 package com.example.madplayground.ui.container.source
 
+import com.example.core.settings.models.Settings
+import com.example.core.settings.repository.SettingsCache
+import com.example.core.settings.source.RetrieveIconographyTypeUseCaseImpl
+import com.example.core.settings.source.RetrieveNavigationLabelVisibilityUseCaseImpl
+import com.example.core.settings.source.RetrieveShapeTypeUseCaseImpl
+import com.example.core.settings.source.RetrieveThemeTypeUseCaseImpl
 import com.example.madplayground.cache.settings.fakes.FakeSettingsCache
-import com.example.madplayground.cache.settings.models.SettingsCache
-import com.example.common.logs.models.Logs
-import com.example.madplayground.domain.settings.models.Settings
-import com.example.madplayground.domain.settings.source.RetrieveIconographyTypeUseCaseImpl
-import com.example.madplayground.domain.settings.source.RetrieveNavigationLabelVisibilityUseCaseImpl
-import com.example.madplayground.domain.settings.source.RetrieveShapeTypeUseCaseImpl
-import com.example.madplayground.domain.settings.source.RetrieveThemeTypeUseCaseImpl
 import com.example.madplayground.logs.TestLogs
 import com.example.madplayground.ui.container.models.ContentContainer
 import kotlinx.coroutines.CoroutineScope

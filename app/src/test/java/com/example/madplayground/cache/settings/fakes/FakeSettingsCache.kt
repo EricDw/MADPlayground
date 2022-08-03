@@ -1,10 +1,8 @@
 package com.example.madplayground.cache.settings.fakes
 
-import com.example.madplayground.cache.settings.models.SettingsCache
-import com.example.common.logs.models.Logs
-import com.example.madplayground.domain.settings.models.Settings
+import com.example.core.settings.models.Settings
+import com.example.core.settings.repository.SettingsCache
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 
 class FakeSettingsCache(

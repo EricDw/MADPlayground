@@ -2,11 +2,10 @@ package com.example.madplayground.ui.container.source
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.common.logs.models.Logs
-import com.example.madplayground.domain.settings.usecases.RetrieveIconographyTypeUseCase
-import com.example.madplayground.domain.settings.usecases.RetrieveNavigationLabelVisibilityUseCase
-import com.example.madplayground.domain.settings.usecases.RetrieveShapeTypeUseCase
-import com.example.madplayground.domain.settings.usecases.RetrieveThemeTypeUseCase
+import com.example.core.settings.usecases.RetrieveIconographyTypeUseCase
+import com.example.core.settings.usecases.RetrieveNavigationLabelVisibilityUseCase
+import com.example.core.settings.usecases.RetrieveShapeTypeUseCase
+import com.example.core.settings.usecases.RetrieveThemeTypeUseCase
 import com.example.madplayground.ui.container.models.ContentContainer
 import com.example.madplayground.ui.container.models.ContentContainer.State
 import dagger.hilt.android.lifecycle.HiltViewModel

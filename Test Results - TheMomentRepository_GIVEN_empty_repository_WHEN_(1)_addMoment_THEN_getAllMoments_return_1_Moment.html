@@ -1,5 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns:str="http://exslt.org/strings" xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml">
     <head>
         <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Test Results &mdash; TheMomentRepository.GIVEN empty repository WHEN (1) addMoment THEN getAllMoments return 1 Moment</title>
@@ -298,7 +298,7 @@ jQuery.cookie = function(name, value, options) {
             expires = '; expires=' + date.toUTCString(); // use expires attribute, max-age is not supported by IE
         }
         var path = options.path ? '; path=' + options.path : '';
-        var domain = options.domain ? '; domain=' + options.domain : '';
+        var domain = options.core ? '; domain=' + options.core : '';
         var secure = options.secure ? '; secure' : '';
         document.cookie = [name, '=', encodeURIComponent(value), expires, path, domain, secure].join('');
     } else { // only name given, get cookie

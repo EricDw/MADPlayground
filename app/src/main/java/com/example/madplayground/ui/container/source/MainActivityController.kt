@@ -9,7 +9,6 @@ import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
-import com.example.common.logs.models.Logs
 import com.example.madplayground.ui.config.LocalWindowConfiguration
 import com.example.madplayground.ui.config.WindowConfiguration
 import com.example.madplayground.ui.config.WindowHeightType

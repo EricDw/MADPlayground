@@ -7,7 +7,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FabPosition
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
-import com.example.madplayground.domain.settings.models.Settings
+import com.example.core.settings.models.Settings
 import kotlinx.coroutines.flow.StateFlow
 
 @OptIn(ExperimentalMaterial3Api::class)

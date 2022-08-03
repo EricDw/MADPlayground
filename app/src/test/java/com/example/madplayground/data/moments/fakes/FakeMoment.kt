@@ -1,11 +1,10 @@
 package com.example.madplayground.data.moments.fakes
 
-import com.example.madplayground.domain.moments.models.Moment
 import kotlinx.datetime.*
 
-class FakeMoment : Moment {
+class FakeMoment : com.example.core.moments.models.Moment {
 
-    override var id: Moment.Id = Moment.Id()
+    override var id: com.example.core.moments.models.Moment.Id = com.example.core.moments.models.Moment.Id()
 
     override val createdDateTime: LocalDateTime =
         Clock.System.now().toLocalDateTime(TimeZone.UTC)

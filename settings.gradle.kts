@@ -15,3 +15,6 @@ dependencyResolutionManagement {
 rootProject.name = "MAD Playground"
 include(":app")
 include(":common")
+include(":core")
+include(":data")
+include(":cache")
