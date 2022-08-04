@@ -1,6 +1,7 @@
 plugins {
     id("com.android.library")
     id("kotlin-kapt")
+    id("com.google.devtools.ksp") version "1.7.0-1.0.6"
     id("org.jetbrains.kotlin.android")
 }
 
@@ -46,7 +47,7 @@ dependencies {
 
     api("androidx.room:room-runtime:$roomVersion")
     api("androidx.room:room-ktx:$roomVersion")
-    kapt("androidx.room:room-compiler:$roomVersion")
+    ksp("androidx.room:room-compiler:$roomVersion")
     testApi("androidx.room:room-testing:$roomVersion")
 
     // endregion Database
@@ -58,7 +59,7 @@ dependencies {
     implementation("com.google.dagger:hilt-android:$hiltVersion")
 
     // Hilt Compiler
-    kapt("com.google.dagger:hilt-compiler:$hiltVersion")
+    ksp("com.google.dagger:hilt-compiler:$hiltVersion")
 
     // endregion Hilt
 

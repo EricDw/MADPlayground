@@ -4,6 +4,7 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
+import com.example.cache.settings.mapper.SettingsCacheMapper
 import com.example.data.settings.models.IconographyType
 import com.example.data.settings.models.NavigationLabelVisibility
 import com.example.data.settings.models.ShapeType
@@ -15,6 +16,7 @@ import kotlinx.coroutines.flow.*
 
 class LocalSettingsDataSourceImpl(
     private val dataStore: DataStore<Preferences>,
+    private val mapper: SettingsCacheMapper,
     private val scope: CoroutineScope,
 ) : LocalSettingsDataSource {
 
@@ -87,7 +89,7 @@ class LocalSettingsDataSourceImpl(
         newThemeType: ThemeType,
     ) {
         dataStore.edit { preferences ->
-            preferences[themeKey] = newThemeType.name
+            preferences[themeKey] = mapper.mapToCache(newThemeType)
         }
     }
 

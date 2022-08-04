@@ -11,7 +11,9 @@ import com.example.cache.moments.mapper.MomentCacheMapper
 import com.example.cache.moments.models.MomentDao
 import com.example.cache.moments.source.LocalMomentDataSourceImpl
 import com.example.cache.moments.source.MomentCacheMapperImpl
+import com.example.cache.settings.mapper.SettingsCacheMapper
 import com.example.cache.settings.source.LocalSettingsDataSourceImpl
+import com.example.cache.settings.source.SettingsCacheMapperImpl
 import com.example.core.settings.repository.SettingsCache
 import com.example.data.settings.mapper.SettingsDataMapper
 import com.example.data.settings.repository.LocalSettingsDataSource
@@ -29,6 +31,16 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object CacheModule {
+
+    @Provides
+    fun provideSettingsDataMapper(): SettingsDataMapper {
+        return SettingsDataMapperImpl()
+    }
+
+    @Provides
+    fun provideSettingsCacheMapper(): SettingsCacheMapper {
+        return SettingsCacheMapperImpl()
+    }
 
     @Provides
     @Singleton
@@ -60,6 +72,7 @@ object CacheModule {
     @Singleton
     fun provideLocalSettingsDataSource(
         dataStore: DataStore<Preferences>,
+        mapper: SettingsCacheMapper,
         @IODispatcher
         ioDispatcher: CoroutineDispatcher,
     ): LocalSettingsDataSource {
@@ -67,16 +80,11 @@ object CacheModule {
         val ioScope = CoroutineScope(ioDispatcher)
 
         return LocalSettingsDataSourceImpl(
-            scope = ioScope,
             dataStore = dataStore,
+            mapper = mapper,
+            scope = ioScope
         )
 
-    }
-
-
-    @Provides
-    fun provideSettingsDataMapper(): SettingsDataMapper {
-        return SettingsDataMapperImpl()
     }
 
 
