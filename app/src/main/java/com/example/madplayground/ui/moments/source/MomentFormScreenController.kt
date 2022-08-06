@@ -22,8 +22,6 @@ fun ContentContainer.Controller.MomentFormScreenController(
 
     val windowConfiguration = LocalWindowConfiguration.current
 
-    val navController = navHostController
-
     val state = viewModel.state
 
     var showDiscardChangesDialog by remember {
@@ -69,7 +67,7 @@ fun ContentContainer.Controller.MomentFormScreenController(
             is MomentFormScreen.Event.BackClicked            -> {
                 if (state.isEmpty) {
                     showDiscardChangesDialog = false
-                    navController.popBackStack()
+                    navHostController.popBackStack()
                 } else {
                     showDiscardChangesDialog = true
                 }
@@ -77,7 +75,7 @@ fun ContentContainer.Controller.MomentFormScreenController(
 
             is MomentFormScreen.Event.DiscardChangesClicked  -> {
                 showDiscardChangesDialog = false
-                navController.popBackStack()
+                navHostController.popBackStack()
             }
 
             is MomentFormScreen.Event.DismissDialogRequested -> {
@@ -127,7 +125,7 @@ fun ContentContainer.Controller.MomentFormScreenController(
 
     LaunchedEffect(key1 = submitted) {
         if (submitted) {
-            navController.popBackStack()
+            navHostController.popBackStack()
         }
     }
 
