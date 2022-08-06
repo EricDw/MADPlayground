@@ -1,13 +1,14 @@
 package com.example.madplayground.cache.settings.fakes
 
 import com.example.core.settings.models.Settings
-import com.example.core.settings.repository.SettingsCache
+import com.example.core.settings.repository.SettingsRepository
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 
-class FakeSettingsCache(
+class FakeSettingsRepository(
     logs: com.example.common.logs.models.Logs
-) : SettingsCache, com.example.common.logs.models.Logs by logs {
+) : SettingsRepository, com.example.common.logs.models.Logs by logs {
 
     private val tag = this::class.simpleName
 
@@ -54,4 +55,9 @@ class FakeSettingsCache(
         )
         navigationLabelVisibility.update { newVisibility }
     }
+
+    override fun retrieveSettingsFlow(): Flow<Settings> {
+        TODO("Not yet implemented")
+    }
+
 }

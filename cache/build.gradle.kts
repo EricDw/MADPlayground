@@ -52,17 +52,6 @@ dependencies {
 
     // endregion Database
 
-    // region Hilt
-    val hiltVersion = "2.43.1"
-
-    // Hilt for Android
-    implementation("com.google.dagger:hilt-android:$hiltVersion")
-
-    // Hilt Compiler
-    ksp("com.google.dagger:hilt-compiler:$hiltVersion")
-
-    // endregion Hilt
-
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.3")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")

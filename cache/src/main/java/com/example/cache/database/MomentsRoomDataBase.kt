@@ -8,7 +8,7 @@ import com.example.cache.moments.models.MomentEntity
 @Database(
     entities = [MomentEntity::class],
     version = 1,
-    exportSchema = true,
+    exportSchema = false,
 )
 abstract class MomentsRoomDataBase : RoomDatabase() {
     abstract fun momentDao(): MomentDao

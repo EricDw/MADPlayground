@@ -1,34 +1,20 @@
 package com.example.core.settings.source
 
-import com.example.core.settings.models.Settings
-import com.example.core.settings.repository.SettingsCache
+import com.example.core.settings.repository.SettingsRepository
 import com.example.core.settings.usecases.CycleThemeTypeUseCase
 
 class CycleThemeTypeUseCaseImpl(
-    private val cache: SettingsCache,
+    private val repository: SettingsRepository,
 ) : CycleThemeTypeUseCase {
 
     override suspend fun invoke() {
 
-        val newThemeType = when (
-            cache.themeType.value
-        ) {
+        val settings = repository.retrieveSettings()
 
-            Settings.ThemeType.LIGHT  -> {
-                Settings.ThemeType.DARK
-            }
+        settings.cycleThemeType()
 
-            Settings.ThemeType.DARK   -> {
-                Settings.ThemeType.SYSTEM
-            }
+        repository.updateSettings(settings)
 
-            Settings.ThemeType.SYSTEM -> {
-                Settings.ThemeType.LIGHT
-            }
-
-        }
-
-        return cache.setThemeType(newThemeType)
     }
 
 }

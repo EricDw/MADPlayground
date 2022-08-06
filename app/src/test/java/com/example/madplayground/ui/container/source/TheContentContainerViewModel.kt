@@ -1,12 +1,12 @@
 package com.example.madplayground.ui.container.source
 
 import com.example.core.settings.models.Settings
-import com.example.core.settings.repository.SettingsCache
+import com.example.core.settings.repository.SettingsRepository
 import com.example.core.settings.source.RetrieveIconographyTypeUseCaseImpl
 import com.example.core.settings.source.RetrieveNavigationLabelVisibilityUseCaseImpl
 import com.example.core.settings.source.RetrieveShapeTypeUseCaseImpl
 import com.example.core.settings.source.RetrieveThemeTypeUseCaseImpl
-import com.example.madplayground.cache.settings.fakes.FakeSettingsCache
+import com.example.madplayground.cache.settings.fakes.FakeSettingsRepository
 import com.example.madplayground.logs.TestLogs
 import com.example.madplayground.ui.container.models.ContentContainer
 import kotlinx.coroutines.CoroutineScope
@@ -21,7 +21,7 @@ import org.junit.Test
 @OptIn(ExperimentalCoroutinesApi::class)
 class TheContentContainerViewModel {
 
-    private lateinit var cache: SettingsCache
+    private lateinit var settingsRepository: SettingsRepository
 
     private lateinit var viewModel: ContentContainer.ViewModel
 
@@ -38,23 +38,23 @@ class TheContentContainerViewModel {
 
         logs = TestLogs()
 
-        cache = FakeSettingsCache(
+        settingsRepository = FakeSettingsRepository(
             logs =  logs
         )
 
         viewModel = ContentContainerViewModel(
             logs = logs,
             retrieveThemeTypeUseCase = RetrieveThemeTypeUseCaseImpl(
-                cache = cache,
+                repository = settingsRepository,
             ),
             retrieveIconographyTypeUseCase = RetrieveIconographyTypeUseCaseImpl(
-                cache = cache
+                repository = settingsRepository
             ),
             retrieveShapeTypeUseCase = RetrieveShapeTypeUseCaseImpl(
-                cache = cache
+                repository = settingsRepository
             ),
             retrieveNavigationLabelVisibilityUseCase = RetrieveNavigationLabelVisibilityUseCaseImpl(
-                cache = cache
+                repository = settingsRepository
             ),
             scope = CoroutineScope(dispatcher)
         )
@@ -139,7 +139,7 @@ class TheContentContainerViewModel {
 
         // Act
 
-        cache.setThemeType(expected)
+        settingsRepository.setThemeType(expected)
 
         val actual = viewModel.stateFlow.value.themeType
 
@@ -157,7 +157,7 @@ class TheContentContainerViewModel {
         val expected = Settings.IconographyType.ROUNDED
 
         // Act
-        cache.setIconographyType(expected)
+        settingsRepository.setIconographyType(expected)
 
         val actual = viewModel.stateFlow.value.iconographyType
 
@@ -175,7 +175,7 @@ class TheContentContainerViewModel {
         val expected = Settings.ShapeType.CUT
 
         // Act
-        cache.setShapeType(expected)
+        settingsRepository.setShapeType(expected)
 
         val actual = viewModel.stateFlow.value.shapeType
 
@@ -193,7 +193,7 @@ class TheContentContainerViewModel {
         val expected = Settings.NavigationLabelVisibility.ALWAYS
 
         // Act
-        cache.setNavigationLabelVisibility(expected)
+        settingsRepository.setNavigationLabelVisibility(expected)
 
         val actual = viewModel.stateFlow.value.navigationLabelVisibility
 

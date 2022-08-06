@@ -1,30 +1,20 @@
 package com.example.core.settings.source
 
-import com.example.core.settings.models.Settings
-import com.example.core.settings.repository.SettingsCache
+import com.example.core.settings.repository.SettingsRepository
 import com.example.core.settings.usecases.CycleShapeTypeUseCase
 
 class CycleShapeTypeUseCaseImpl(
-    private val cache: SettingsCache,
+    private val repository: SettingsRepository,
 ) : CycleShapeTypeUseCase {
 
     override suspend fun invoke() {
 
-        val newShapeType = when (
-            cache.shapeType.value
-        ) {
+        val settings = repository.retrieveSettings()
 
-            Settings.ShapeType.ROUNDED -> {
-                Settings.ShapeType.CUT
-            }
+        settings.cycleShapeType()
 
-            Settings.ShapeType.CUT     -> {
-                Settings.ShapeType.ROUNDED
-            }
+        repository.updateSettings(settings)
 
-        }
-
-        return cache.setShapeType(newShapeType)
     }
 
 }

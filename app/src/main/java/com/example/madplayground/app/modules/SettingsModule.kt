@@ -1,6 +1,6 @@
 package com.example.madplayground.app.modules
 
-import com.example.core.settings.repository.SettingsCache
+import com.example.core.settings.repository.SettingsRepository
 import com.example.core.settings.source.*
 import com.example.core.settings.usecases.*
 import dagger.Module
@@ -14,88 +14,88 @@ object SettingsModule {
 
     @Provides
     fun provideRetrieveThemeTypeUseCase(
-        cache: SettingsCache,
+        repository: SettingsRepository,
     ): RetrieveThemeTypeUseCase {
 
         return RetrieveThemeTypeUseCaseImpl(
-            cache = cache
+            repository = repository
         )
 
     }
 
     @Provides
     fun provideRetrieveIconographyTypeUseCase(
-        cache: SettingsCache,
+        repository: SettingsRepository,
     ): RetrieveIconographyTypeUseCase {
 
         return RetrieveIconographyTypeUseCaseImpl(
-            cache = cache
+            repository = repository
         )
 
     }
 
     @Provides
     fun provideRetrieveShapeTypeUseCase(
-        cache: SettingsCache,
+        repository: SettingsRepository,
     ): RetrieveShapeTypeUseCase {
 
         return RetrieveShapeTypeUseCaseImpl(
-            cache = cache
+            repository = repository
         )
 
     }
 
     @Provides
     fun provideRetrieveNavTypeUseCase(
-        cache: SettingsCache,
+        repository: SettingsRepository,
     ): RetrieveNavigationLabelVisibilityUseCase {
 
         return RetrieveNavigationLabelVisibilityUseCaseImpl(
-            cache = cache
+            repository = repository
         )
 
     }
 
     @Provides
     fun provideCycleThemeTypeUseCase(
-        cache: SettingsCache,
+        repository: SettingsRepository,
     ): CycleThemeTypeUseCase {
 
         return CycleThemeTypeUseCaseImpl(
-            cache = cache
+            repository = repository
         )
 
     }
 
     @Provides
     fun provideCycleIconographyTypeUseCase(
-        cache: SettingsCache,
+        repository: SettingsRepository,
     ): CycleIconographyTypeUseCase {
 
         return CycleIconographyTypeUseCaseImpl(
-            cache = cache
+            repository = repository
         )
 
     }
 
     @Provides
     fun provideCycleShapeTypeUseCase(
-        cache: SettingsCache,
+        repository: SettingsRepository,
     ): CycleShapeTypeUseCase {
 
         return CycleShapeTypeUseCaseImpl(
-            cache = cache
+            repository = repository
         )
 
     }
 
     @Provides
     fun provideCycleNavigationLabelVisibilityUseCase(
-        cache: SettingsCache,
+        repository: SettingsRepository,
     ): CycleNavigationLabelVisibilityUseCase {
 
         return CycleNavigationLabelVisibilityUseCaseImpl(
-            cache = cache
+            repository = repository
         )
 
     }

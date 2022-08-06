@@ -2,6 +2,22 @@ package com.example.core.settings.models
 
 interface Settings {
 
+    val themeType: ThemeType
+
+    val shapeType: ShapeType
+
+    val iconographyType: IconographyType
+
+    val navigationLabelVisibility: NavigationLabelVisibility
+
+    fun cycleThemeType()
+
+    fun cycleShapeType()
+
+    fun cycleIconographyType()
+
+    fun cycleNavigationLabelVisibility()
+
     enum class ThemeType {
         LIGHT, DARK, SYSTEM;
     }

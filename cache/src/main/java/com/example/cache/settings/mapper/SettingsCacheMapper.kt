@@ -1,9 +1,10 @@
 package com.example.cache.settings.mapper
 
-import com.example.data.settings.models.ThemeType
+import androidx.datastore.preferences.core.Preferences
+import com.example.data.settings.models.*
 
 interface SettingsCacheMapper {
 
-    fun mapToCache(themeType: ThemeType) : String
+    fun mapToData(preferences: Preferences): SettingsData
 
 }

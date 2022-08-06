@@ -1,8 +1,9 @@
 plugins {
     id("com.android.application")
-    id("org.jetbrains.kotlin.android")
     id("kotlin-kapt")
+    id("com.google.devtools.ksp") version "1.7.0-1.0.6"
     id("dagger.hilt.android.plugin")
+    id("org.jetbrains.kotlin.android")
 }
 
 android {
@@ -114,6 +115,7 @@ dependencies {
 
     // region Hilt
 
+    // region Hilt
     val hiltVersion = "2.43.1"
 
     // Hilt for Android
@@ -121,6 +123,8 @@ dependencies {
 
     // Hilt Compiler
     kapt("com.google.dagger:hilt-compiler:$hiltVersion")
+
+    // endregion Hilt
 
     // Hilt Compose Navigation Integration
     implementation("androidx.hilt:hilt-navigation-compose:1.0.0")

@@ -14,10 +14,10 @@ import com.example.cache.moments.source.MomentCacheMapperImpl
 import com.example.cache.settings.mapper.SettingsCacheMapper
 import com.example.cache.settings.source.LocalSettingsDataSourceImpl
 import com.example.cache.settings.source.SettingsCacheMapperImpl
-import com.example.core.settings.repository.SettingsCache
+import com.example.core.settings.repository.SettingsRepository
 import com.example.data.settings.mapper.SettingsDataMapper
 import com.example.data.settings.repository.LocalSettingsDataSource
-import com.example.data.settings.source.SettingsCacheImpl
+import com.example.data.settings.source.SettingsRepositoryImpl
 import com.example.data.settings.source.SettingsDataMapperImpl
 import dagger.Module
 import dagger.Provides
@@ -33,11 +33,13 @@ import javax.inject.Singleton
 object CacheModule {
 
     @Provides
+    @Singleton
     fun provideSettingsDataMapper(): SettingsDataMapper {
         return SettingsDataMapperImpl()
     }
 
     @Provides
+    @Singleton
     fun provideSettingsCacheMapper(): SettingsCacheMapper {
         return SettingsCacheMapperImpl()
     }
@@ -73,20 +75,14 @@ object CacheModule {
     fun provideLocalSettingsDataSource(
         dataStore: DataStore<Preferences>,
         mapper: SettingsCacheMapper,
-        @IODispatcher
-        ioDispatcher: CoroutineDispatcher,
     ): LocalSettingsDataSource {
-
-        val ioScope = CoroutineScope(ioDispatcher)
 
         return LocalSettingsDataSourceImpl(
             dataStore = dataStore,
-            mapper = mapper,
-            scope = ioScope
+            mapper = mapper
         )
 
     }
-
 
     @Provides
     @Singleton
@@ -95,11 +91,11 @@ object CacheModule {
         mapper: SettingsDataMapper,
         @IODispatcher
         ioDispatcher: CoroutineDispatcher,
-    ): SettingsCache {
+    ): SettingsRepository {
 
         val ioScope = CoroutineScope(ioDispatcher)
 
-        return SettingsCacheImpl(
+        return SettingsRepositoryImpl(
             localSettingsDataSource = dataSource,
             mapper = mapper,
             scope = ioScope
